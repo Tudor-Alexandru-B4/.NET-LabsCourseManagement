@@ -2,9 +2,9 @@
 {
     public class Contact
     {
-        Guid Id { get; set; }
-        List<string> PhoneNumbers { get; set; }
-        List<string> EmailAddresses { get; set; }
+        public Guid Id { get; private set; }
+        public List<string> PhoneNumbers { get; private set; }
+        public List<string> EmailAddresses { get; private set; }
 
     }
 }

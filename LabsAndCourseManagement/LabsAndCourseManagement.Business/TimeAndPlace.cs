@@ -2,8 +2,8 @@
 {
     public class TimeAndPlace
     {
-        Guid Id { get; set; }
-        DateTime DateAndTime { get; set; }
-        String Room { get; set; }
+        public Guid Id { get; private set; }
+        public DateTime DateAndTime { get; private set; }
+        public string Classroom { get; private set; }
     }
 }
