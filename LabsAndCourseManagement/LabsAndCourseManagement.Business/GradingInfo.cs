@@ -2,12 +2,12 @@
 {
     public class GradingInfo
     {
-        Guid Id { get; set; }
-        ExaminationType ExaminationType { get; set; }
-        Boolean IsMandatory { get; set; }
-        Double MinGrade { get; set; }
-        Double MaxGrade { get; set; }
-        String Description { get; set; }
-        TimeAndPlace TimeAndPlace { get; set; }
+        public Guid Id { get; private set; }
+        public ExaminationType ExaminationType { get; private set; }
+        public bool IsMandatory { get; private set; }
+        public double MinGrade { get; private set; }
+        public double MaxGrade { get; private set; }
+        public string Description { get; private set; }
+        public TimeAndPlace TimeAndPlace { get; private set; }
     }
 }

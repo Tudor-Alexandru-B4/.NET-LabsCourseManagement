@@ -2,10 +2,10 @@
 {
     public class Announcement
     {
-        Guid Id { get; set; }
-        String Header { get; set; }
-        String Text { get; set; }
-        DateTime PostingDate { get; set; }
-        Professor Writer { get; set; }
+        public Guid Id { get; private set; }
+        public string Header { get; private set; }
+        public string Text { get; private set; }
+        public DateTime PostingDate { get; private set; }
+        public Professor Writer { get; private set; }
     }
 }

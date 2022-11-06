@@ -2,13 +2,13 @@
 {
     public class Professor
     {
-        Guid Id { get; set; }
-        String Name { get; set; }
-        String Surname { get; set; }
-        Contact ContactInfo { get; set; }
-        Boolean IsActive { get; set; }
-        List<Course> Courses { get; set; }
-        List<Laboratory> Laboratories { get; set; }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string Surname { get; private set; }
+        public Contact ContactInfo { get; private set; }
+        public bool IsActive { get; private set; }
+        public List<Course> Courses { get; private set; }
+        public List<Laboratory> Laboratories { get; private set; }
 
     }
 }

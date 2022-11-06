@@ -3,16 +3,16 @@
 {
     public class Student
     {
-        Guid StudentId { get; set; }
-        String Name { get; set; }
-        String Surname { get; set; }
-        Contact ContactInfo { get; set; }
-        int Year { get; set; }
-        String Group { get; set; }
-        Boolean IsActive { get; set; }
-        String RegistrationNumber { get; set; }
-        List<Course> Courses { get; set; }
-        List<Laboratory> Laboratories { get; set; }
+        public Guid StudentId { get; private set; }
+        public string Name { get; private set; }
+        public string Surname { get; private set; }
+        public Contact ContactInfo { get; private set; }
+        public int Year { get; private set; }
+        public string Group { get; private set; }
+        public bool IsActive { get; private set; }
+        public string RegistrationNumber { get; private set; }
+        public List<Course> Courses { get; private set; }
+        public List<Laboratory> Laboratories { get; private set; }
     }
 
 }

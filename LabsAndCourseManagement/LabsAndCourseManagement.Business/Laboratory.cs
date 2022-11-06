@@ -3,9 +3,9 @@
     public class Laboratory
     {
         public Guid Id { get; private set; }
-        public String Name { get; private set; }
+        public string Name { get; private set; }
         public Course Course { get; private set; }
-        public Bool IsActive { get; private set; }
+        public bool IsActive { get; private set; }
         public Catalog LaboratoryCatalog { get; private set; }
         public Professor LaboratoryProfessor { get; private set; }
         public List<Student> LaboratoryStudents { get; private set; }
