@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cotiu\\source\\repos\\dotNet\\project\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {}
+    "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cotiu\\source\\repos\\dotNet\\project\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {
+    "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cotiu\\source\\repos\\dotNet\\project\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj",
+        "projectUniqueName": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj",
         "projectName": "LabsAndCourseManagement.Business",
-        "projectPath": "C:\\Users\\cotiu\\source\\repos\\dotNet\\project\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj",
+        "projectPath": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj",
         "packagesPath": "C:\\Users\\cotiu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cotiu\\source\\repos\\dotNet\\project\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\obj\\",
+        "outputPath": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

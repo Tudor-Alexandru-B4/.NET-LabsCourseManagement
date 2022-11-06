@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0OkNdSo28qs5Eicz9rHA3p8DPCdcwcZaRs6sex+2TuK3Fx98gh1IdSjQ1YLkKpcyomoX0/hMmG9FyCsNyJVGUw==",
+  "dgSpecHash": "f+aVylGJlqz7hB+RzEBI6I6AMfBxwYvbiRncr7yG2p6p0MYa4R2JyaeqpvfKL74wcguhRRERvZ0fMML1IvcR1w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\cotiu\\source\\repos\\dotNet\\project\\LabsAndCourseManagement\\LabsAndCourseManagement.API\\LabsAndCourseManagement.API.csproj",
+  "projectFilePath": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.API\\LabsAndCourseManagement.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cotiu\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\cotiu\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

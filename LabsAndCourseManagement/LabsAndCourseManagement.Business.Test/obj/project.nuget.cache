@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aTz2ihY0LVvC/xxAFJL4dA461+aj/a87j8S56L/bHX8BEOFLQ22vND/FyGoRFo857d6uh5VWbiKe+XCmleiSPQ==",
+  "dgSpecHash": "NHlVMx94C62Kq73tP30Rb//D+mPQ6hQEMcL41vl1CdrpeQFHwgcHtRwgpZFwtyUoIL86/zDL96jp6JvL8xrE4A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\cotiu\\source\\repos\\dotNet\\project\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
+  "projectFilePath": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cotiu\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\cotiu\\.nuget\\packages\\fluentassertions\\6.8.0\\fluentassertions.6.8.0.nupkg.sha512",
