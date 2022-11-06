@@ -1,0 +1,2 @@
+D:\1_SCOALA\Anul_3_Semestrul_1\Net\final_project_and_resources\project\.NET---Team-Green---Labs-and-course-management\LabsAndCourseManagement\LabsAndCourseManagement.Business\obj\Debug\net6.0\LabsAndCourseManagement.Business.csproj.AssemblyReference.cache
+D:\1_SCOALA\Anul_3_Semestrul_1\Net\final_project_and_resources\project\.NET---Team-Green---Labs-and-course-management\LabsAndCourseManagement\LabsAndCourseManagement.Business\obj\Debug\net6.0\LabsAndCourseManagement.Business.GeneratedMSBuildEditorConfig.editorconfig

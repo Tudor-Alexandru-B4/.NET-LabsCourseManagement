@@ -6265,23 +6265,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\cotiu\\.nuget\\packages\\": {},
+    "C:\\Users\\Delia\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
+      "projectUniqueName": "D:\\1_SCOALA\\Anul_3_Semestrul_1\\Net\\final_project_and_resources\\project\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
       "projectName": "LabsAndCourseManagement.Business.Test",
-      "projectPath": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
-      "packagesPath": "C:\\Users\\cotiu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\obj\\",
+      "projectPath": "D:\\1_SCOALA\\Anul_3_Semestrul_1\\Net\\final_project_and_resources\\project\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
+      "packagesPath": "C:\\Users\\Delia\\.nuget\\packages\\",
+      "outputPath": "D:\\1_SCOALA\\Anul_3_Semestrul_1\\Net\\final_project_and_resources\\project\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\cotiu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Delia\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -6290,14 +6290,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {
-              "projectPath": "C:\\Users\\cotiu\\Documents\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj"
+            "D:\\1_SCOALA\\Anul_3_Semestrul_1\\Net\\final_project_and_resources\\project\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {
+              "projectPath": "D:\\1_SCOALA\\Anul_3_Semestrul_1\\Net\\final_project_and_resources\\project\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj"
             }
           }
         }
