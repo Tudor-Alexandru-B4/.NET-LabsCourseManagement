@@ -5,7 +5,7 @@
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public Catalog CourseCatalog { get; private set; }
-        public bool isActive { get; private set; }
+        public bool IsActive { get; private set; }
         public List<Professor> CourseProfessors { get; private set; }
         public List<Professor> LaboratoryProfessors { get; private set; }
         public List<Laboratory> Laboratorys { get; private set; }
@@ -13,7 +13,7 @@
         public List<TimeAndPlace> CourseProgram { get; private set; }
         public List<Announcement> CourseAnnouncements { get; private set; }
         public List<GradingInfo> CourseGradingInfo { get; private set; }
-        public List<String> HelpfulMaterials { get; private set; }
+        public List<string> HelpfulMaterials { get; private set; }
 
         public static Result<Course> Create(string name)
         {
@@ -27,7 +27,7 @@
                 Id = Guid.NewGuid(),
                 Name = name,
                 CourseCatalog = Catalog.Create().Entity,
-                isActive = true,
+                IsActive = true,
                 CourseProfessors = new List<Professor>(),
                 LaboratoryProfessors = new List<Professor>(),
                 Laboratorys = new List<Laboratory>(),
