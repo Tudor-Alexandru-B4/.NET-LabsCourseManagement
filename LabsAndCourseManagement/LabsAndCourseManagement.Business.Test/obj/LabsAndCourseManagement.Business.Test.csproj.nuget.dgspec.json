@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj": {}
+    "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj": {}
   },
   "projects": {
-    "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj": {
+    "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
+        "projectUniqueName": "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
         "projectName": "LabsAndCourseManagement.Business.Test",
-        "projectPath": "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
-        "packagesPath": "C:\\Users\\Paula Malina\\.nuget\\packages\\",
-        "outputPath": "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\obj\\",
+        "projectPath": "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\LabsAndCourseManagement.Business.Test.csproj",
+        "packagesPath": "C:\\Users\\tudor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business.Test\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Paula Malina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tudor\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {
-                "projectPath": "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj"
+              "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {
+                "projectPath": "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj"
               }
             }
           }
@@ -75,8 +75,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -85,21 +84,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {
+    "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj",
+        "projectUniqueName": "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj",
         "projectName": "LabsAndCourseManagement.Business",
-        "projectPath": "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj",
-        "packagesPath": "C:\\Users\\Paula Malina\\.nuget\\packages\\",
-        "outputPath": "D:\\facultate\\AN3\\.net\\proiect .net\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\obj\\",
+        "projectPath": "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\LabsAndCourseManagement.Business.csproj",
+        "packagesPath": "C:\\Users\\tudor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tudor\\Desktop\\dotNET\\CourseAndLabManagement\\.NET---Team-Green---Labs-and-course-management\\LabsAndCourseManagement\\LabsAndCourseManagement.Business\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Paula Malina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tudor\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -130,8 +129,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -140,7 +138,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
