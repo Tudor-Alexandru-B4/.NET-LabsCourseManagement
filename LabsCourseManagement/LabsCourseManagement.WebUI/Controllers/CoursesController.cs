@@ -22,6 +22,17 @@ namespace LabsCourseManagement.WebUI.Controllers
             return Ok(courseRepository.GetAll());
         }
 
+        [HttpGet("{courseId:guid}")]
+        public IActionResult Get(Guid courseId)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return Ok(course);
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] CreateCourseDto courseDto)
         {
@@ -33,6 +44,19 @@ namespace LabsCourseManagement.WebUI.Controllers
                 return Created(nameof(Get), course);
             }
             return BadRequest(course.Error);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody]Guid courseId)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            courseRepository.Delete(course);
+            courseRepository.Save();
+            return NoContent();
         }
     }
 }
