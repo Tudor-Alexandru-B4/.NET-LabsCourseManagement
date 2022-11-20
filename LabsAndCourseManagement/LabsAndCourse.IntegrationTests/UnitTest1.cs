@@ -1,4 +1,6 @@
-namespace LabsAndCourseManagement.API.IntegrationTests
+using Xunit;
+
+namespace LabsAndCourse.IntegrationTests
 {
     public class UnitTest1
     {

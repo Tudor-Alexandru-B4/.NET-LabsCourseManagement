@@ -5,13 +5,15 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsAndCourseManagement.API", "LabsAndCourseManagement.API\LabsAndCourseManagement.API.csproj", "{780EAFD1-38AA-4F1B-B953-610A941E1927}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabsAndCourseManagement.Business", "LabsAndCourseManagement.Business\LabsAndCourseManagement.Business.csproj", "{2D2ABCD9-062D-4B62-B31C-06F48953EE5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsAndCourseManagement.Business", "LabsAndCourseManagement.Business\LabsAndCourseManagement.Business.csproj", "{2D2ABCD9-062D-4B62-B31C-06F48953EE5D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C6C8E941-EBE3-45B3-94C1-29F3DA019140}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{536F4438-60D9-4FDA-84EC-81358D14DF10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabsAndCourseManagement.Business.Test", "LabsAndCourseManagement.Business.Test\LabsAndCourseManagement.Business.Test.csproj", "{B066AEAF-DD49-4CA0-B358-EECFB8A3C439}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsAndCourseManagement.Business.Test", "LabsAndCourseManagement.Business.Test\LabsAndCourseManagement.Business.Test.csproj", "{B066AEAF-DD49-4CA0-B358-EECFB8A3C439}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabsAndCourse.IntegrationTests", "LabsAndCourse.IntegrationTests\LabsAndCourse.IntegrationTests.csproj", "{66830E5C-4DF7-4FE3-BFA3-101AE6EEDEEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{B066AEAF-DD49-4CA0-B358-EECFB8A3C439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B066AEAF-DD49-4CA0-B358-EECFB8A3C439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B066AEAF-DD49-4CA0-B358-EECFB8A3C439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66830E5C-4DF7-4FE3-BFA3-101AE6EEDEEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66830E5C-4DF7-4FE3-BFA3-101AE6EEDEEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66830E5C-4DF7-4FE3-BFA3-101AE6EEDEEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66830E5C-4DF7-4FE3-BFA3-101AE6EEDEEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{780EAFD1-38AA-4F1B-B953-610A941E1927} = {C6C8E941-EBE3-45B3-94C1-29F3DA019140}
 		{2D2ABCD9-062D-4B62-B31C-06F48953EE5D} = {C6C8E941-EBE3-45B3-94C1-29F3DA019140}
 		{B066AEAF-DD49-4CA0-B358-EECFB8A3C439} = {536F4438-60D9-4FDA-84EC-81358D14DF10}
+		{66830E5C-4DF7-4FE3-BFA3-101AE6EEDEEC} = {536F4438-60D9-4FDA-84EC-81358D14DF10}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37423F23-5CD1-4327-B0E7-CEDBEB34B491}

@@ -6,8 +6,7 @@
         public string Name { get; private set; }
         public Catalog CourseCatalog { get; private set; }
         public bool IsActive { get; private set; }
-        public List<Professor> CourseProfessors { get; private set; }
-        public List<Professor> LaboratoryProfessors { get; private set; }
+        public List<Professor> Professors { get; private set; }
         public List<Laboratory> Laboratorys { get; private set; }
         public List<Student> CourseStudents { get; private set; }
         public List<TimeAndPlace> CourseProgram { get; private set; }
@@ -28,8 +27,7 @@
                 Name = name,
                 CourseCatalog = Catalog.Create().Entity,
                 IsActive = true,
-                CourseProfessors = new List<Professor>(),
-                LaboratoryProfessors = new List<Professor>(),
+                Professors = new List<Professor>(),
                 Laboratorys = new List<Laboratory>(),
                 CourseStudents = new List<Student>(),
                 CourseProgram = new List<TimeAndPlace>(),
@@ -40,27 +38,27 @@
             return Result<Course>.Success(course);
         }
 
-        public Result AddCourseProfessor(Professor courseProfessor)
-        {
-            if (courseProfessor == null)
-            {
-                return Result.Failure("Professor cannot be null");
-            }
+        //public Result AddCourseProfessor(Professor courseProfessor)
+        //{
+        //    if (courseProfessor == null)
+        //    {
+        //        return Result.Failure("Professor cannot be null");
+        //    }
 
-            CourseProfessors.Add(courseProfessor);
-            return Result.Success();
-        }
+        //    CourseProfessors.Add(courseProfessor);
+        //    return Result.Success();
+        //}
 
-        public Result AddLaboratoryProfessor(Professor laboratoryProfessor)
-        {
-            if (laboratoryProfessor == null)
-            {
-                return Result.Failure("Professor cannot be null");
-            }
+        //public Result AddLaboratoryProfessor(Professor laboratoryProfessor)
+        //{
+        //    if (laboratoryProfessor == null)
+        //    {
+        //        return Result.Failure("Professor cannot be null");
+        //    }
 
-            LaboratoryProfessors.Add(laboratoryProfessor);
-            return Result.Success();
-        }
+        //    LaboratoryProfessors.Add(laboratoryProfessor);
+        //    return Result.Success();
+        //}
 
         public Result AddLaboratory(Laboratory laboratory)
         {
