@@ -17,14 +17,14 @@ namespace LabsCourseManagement.Domain
             return Result<Catalog>.Success(catalog);
         }
 
-        public Result AddStudentGradesToCatalog(StudentGrades studentGrades)
+        public Result AddStudentGradesToCatalog(List<StudentGrades> studentGrades)
         {
-            if(studentGrades == null)
+            if(!studentGrades.Any())
             {
                 return Result.Failure("StudentGrades cannot be null");
             }
 
-            StudentGrades.Add(studentGrades);
+            studentGrades.ForEach(studentGrades => StudentGrades.Add(studentGrades));
             return Result.Success();
         }
     

@@ -62,69 +62,69 @@ namespace LabsCourseManagement.Domain
         //    return Result.Success();
         //}
 
-        public Result AddLaboratory(Laboratory laboratory)
+        public Result AddLaboratories(List<Laboratory> laboratories)
         {
-            if (laboratory == null)
+            if (!laboratories.Any())
             {
                 return Result.Failure("Laboratory cannot be null");
             }
 
-            Laboratorys.Add(laboratory);
+            laboratories.ForEach(lab => Laboratorys.Add(lab));
             return Result.Success();
         }
 
-        public Result AddCourseStudent(Student student)
+        public Result AddCourseStudents(List<Student> students)
         {
-            if (student == null)
+            if (!students.Any())
             {
                 return Result.Failure("Student cannot be null");
             }
 
-            CourseStudents.Add(student);
+            students.ForEach(student => CourseStudents.Add(student));
             return Result.Success();
         }
         
-        public Result AddCourseProgram(TimeAndPlace timeAndPlace)
+        public Result AddCoursePrograms(List<TimeAndPlace> timesAndPlaces)
         {
-            if (timeAndPlace == null)
+            if (!timesAndPlaces.Any())
             {
                 return Result.Failure("TimeAndPlace cannot be null");
             }
 
-            CourseProgram.Add(timeAndPlace);
+            timesAndPlaces.ForEach(timeAndPlace => CourseProgram.Add(timeAndPlace));
             return Result.Success();
         }
 
-        public Result AddCourseAnnouncement(Announcement announcement)
+        public Result AddCourseAnnouncements(List<Announcement> announcements)
         {
-            if (announcement == null)
+            if (!announcements.Any())
             {
                 return Result.Failure("Announcement cannot be null");
             }
 
-            CourseAnnouncements.Add(announcement);
+            announcements.ForEach(announcement => CourseAnnouncements.Add(announcement));
             return Result.Success();
         }
 
-        public Result AddCourseGradingInfo(GradingInfo gradingInfo)
+        public Result AddCourseGradingInfos(List<GradingInfo> gradingInfos)
         {
-            if (gradingInfo == null)
+            if (!gradingInfos.Any())
             {
                 return Result.Failure("GradingInfo cannot be null");
             }
 
-            CourseGradingInfo.Add(gradingInfo);
+            gradingInfos.ForEach(gradingInfo => CourseGradingInfo.Add(gradingInfo));
             return Result.Success();
         }
 
-        public Result AddHelpfulMaterial(MyString helpfulMaterial)
+        public Result AddHelpfulMaterials(List<MyString> helpfulMaterials)
         {
-            if (helpfulMaterial == null)
+            if (!helpfulMaterials.Any())
             {
                 return Result.Failure("HelpfulMaterial cannot be null");
             }
 
-            HelpfulMaterials.Add(helpfulMaterial);
+            helpfulMaterials.ForEach(helpfulMaterial => HelpfulMaterials.Add(helpfulMaterial));
             return Result.Success();
         }
 
