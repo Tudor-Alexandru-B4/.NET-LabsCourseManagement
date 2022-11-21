@@ -1,6 +1,4 @@
 ﻿using LabsCourseManagement.Domain;
-using System;
-using System.Collections.Generic;
 
 namespace LabsCourseManagement.UnitTests
 {
