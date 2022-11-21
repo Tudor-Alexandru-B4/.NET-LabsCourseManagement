@@ -1,5 +1,4 @@
-﻿using LabsCourseManagement.Application;
-using LabsCourseManagement.Domain;
+﻿using LabsCourseManagement.Domain;
 
 namespace LabsCourseManagement.Application.Repositories
 {
