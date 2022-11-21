@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabsCourseManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221121092211_InitialCreate")]
+    [Migration("20221121132458_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -297,11 +297,9 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
