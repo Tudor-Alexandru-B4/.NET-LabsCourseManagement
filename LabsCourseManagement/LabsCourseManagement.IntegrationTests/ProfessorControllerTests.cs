@@ -2,7 +2,6 @@ using LabsCourseManagement.WebUI.Dtos;
 using System.Net.Http.Json;
 using Xunit;
 using FluentAssertions;
-using ShelterManagement.API.IntegrationTests;
 using System.Collections.Generic;
 
 namespace LabsCourseManagement.IntegrationTests
