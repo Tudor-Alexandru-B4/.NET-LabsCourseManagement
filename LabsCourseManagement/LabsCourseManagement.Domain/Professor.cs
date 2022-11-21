@@ -34,19 +34,19 @@ namespace LabsCourseManagement.Domain
         }
         public Result AddCourses(List<Course> courses)
         {
-            //if (!courses.Any())
-            //{
-            //    return Result.Failure("Courses can not be null");
-            //}
+            if (!courses.Any())
+            {
+                return Result.Failure("Courses can not be null");
+            }
             courses.ForEach(course => Courses.Add(course));
             return Result.Success();
         }
         public Result AddLaboratories(List<Laboratory> laboratories)
         {
-            //if (!laboratories.Any())
-            //{
-            //    return Result.Failure("Laboratories can not be null");
-            //}
+            if (!laboratories.Any())
+            {
+                return Result.Failure("Laboratories can not be null");
+            }
             laboratories.ForEach(Laboratory => Laboratories.Add(Laboratory));
             return Result.Success();
         }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LabsCourseManagement.WebUI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1/api/[controller]")]
     [ApiController]
     public class ProfessorsController : ControllerBase
     {

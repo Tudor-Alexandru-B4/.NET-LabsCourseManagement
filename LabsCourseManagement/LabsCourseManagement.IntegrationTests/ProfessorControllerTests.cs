@@ -8,7 +8,7 @@ namespace LabsCourseManagement.IntegrationTests
 {
     public class ProfessorControllerTests:BaseIntegrationTests
     {
-        private const string ApiUrl = "api/professors";
+        private const string ApiUrl = "v1/api/professors";
         [Fact]
         public async void When_CreatedProfessor_Then_ShouldReturnProfessorInTheGetRequest()
         {
