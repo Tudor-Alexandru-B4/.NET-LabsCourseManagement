@@ -14,9 +14,7 @@ namespace LabsCourseManagement.Application.Repositories
 
         public void Add(Course course)
         {
-            Console.WriteLine("WHY?!?!?!");
             context.Courses.Add(course);
-            Console.WriteLine("WHY?!?!?!");
         }
 
         public List<Course> GetAll()

@@ -1,12 +1,11 @@
 ﻿using LabsCourseManagement.Application.Repositories;
 using LabsCourseManagement.Domain;
 using LabsCourseManagement.WebUI.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabsCourseManagement.WebUI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1/api/[controller]")]
     [ApiController]
     public class AnnouncementsController : ControllerBase
     {
