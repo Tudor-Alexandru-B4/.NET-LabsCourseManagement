@@ -66,7 +66,7 @@ namespace LabsCourseManagement.Domain
         {
             if (!laboratories.Any())
             {
-                return Result.Failure("Laboratory cannot be null");
+                return Result.Failure("Laboratories cannot be null");
             }
 
             laboratories.ForEach(lab => Laboratorys.Add(lab));
@@ -77,7 +77,7 @@ namespace LabsCourseManagement.Domain
         {
             if (!students.Any())
             {
-                return Result.Failure("Student cannot be null");
+                return Result.Failure("Students cannot be null");
             }
 
             students.ForEach(student => CourseStudents.Add(student));
@@ -88,7 +88,7 @@ namespace LabsCourseManagement.Domain
         {
             if (!timesAndPlaces.Any())
             {
-                return Result.Failure("TimeAndPlace cannot be null");
+                return Result.Failure("TimesAndPlaces cannot be null");
             }
 
             timesAndPlaces.ForEach(timeAndPlace => CourseProgram.Add(timeAndPlace));
@@ -99,7 +99,7 @@ namespace LabsCourseManagement.Domain
         {
             if (!announcements.Any())
             {
-                return Result.Failure("Announcement cannot be null");
+                return Result.Failure("Announcements cannot be null");
             }
 
             announcements.ForEach(announcement => CourseAnnouncements.Add(announcement));
@@ -110,7 +110,7 @@ namespace LabsCourseManagement.Domain
         {
             if (!gradingInfos.Any())
             {
-                return Result.Failure("GradingInfo cannot be null");
+                return Result.Failure("GradingInfos cannot be null");
             }
 
             gradingInfos.ForEach(gradingInfo => CourseGradingInfo.Add(gradingInfo));
@@ -121,7 +121,7 @@ namespace LabsCourseManagement.Domain
         {
             if (!helpfulMaterials.Any())
             {
-                return Result.Failure("HelpfulMaterial cannot be null");
+                return Result.Failure("HelpfulMaterials cannot be null");
             }
 
             helpfulMaterials.ForEach(helpfulMaterial => HelpfulMaterials.Add(helpfulMaterial));
