@@ -1,16 +1,19 @@
-﻿using LabsCourseManagement.Infrastructure;
+using LabsCourseManagement.Infrastructure;
 using LabsCourseManagement.WebUI.Controllers;
 using Microsoft.AspNetCore.Mvc.Testing;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 
-namespace ShelterManagement.API.IntegrationTests
+namespace LabsCourseManagement.IntegrationTests
 {
     public class BaseIntegrationTests
     {
+        protected HttpClient HttpClientCourses { get; private set; }
         protected HttpClient HttpClientProfessor { get; private set; }
         protected BaseIntegrationTests()
         {
+            var applicationCourses = new WebApplicationFactory<CoursesController>().WithWebHostBuilder(builder => { });
+            HttpClientCourses = applicationCourses.CreateClient();
             var applicationProfessors = new WebApplicationFactory<ProfessorsController>().WithWebHostBuilder(builder => { });
             HttpClientProfessor = applicationProfessors.CreateClient();
             CleanDatabases();
