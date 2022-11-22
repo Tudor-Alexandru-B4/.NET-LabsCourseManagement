@@ -48,11 +48,11 @@ namespace LabsCourseManagement.UnitTests
         public void When_AddHelpfulMaterials_Then_ShouldAddHelpfulMaterialsToList()
         {
             //Arrange
-            List<MyString> helpfulMeterials = new List<MyString>()
+            List<InformationString> helpfulMeterials = new List<InformationString>()
             {
-                MyString.Create("HelpfulMaterial-1").Entity,
-                MyString.Create("HelpfulMaterial-2").Entity,
-                MyString.Create("HelpfulMaterial-3").Entity
+                InformationString.Create("HelpfulMaterial-1").Entity,
+                InformationString.Create("HelpfulMaterial-2").Entity,
+                InformationString.Create("HelpfulMaterial-3").Entity
             };
 
             //Act
@@ -70,7 +70,7 @@ namespace LabsCourseManagement.UnitTests
         public void When_AddHelpfulMaterialsEmpty_Then_ShouldReturnFailure()
         {
             //Arrange
-            List<MyString> helpfulMeterials = new List<MyString>();
+            List<InformationString> helpfulMeterials = new List<InformationString>();
 
             //Act
             var result = Course.Create(CourseName);

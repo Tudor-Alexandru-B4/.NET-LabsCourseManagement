@@ -218,6 +218,31 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                     b.ToTable("GradingInfos");
                 });
 
+            modelBuilder.Entity("LabsCourseManagement.Domain.InformationString", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ContactId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("String")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("MyStrings");
+                });
+
             modelBuilder.Entity("LabsCourseManagement.Domain.Laboratory", b =>
                 {
                     b.Property<Guid>("Id")
@@ -254,31 +279,6 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                     b.HasIndex("LaboratoryTimeAndPlaceId");
 
                     b.ToTable("Laboratories");
-                });
-
-            modelBuilder.Entity("LabsCourseManagement.Domain.MyString", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("ContactId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("CourseId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("String")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContactId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("MyStrings");
                 });
 
             modelBuilder.Entity("LabsCourseManagement.Domain.Professor", b =>
@@ -494,6 +494,17 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                     b.Navigation("TimeAndPlace");
                 });
 
+            modelBuilder.Entity("LabsCourseManagement.Domain.InformationString", b =>
+                {
+                    b.HasOne("LabsCourseManagement.Domain.Contact", null)
+                        .WithMany("EmailAddresses")
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("LabsCourseManagement.Domain.Course", null)
+                        .WithMany("HelpfulMaterials")
+                        .HasForeignKey("CourseId");
+                });
+
             modelBuilder.Entity("LabsCourseManagement.Domain.Laboratory", b =>
                 {
                     b.HasOne("LabsCourseManagement.Domain.Course", "Course")
@@ -527,17 +538,6 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                     b.Navigation("LaboratoryProfessor");
 
                     b.Navigation("LaboratoryTimeAndPlace");
-                });
-
-            modelBuilder.Entity("LabsCourseManagement.Domain.MyString", b =>
-                {
-                    b.HasOne("LabsCourseManagement.Domain.Contact", null)
-                        .WithMany("EmailAddresses")
-                        .HasForeignKey("ContactId");
-
-                    b.HasOne("LabsCourseManagement.Domain.Course", null)
-                        .WithMany("HelpfulMaterials")
-                        .HasForeignKey("CourseId");
                 });
 
             modelBuilder.Entity("LabsCourseManagement.Domain.Professor", b =>
