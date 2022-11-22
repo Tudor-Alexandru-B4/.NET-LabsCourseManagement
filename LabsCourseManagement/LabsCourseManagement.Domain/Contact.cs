@@ -6,7 +6,7 @@ namespace LabsCourseManagement.Domain
     {
         public Guid Id { get; private set; }
         public string? PhoneNumber { get; private set; }
-        public List<MyString> EmailAddresses { get; private set; }
+        public List<InformationString> EmailAddresses { get; private set; }
 
         public static Result<Contact> Create(string phoneNumber)
         {
@@ -14,12 +14,12 @@ namespace LabsCourseManagement.Domain
             {
                 Id = Guid.NewGuid(),
                 PhoneNumber = phoneNumber,
-                EmailAddresses = new List<MyString>()
+                EmailAddresses = new List<InformationString>()
             };
             return Result<Contact>.Success(contact);
         }
 
-        public Result AddEmailAddressToList(List<MyString> emailAddresses)
+        public Result AddEmailAddressToList(List<InformationString> emailAddresses)
         {
             if(emailAddresses == null)
             {

@@ -2,19 +2,19 @@
 
 namespace LabsCourseManagement.Domain
 {
-    public class MyString
+    public class InformationString
     {
         public Guid Id { get; private set; }
         public string String { get; private set; }
 
-        public static Result<MyString> Create(string String)
+        public static Result<InformationString> Create(string String)
         {
-            var myString = new MyString()
+            var myString = new InformationString()
             {
                 Id = Guid.NewGuid(),
                 String = String
             };
-            return Result<MyString>.Success(myString);
+            return Result<InformationString>.Success(myString);
         }
 
     }

@@ -12,7 +12,7 @@ namespace LabsCourseManagement.Application
         public DbSet<Grade> Grades { get; }
         public DbSet<GradingInfo> GradingInfos { get; }
         public DbSet<Laboratory> Laboratories { get; }
-        public DbSet<MyString> MyStrings { get; }
+        public DbSet<InformationString> MyStrings { get; }
         public DbSet<Professor> Professors { get; }
         public DbSet<Student> Students { get; }
         public DbSet<StudentGrades> StudentGrades { get; }

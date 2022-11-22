@@ -14,7 +14,7 @@ namespace LabsCourseManagement.Domain
         public List<TimeAndPlace> CourseProgram { get; private set; }
         public List<Announcement> CourseAnnouncements { get; private set; }
         public List<GradingInfo> CourseGradingInfo { get; private set; }
-        public List<MyString> HelpfulMaterials { get; private set; }
+        public List<InformationString> HelpfulMaterials { get; private set; }
 
         public static Result<Course> Create(string name)
         {
@@ -35,32 +35,21 @@ namespace LabsCourseManagement.Domain
                 CourseProgram = new List<TimeAndPlace>(),
                 CourseAnnouncements = new List<Announcement>(),
                 CourseGradingInfo = new List<GradingInfo>(),
-                HelpfulMaterials = new List<MyString>()
+                HelpfulMaterials = new List<InformationString>()
             };
             return Result<Course>.Success(course);
         }
 
-        //public Result AddCourseProfessor(Professor courseProfessor)
-        //{
-        //    if (courseProfessor == null)
-        //    {
-        //        return Result.Failure("Professor cannot be null");
-        //    }
+        public Result AddProfessors(List<Professor> professors)
+        {
+            if (!professors.Any())
+            {
+                return Result.Failure("Professors cannot be null");
+            }
 
-        //    CourseProfessors.Add(courseProfessor);
-        //    return Result.Success();
-        //}
-
-        //public Result AddLaboratoryProfessor(Professor laboratoryProfessor)
-        //{
-        //    if (laboratoryProfessor == null)
-        //    {
-        //        return Result.Failure("Professor cannot be null");
-        //    }
-
-        //    LaboratoryProfessors.Add(laboratoryProfessor);
-        //    return Result.Success();
-        //}
+            professors.ForEach(professor => Professors.Add(professor));
+            return Result.Success();
+        }
 
         public Result AddLaboratories(List<Laboratory> laboratories)
         {
@@ -117,7 +106,7 @@ namespace LabsCourseManagement.Domain
             return Result.Success();
         }
 
-        public Result AddHelpfulMaterials(List<MyString> helpfulMaterials)
+        public Result AddHelpfulMaterials(List<InformationString> helpfulMaterials)
         {
             if (!helpfulMaterials.Any())
             {
