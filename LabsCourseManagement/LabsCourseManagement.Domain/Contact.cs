@@ -5,7 +5,7 @@ namespace LabsCourseManagement.Domain
     public class Contact
     {
         public Guid Id { get; private set; }
-        public string? PhoneNumber { get; private set; }
+        public string PhoneNumber { get; private set; }
         public List<InformationString> EmailAddresses { get; private set; }
 
         public static Result<Contact> Create(string phoneNumber)
@@ -21,7 +21,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddEmailAddressToList(List<InformationString> emailAddresses)
         {
-            if(emailAddresses == null)
+            if (emailAddresses == null)
             {
                 return Result.Failure("Email cannot be null");
             }

@@ -26,7 +26,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         public IActionResult Get(Guid studentId)
         {
             var student = studentRepository.Get(studentId);
-            if(student == null)
+            if (student == null)
             {
                 return NotFound();
             }
@@ -34,9 +34,9 @@ namespace LabsCourseManagement.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateStudentDto studentDto )
+        public IActionResult Create([FromBody] CreateStudentDto studentDto)
         {
-            var student = Student.Create(studentDto.Name, studentDto.Surname, studentDto.Group, studentDto.Year, studentDto.RegistrationNumber);
+            var student = Student.Create(studentDto.Name, studentDto.Surname, studentDto.Group, studentDto.Year, studentDto.RegistrationNumber, studentDto.PhoneNumber);
             if (student.IsSuccess)
             {
                 studentRepository.Add(student.Entity);
