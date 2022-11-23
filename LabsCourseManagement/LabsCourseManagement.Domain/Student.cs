@@ -16,11 +16,11 @@ namespace LabsCourseManagement.Domain
         public List<Course> Courses { get; private set; }
         public List<Laboratory> Laboratories { get; private set; }
 
-        public static Result<Student> Create(string name, string surname, string group, int year, string registrationNumber)
+        public static Result<Student> Create(string name, string surname, string group, int year, string registrationNumber, string phoneNumber)
         {
-            if (name == null || surname == null || group == null || year == null || registrationNumber == null)
+            if (name == null || surname == null || group == null || year <= 0 || registrationNumber == null || phoneNumber == null)
             {
-                return Result<Student>.Failure("The field cannot be null");
+                return Result<Student>.Failure("The field cannot be null / year cannot be less than 1");
             }
 
             var student = new Student
@@ -28,7 +28,7 @@ namespace LabsCourseManagement.Domain
                 StudentId = Guid.NewGuid(),
                 Name = name,
                 Surname = surname,
-                ContactInfo = new Contact(),
+                ContactInfo = Contact.Create(phoneNumber).Entity,
                 Group = group,
                 Year = year,
                 IsActive = true,
@@ -38,6 +38,28 @@ namespace LabsCourseManagement.Domain
             };
 
             return Result<Student>.Success(student);
+        }
+
+        public Result AddCourse(List<Course> courses)
+        {
+            if (!courses.Any())
+            {
+                return Result.Failure("Courses cannot be null");
+            }
+
+            courses.ForEach(course => Courses.Add(course));
+            return Result.Success();
+        }
+
+        public Result AddLaboratories(List<Laboratory> laboratories)
+        {
+            if (!laboratories.Any())
+            {
+                return Result.Failure("Laboratories cannot be null");
+            }
+
+            laboratories.ForEach(lab => Laboratories.Add(lab));
+            return Result.Success();
         }
     }
 
