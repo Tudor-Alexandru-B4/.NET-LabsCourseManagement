@@ -15,7 +15,7 @@ namespace LabsCourseManagement.Domain
         public List<Announcement> LaboratoryAnnouncements { get; private set; }
         public List<GradingInfo> LaboratoryGradingInfo { get; private set; }
 
-        public static Result<Laboratory> Create(string name, Guid courseId)
+        public static Result<Laboratory> Create(string name, Guid courseId, Professor laboratoryProfessor, string classroom)
         {
             if (name == null)
             {
@@ -33,14 +33,47 @@ namespace LabsCourseManagement.Domain
                 Name = name,
                 LaboratoryCatalog = Catalog.Create().Entity,
                 IsActive = true,
-                LaboratoryProfessor = Professor.Create("FirstName", "Surname").Entity,
+                LaboratoryProfessor = laboratoryProfessor,
                 LaboratoryStudents = new List<Student>(),
-                LaboratoryTimeAndPlace = null,
+                LaboratoryTimeAndPlace = TimeAndPlace.Create(classroom).Entity,
                 LaboratoryAnnouncements = new List<Announcement>(),
                 LaboratoryGradingInfo = new List<GradingInfo>(),
             };
 
             return Result<Laboratory>.Success(laboratory);
+        }
+
+        public Result AddStudents(List<Student> students)
+        {
+            if (!students.Any())
+            {
+                return Result.Failure("Students cannot be null");
+            }
+
+            students.ForEach(student => LaboratoryStudents.Add(student));
+            return Result.Success();
+        }
+
+        public Result AddLaboratoryAnnouncements(List<Announcement> announcements)
+        {
+            if (!announcements.Any())
+            {
+                return Result.Failure("Announcements cannot be null");
+            }
+
+            announcements.ForEach(announcement => LaboratoryAnnouncements.Add(announcement));
+            return Result.Success();
+        }
+
+        public Result AddLaboratoryGradingInfos(List<GradingInfo> gradingInfos)
+        {
+            if (!gradingInfos.Any())
+            {
+                return Result.Failure("GradingInfos cannot be null");
+            }
+
+            gradingInfos.ForEach(gradingInfo => LaboratoryGradingInfo.Add(gradingInfo));
+            return Result.Success();
         }
     }
 }
