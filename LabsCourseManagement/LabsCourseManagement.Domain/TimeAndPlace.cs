@@ -8,12 +8,12 @@ namespace LabsCourseManagement.Domain
         public DateTime DateAndTime { get; private set; }
         public string Classroom { get; private set; }
 
-        public static Result<TimeAndPlace> Create(string classroom)
+        public static Result<TimeAndPlace> Create(string classroom, DateTime dateTime)
         {
             var timeAndPlace = new TimeAndPlace
             {
                 Id = Guid.NewGuid(),
-                DateAndTime = DateTime.Now,
+                DateAndTime = dateTime,
                 Classroom = classroom
             };
             return Result<TimeAndPlace>.Success(timeAndPlace);

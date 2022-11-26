@@ -11,11 +11,17 @@ namespace LabsCourseManagement.WebUI.Controllers
     {
         private readonly ILaboratoryRepository laboratoryRepository;
         private readonly ICourseRepository courseRepository;
+        private readonly IProfessorRepository professorRepository;
+        private readonly ITimeAndPlaceRepository timeAndPlaceRepository;
 
-        public LaboratoriesController(ILaboratoryRepository laboratoryRepository, ICourseRepository courseRepository)
+        public LaboratoriesController(ILaboratoryRepository laboratoryRepository, 
+            ICourseRepository courseRepository, IProfessorRepository professorRepository,
+            ITimeAndPlaceRepository timeAndPlaceRepository)
         {
             this.laboratoryRepository = laboratoryRepository;
             this.courseRepository = courseRepository;
+            this.professorRepository = professorRepository;
+            this.timeAndPlaceRepository = timeAndPlaceRepository;
         }
 
         [HttpGet]
@@ -27,12 +33,12 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpGet("{laboratoryId:guid}")]
         public IActionResult Get(Guid laboratoryId)
         {
-            var course = laboratoryRepository.Get(laboratoryId);
-            if (course == null)
+            var laboratory = laboratoryRepository.Get(laboratoryId);
+            if (laboratory == null)
             {
                 return NotFound();
             }
-            return Ok(course);
+            return Ok(laboratory);
         }
 
         [HttpPost]
@@ -43,7 +49,12 @@ namespace LabsCourseManagement.WebUI.Controllers
                 return NotFound();
             }
 
-            var laboratory = Laboratory.Create(laboratoryDto.Name, laboratoryDto.CourseId);
+            var laboratoryProfessor = professorRepository.GetById(laboratoryDto.ProfessorId);
+            var course = courseRepository.Get(laboratoryDto.CourseId);
+            var timeAndPlace = timeAndPlaceRepository.Get(laboratoryDto.TimeAndPlaceId);
+
+            var laboratory = Laboratory.Create(laboratoryDto.Name, course, 
+                laboratoryProfessor, timeAndPlace);
 
             if (laboratory.IsSuccess)
             {

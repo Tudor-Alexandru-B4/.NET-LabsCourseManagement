@@ -15,27 +15,24 @@ namespace LabsCourseManagement.Domain
         public List<Announcement> LaboratoryAnnouncements { get; private set; }
         public List<GradingInfo> LaboratoryGradingInfo { get; private set; }
 
-        public static Result<Laboratory> Create(string name, Guid courseId, Professor laboratoryProfessor, string classroom)
+        public static Result<Laboratory> Create(string name, Course course, 
+            Professor laboratoryProfessor, TimeAndPlace timeAndPlace)
         {
             if (name == null)
             {
                 return Result<Laboratory>.Failure("Name cannot be null");
             }
 
-            if (courseId == null)
-            {
-                return Result<Laboratory>.Failure("Course Id cannot be null");
-            }
-
             var laboratory = new Laboratory
             {
                 Id = Guid.NewGuid(),
                 Name = name,
+                Course = course,
                 LaboratoryCatalog = Catalog.Create().Entity,
                 IsActive = true,
                 LaboratoryProfessor = laboratoryProfessor,
                 LaboratoryStudents = new List<Student>(),
-                LaboratoryTimeAndPlace = TimeAndPlace.Create(classroom).Entity,
+                LaboratoryTimeAndPlace = timeAndPlace,
                 LaboratoryAnnouncements = new List<Announcement>(),
                 LaboratoryGradingInfo = new List<GradingInfo>(),
             };

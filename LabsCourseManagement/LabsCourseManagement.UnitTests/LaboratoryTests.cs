@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain;
+using System;
 
 namespace LabsCourseManagement.UnitTests
 {
@@ -11,14 +12,21 @@ namespace LabsCourseManagement.UnitTests
         {
             //Arrange
             var course = new Course();
+            var laboratoryProfessor = new Professor();
+            var timeAndPlace = new TimeAndPlace();
 
             //Act
-            var result = Laboratory.Create(LaboratoryName, course.Id);
+
+            //Create(string name, Course course, 
+            //Professor laboratoryProfessor, timeandplace)
+
+            var result = Laboratory.Create(LaboratoryName, course.Id, laboratoryProfessor, timeandplace);
 
             //Assert
             result.IsSuccess.Should().BeTrue();
             result.Entity.Should().NotBeNull();
             result.Entity.Id.Should().NotBeEmpty();
+            result.Entity.Course.Should().NotBeNull();
             result.Entity.Name.Should().Be(LaboratoryName);
             result.Entity.LaboratoryCatalog.Should().NotBeNull();
             result.Entity.IsActive.Should().BeTrue();
