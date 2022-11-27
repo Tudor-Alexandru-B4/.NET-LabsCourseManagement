@@ -11,16 +11,13 @@ namespace LabsCourseManagement.UnitTests
         public void When_CreateLaboratory_Then_ShouldReturnLaboratory()
         {
             //Arrange
-            var course = new Course();
-            var laboratoryProfessor = new Professor();
-            var timeAndPlace = new TimeAndPlace();
+            var course = Course.Create("Test Course").Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname").Entity;
+            var timeAndPlace = TimeAndPlace.Create("C408", DateTime.Parse("1 January 2022")).Entity;
 
             //Act
 
-            //Create(string name, Course course, 
-            //Professor laboratoryProfessor, timeandplace)
-
-            var result = Laboratory.Create(LaboratoryName, course.Id, laboratoryProfessor, timeandplace);
+            var result = Laboratory.Create(LaboratoryName, course, laboratoryProfessor, timeAndPlace);
 
             //Assert
             result.IsSuccess.Should().BeTrue();
@@ -30,9 +27,9 @@ namespace LabsCourseManagement.UnitTests
             result.Entity.Name.Should().Be(LaboratoryName);
             result.Entity.LaboratoryCatalog.Should().NotBeNull();
             result.Entity.IsActive.Should().BeTrue();
-            result.Entity.LaboratoryProfessor.Should().BeNull();
+            result.Entity.LaboratoryProfessor.Should().NotBeNull();
             result.Entity.LaboratoryStudents.Should().BeEmpty();
-            result.Entity.LaboratoryTimeAndPlace.Should().BeNull();
+            result.Entity.LaboratoryTimeAndPlace.Should().NotBeNull();
             result.Entity.LaboratoryAnnouncements.Should().BeEmpty();
             result.Entity.LaboratoryGradingInfo.Should().BeEmpty();
         }
@@ -41,10 +38,13 @@ namespace LabsCourseManagement.UnitTests
         public void When_CreateLaboratoryWithNullName_Then_ShouldReturnFailure()
         {
             //Arrange
-            var course = new Course();
+            var course = Course.Create("Test Course").Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname").Entity;
+            var timeAndPlace = TimeAndPlace.Create("C408", DateTime.Parse("1 January 2022")).Entity;
 
             //Act
-            var result = Laboratory.Create(null, course.Id);
+
+            var result = Laboratory.Create(null, course, laboratoryProfessor, timeAndPlace);
 
             //Assert
             result.IsFailure.Should().BeTrue();
