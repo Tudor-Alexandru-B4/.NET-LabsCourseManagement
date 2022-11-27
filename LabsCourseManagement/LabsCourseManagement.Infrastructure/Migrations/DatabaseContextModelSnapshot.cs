@@ -34,15 +34,15 @@ namespace LabsCourseManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("CourseStudent", b =>
                 {
-                    b.Property<Guid>("CourseStudentsStudentId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("CoursesId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("CourseStudentsStudentId", "CoursesId");
+                    b.Property<Guid>("StudentsStudentId")
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("CoursesId");
+                    b.HasKey("CoursesId", "StudentsStudentId");
+
+                    b.HasIndex("StudentsStudentId");
 
                     b.ToTable("CourseStudent");
                 });
@@ -410,15 +410,15 @@ namespace LabsCourseManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("CourseStudent", b =>
                 {
-                    b.HasOne("LabsCourseManagement.Domain.Student", null)
-                        .WithMany()
-                        .HasForeignKey("CourseStudentsStudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("LabsCourseManagement.Domain.Course", null)
                         .WithMany()
                         .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LabsCourseManagement.Domain.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsStudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -508,7 +508,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
             modelBuilder.Entity("LabsCourseManagement.Domain.Laboratory", b =>
                 {
                     b.HasOne("LabsCourseManagement.Domain.Course", "Course")
-                        .WithMany("Laboratorys")
+                        .WithMany("Laboratories")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -612,7 +612,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
 
                     b.Navigation("HelpfulMaterials");
 
-                    b.Navigation("Laboratorys");
+                    b.Navigation("Laboratories");
                 });
 
             modelBuilder.Entity("LabsCourseManagement.Domain.Laboratory", b =>
