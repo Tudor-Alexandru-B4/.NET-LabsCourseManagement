@@ -9,7 +9,7 @@ namespace LabsCourseManagement.Domain
         public List<Grade> Grades { get; private set; }
         public Grade FinalGrade { get; private set; }
 
-        public Result<StudentGrades> Create(Student student)
+        public static Result<StudentGrades> Create(Student student)
         {
             if (student == null)
             {

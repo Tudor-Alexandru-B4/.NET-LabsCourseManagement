@@ -13,15 +13,17 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly ICourseRepository courseRepository;
         private readonly IProfessorRepository professorRepository;
         private readonly ITimeAndPlaceRepository timeAndPlaceRepository;
+        private readonly IStudentRepository studentRepository;
 
         public LaboratoriesController(ILaboratoryRepository laboratoryRepository, 
             ICourseRepository courseRepository, IProfessorRepository professorRepository,
-            ITimeAndPlaceRepository timeAndPlaceRepository)
+            ITimeAndPlaceRepository timeAndPlaceRepository, IStudentRepository studentRepository)
         {
             this.laboratoryRepository = laboratoryRepository;
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
             this.timeAndPlaceRepository = timeAndPlaceRepository;
+            this.studentRepository = studentRepository;
         }
 
         [HttpGet]
@@ -65,17 +67,42 @@ namespace LabsCourseManagement.WebUI.Controllers
             return BadRequest(laboratory.Error);
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromBody] Guid courseId)
+        [HttpDelete("{laboratoryId:guid}")]
+        public IActionResult Delete(Guid laboratoryId)
         {
-            var course = laboratoryRepository.Get(courseId);
-            if (course == null)
+            var laboratory = laboratoryRepository.Get(laboratoryId);
+            if (laboratory == null)
             {
                 return NotFound();
             }
-            laboratoryRepository.Delete(course);
+            laboratoryRepository.Delete(laboratory);
             laboratoryRepository.Save();
             return NoContent();
         }
+
+        [HttpPost("{laboratoryId:guid}/addStudents")]
+        public IActionResult AddStudents(Guid laboratoryId, [FromBody] List<Guid> studentsIds)
+        {
+            foreach (Guid studentId in studentsIds)
+            {
+                if (studentRepository.Get(studentId) == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            var students = studentsIds.Select(studentRepository.Get).ToList();
+
+            var laboratory = laboratoryRepository.Get(laboratoryId);
+            var addStudentsResult = laboratory.AddStudents(students);
+
+            if (addStudentsResult.IsSuccess)
+            {
+                laboratoryRepository.Save();
+                return NoContent();
+            }
+            return BadRequest(addStudentsResult.Error);
+        }
+
     }
 }

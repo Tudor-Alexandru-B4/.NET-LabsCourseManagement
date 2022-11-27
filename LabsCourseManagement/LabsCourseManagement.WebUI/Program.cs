@@ -21,6 +21,7 @@ builder.Services.AddScoped<ILaboratoryRepository, LaboratoryRepository>();
 builder.Services.AddScoped<IStudentGradesRepository, StudentGradesRepository>();
 builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ITimeAndPlaceRepository, TimeAndPlaceRepository>();
 
 var app = builder.Build();
 
