@@ -170,12 +170,12 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 name: "CourseStudent",
                 columns: table => new
                 {
-                    CourseStudentsStudentId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CoursesId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    CoursesId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StudentsStudentId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseStudent", x => new { x.CourseStudentsStudentId, x.CoursesId });
+                    table.PrimaryKey("PK_CourseStudent", x => new { x.CoursesId, x.StudentsStudentId });
                     table.ForeignKey(
                         name: "FK_CourseStudent_Courses_CoursesId",
                         column: x => x.CoursesId,
@@ -183,8 +183,8 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseStudent_Students_CourseStudentsStudentId",
-                        column: x => x.CourseStudentsStudentId,
+                        name: "FK_CourseStudent_Students_StudentsStudentId",
+                        column: x => x.StudentsStudentId,
                         principalTable: "Students",
                         principalColumn: "StudentId",
                         onDelete: ReferentialAction.Cascade);
@@ -396,9 +396,9 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 column: "CourseCatalogId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseStudent_CoursesId",
+                name: "IX_CourseStudent_StudentsStudentId",
                 table: "CourseStudent",
-                column: "CoursesId");
+                column: "StudentsStudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Grades_StudentGradesId",
