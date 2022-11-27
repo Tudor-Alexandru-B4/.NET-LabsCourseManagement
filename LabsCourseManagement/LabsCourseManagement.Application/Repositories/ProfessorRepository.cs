@@ -1,5 +1,6 @@
 ﻿using LabsCourseManagement.Application;
 using LabsCourseManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LabsCourseManagement.Application.Repositories
 {
@@ -21,11 +22,11 @@ namespace LabsCourseManagement.Application.Repositories
         }
         public Professor GetById(Guid id)
         {
-            return context.Professors.Find(id);
+            return context.Professors.Include(c => c.Courses).Include(l=>l.Laboratories).FirstOrDefault(p => p.Id == id);
         }
         public List<Professor> GetAll()
         {
-            return context.Professors.ToList();
+            return context.Professors.Include(c =>c.Courses).ToList();
         }
         public void Save()
         {
