@@ -23,8 +23,8 @@ namespace LabsCourseManagement.UnitTests
             result.Entity.CourseCatalog.Should().NotBeNull();
             result.Entity.IsActive.Should().BeTrue();
             result.Entity.Professors.Should().BeEmpty();
-            result.Entity.Laboratories.Should().BeEmpty();
-            result.Entity.Students.Should().BeEmpty();
+            result.Entity.Laboratorys.Should().BeEmpty();
+            result.Entity.CourseStudents.Should().BeEmpty();
             result.Entity.CourseProgram.Should().BeEmpty();
             result.Entity.CourseAnnouncements.Should().BeEmpty();
             result.Entity.CourseGradingInfo.Should().BeEmpty();
