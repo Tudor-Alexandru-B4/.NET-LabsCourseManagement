@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LabsCourseManagement.Application.Repositories
 {
@@ -22,12 +23,15 @@ namespace LabsCourseManagement.Application.Repositories
 
         public List<Student> GetAll()
         {
-            return context.Students.ToList();
+            return context.Students.Include(c => c.Courses)
+                .Include(l => l.Laboratories).ToList();
         }
 
         public Student Get(Guid id)
         {
-            return context.Students.FirstOrDefault(s => s.StudentId == id);
+            return context.Students.Include(c => c.Courses)
+                .Include(l => l.Laboratories)
+                .FirstOrDefault(s => s.StudentId == id);
         }
 
         public void Save()
