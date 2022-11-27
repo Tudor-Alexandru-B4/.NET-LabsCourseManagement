@@ -8,8 +8,8 @@ namespace LabsCourseManagement.IntegrationTests
 {
     public class BaseIntegrationTests
     {
-        protected HttpClient HttpClientProfessor { get; private set; }
         protected HttpClient HttpClientCourses { get; private set; }
+        protected HttpClient HttpClientProfessor { get; private set; }
         protected BaseIntegrationTests()
         {
             var applicationCourses = new WebApplicationFactory<CoursesController>().WithWebHostBuilder(builder => { });
@@ -19,7 +19,7 @@ namespace LabsCourseManagement.IntegrationTests
             CleanDatabases();
         }
 
-        protected void CleanDatabases()
+        private void CleanDatabases()
         {
             var databaseContext = new DatabaseContext();
 

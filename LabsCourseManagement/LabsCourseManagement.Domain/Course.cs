@@ -9,8 +9,8 @@ namespace LabsCourseManagement.Domain
         public Catalog CourseCatalog { get; private set; }
         public bool IsActive { get; private set; }
         public List<Professor> Professors { get; private set; }
-        public List<Laboratory> Laboratories { get; private set; }
-        public List<Student> Students { get; private set; }
+        public List<Laboratory> Laboratorys { get; private set; }
+        public List<Student> CourseStudents { get; private set; }
         public List<TimeAndPlace> CourseProgram { get; private set; }
         public List<Announcement> CourseAnnouncements { get; private set; }
         public List<GradingInfo> CourseGradingInfo { get; private set; }
@@ -30,8 +30,8 @@ namespace LabsCourseManagement.Domain
                 CourseCatalog = Catalog.Create().Entity,
                 IsActive = true,
                 Professors = new List<Professor>(),
-                Laboratories = new List<Laboratory>(),
-                Students = new List<Student>(),
+                Laboratorys = new List<Laboratory>(),
+                CourseStudents = new List<Student>(),
                 CourseProgram = new List<TimeAndPlace>(),
                 CourseAnnouncements = new List<Announcement>(),
                 CourseGradingInfo = new List<GradingInfo>(),
@@ -58,7 +58,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Laboratories cannot be null");
             }
 
-            laboratories.ForEach(lab => Laboratories.Add(lab));
+            laboratories.ForEach(lab => Laboratorys.Add(lab));
             return Result.Success();
         }
 
@@ -69,7 +69,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Students cannot be null");
             }
 
-            students.ForEach(student => Students.Add(student));
+            students.ForEach(student => CourseStudents.Add(student));
             return Result.Success();
         }
         
