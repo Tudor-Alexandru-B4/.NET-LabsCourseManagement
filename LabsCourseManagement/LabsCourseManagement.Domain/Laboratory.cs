@@ -15,24 +15,27 @@ namespace LabsCourseManagement.Domain
         public List<Announcement> LaboratoryAnnouncements { get; private set; }
         public List<GradingInfo> LaboratoryGradingInfo { get; private set; }
 
-        public static Result<Laboratory> Create(string name, Course course, 
-            Professor laboratoryProfessor, TimeAndPlace timeAndPlace)
+        public static Result<Laboratory> Create(string name, Guid courseId, Professor laboratoryProfessor, string classroom)
         {
             if (name == null)
             {
                 return Result<Laboratory>.Failure("Name cannot be null");
             }
 
+            if (courseId == null)
+            {
+                return Result<Laboratory>.Failure("Course Id cannot be null");
+            }
+
             var laboratory = new Laboratory
             {
                 Id = Guid.NewGuid(),
                 Name = name,
-                Course = course,
                 LaboratoryCatalog = Catalog.Create().Entity,
                 IsActive = true,
                 LaboratoryProfessor = laboratoryProfessor,
                 LaboratoryStudents = new List<Student>(),
-                LaboratoryTimeAndPlace = timeAndPlace,
+                LaboratoryTimeAndPlace = TimeAndPlace.Create(classroom).Entity,
                 LaboratoryAnnouncements = new List<Announcement>(),
                 LaboratoryGradingInfo = new List<GradingInfo>(),
             };
@@ -42,9 +45,9 @@ namespace LabsCourseManagement.Domain
 
         public Result AddStudents(List<Student> students)
         {
-            if (students.Any(student => student == null))
+            if (!students.Any())
             {
-                return Result.Failure("Cannot add null students");
+                return Result.Failure("Students cannot be null");
             }
 
             students.ForEach(student => LaboratoryStudents.Add(student));
@@ -53,9 +56,9 @@ namespace LabsCourseManagement.Domain
 
         public Result AddLaboratoryAnnouncements(List<Announcement> announcements)
         {
-            if (announcements.Any(announcement => announcement == null))
+            if (!announcements.Any())
             {
-                return Result.Failure("Cannot add null announcements");
+                return Result.Failure("Announcements cannot be null");
             }
 
             announcements.ForEach(announcement => LaboratoryAnnouncements.Add(announcement));
@@ -64,9 +67,9 @@ namespace LabsCourseManagement.Domain
 
         public Result AddLaboratoryGradingInfos(List<GradingInfo> gradingInfos)
         {
-            if (gradingInfos.Any(info => info == null))
+            if (!gradingInfos.Any())
             {
-                return Result.Failure("Cannot add null grading infos");
+                return Result.Failure("GradingInfos cannot be null");
             }
 
             gradingInfos.ForEach(gradingInfo => LaboratoryGradingInfo.Add(gradingInfo));
