@@ -1,6 +1,7 @@
 using LabsCourseManagement.Application;
 using LabsCourseManagement.Application.Repositories;
 using LabsCourseManagement.Infrastructure;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,9 @@ builder.Services.AddScoped<ILaboratoryRepository, LaboratoryRepository>();
 builder.Services.AddScoped<IStudentGradesRepository, StudentGradesRepository>();
 builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-builder.Services.AddScoped<ITimeAndPlaceRepository, TimeAndPlaceRepository>();
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
 

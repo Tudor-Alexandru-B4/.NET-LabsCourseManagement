@@ -10,12 +10,21 @@ namespace LabsCourseManagement.Domain
         public ExaminationType GradeType { get; private set; }
         public string Mentions { get; private set; }
 
-        public static Result<Grade> Create(DateTime gradingDate, double mark, ExaminationType type, string mentions)
+        public Result<Grade> Create(DateTime gradingDate, double mark, ExaminationType type, string mentions)
         {
+            if (mark == null)
+            {
+                return Result<Grade>.Failure("The mark cannot be null");
+            }
 
             if (mark <= 0 || mark > 10)
             {
                 return Result<Grade>.Failure("The mark has to be a value greater than 0 and lower or equal to 10");
+            }
+
+            if (gradingDate == null)
+            {
+                return Result<Grade>.Failure("The grade's date cannot be null");
             }
 
             var grade = new Grade

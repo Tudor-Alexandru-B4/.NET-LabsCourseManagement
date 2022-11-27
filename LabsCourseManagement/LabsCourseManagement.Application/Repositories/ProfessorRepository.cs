@@ -1,5 +1,6 @@
 ﻿using LabsCourseManagement.Application;
 using LabsCourseManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LabsCourseManagement.Application.Repositories
 {
