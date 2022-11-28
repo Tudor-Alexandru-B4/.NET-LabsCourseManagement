@@ -20,7 +20,7 @@
     <ProjectReference Include="..\LabsCourseManagement.Shared\LabsCourseManagement.Shared.csproj" />
   </ItemGroup>
 
-      <ItemGroup>
+      <!--<ItemGroup>
         <UpToDateCheckInput Remove="Pages\StudentsOverview.razor" />
       </ItemGroup>
 
@@ -30,6 +30,6 @@
 
       <ItemGroup>
         <None Include="Pages\StudentsOverview.razor" />
-      </ItemGroup>
+      </ItemGroup>-->
 
 </Project>

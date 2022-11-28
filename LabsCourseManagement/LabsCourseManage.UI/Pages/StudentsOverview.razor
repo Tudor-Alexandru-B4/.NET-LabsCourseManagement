@@ -1,7 +1,8 @@
-﻿@*@page "/StudentsOverview"
+﻿@page "/studentsoverview"
+
 
 <h2>Students Overview</h2>
-@if (Students == null)
+@if(Students == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -9,24 +10,19 @@ else
 {
     <tabel class="table table-light">
         <thead class="table-primary">
-        <th>Person Id</th>
-        <th>Person Name</th>
-        <th>Person Surname</th>
-        <th>Person Age</th>
-        <th>Person Gender</th>
+            <th>Student Id</th>
+            <th>Student Name</th>
+            <th>Student Surname</th>
         </thead>
         <tbody>
-            @foreach (var person in Students)
+            @foreach (var student in Students)
             {
                 <tr>
-                    <td>@person.Id</td>
-                    <td>@person.Name</td>
-                    <td>@person.Surname</td>
-                    <td>@person.Age</td>
-                    <td>@person.Gender</td>
+                    <td>@student.StudentId</td>
+                    <td>@student.Name</td>
+                    <td>@student.Surname</td>
                 </tr>
             }
         </tbody>
     </tabel>
 }
-*@
