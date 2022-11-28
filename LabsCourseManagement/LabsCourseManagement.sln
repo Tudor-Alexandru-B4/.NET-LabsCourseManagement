@@ -33,9 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsCourseManagement.Integr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screens", "Screens", "{CFA05B61-6395-4942-96A4-AECCA9644ED7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabsCourseManage.UI", "LabsCourseManage.UI\LabsCourseManage.UI.csproj", "{0F87E5AB-A246-4236-AC47-00D3EA8CD486}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsCourseManage.UI", "LabsCourseManage.UI\LabsCourseManage.UI.csproj", "{0F87E5AB-A246-4236-AC47-00D3EA8CD486}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabsCourseManagement.Shared", "LabsCourseManagement.Shared\LabsCourseManagement.Shared.csproj", "{20261A29-5FB1-4C79-8D7B-B3AE978A0208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsCourseManagement.Shared", "LabsCourseManagement.Shared\LabsCourseManagement.Shared.csproj", "{20261A29-5FB1-4C79-8D7B-B3AE978A0208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

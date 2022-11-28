@@ -1,0 +1,33 @@
+﻿@page "/ProfessorOverview"
+
+<h3>ProfessorsOverview</h3>
+
+@if (Professors == null)
+{
+	<p><em>Loading...</em></p>
+
+}
+else
+{
+
+    <tabel class="table table-light">
+        <thead class="table-primary">
+        <th>Professor Id</th>
+        <th>Professor Name</th>
+        <th>Professor Surname</th>
+        </thead>
+        <tbody>
+            @foreach (var professor in Professors)
+            {
+                <tr>
+                    <td>@professor.Id</td>
+                    <td>@professor.Name</td>
+                    <td>@professor.Surname</td>
+                </tr>
+            }
+        </tbody>
+    </tabel>
+}
+@code {
+
+}
