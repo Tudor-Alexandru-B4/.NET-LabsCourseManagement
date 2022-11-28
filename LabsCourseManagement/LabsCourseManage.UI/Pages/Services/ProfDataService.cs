@@ -9,7 +9,7 @@ namespace LabsCourseManage.UI.Pages.Services
 {
     public class ProfDataService : IProfDataService
     {
-        private const string apiUrl = "http://localhost:5081/v1/api/professors";
+        private const string apiUrl = "http://localhost:7200/v1/api/professors";
         private readonly HttpClient httpClient;
 
         public ProfDataService(HttpClient httpClient)
