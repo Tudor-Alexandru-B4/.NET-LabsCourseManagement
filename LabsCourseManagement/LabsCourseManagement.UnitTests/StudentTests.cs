@@ -138,8 +138,8 @@ namespace LabsCourseManagement.UnitTests
             string professorSurname, string classroom, string dateTime)
         {
             var course = Course.Create(courseName).Entity;
-            var laboratoryProfessor = Professor.Create(professorName, professorSurname).Entity;
-            var timeAndPlace = TimeAndPlace.Create(classroom, DateTime.Parse(dateTime)).Entity;
+            var laboratoryProfessor = Professor.Create(professorName, professorSurname, "0755116783").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse(dateTime), classroom).Entity;
             var laboratory = Laboratory.Create(laboratoryName, course, laboratoryProfessor, timeAndPlace).Entity;
             return laboratory;
         }
