@@ -13,8 +13,8 @@ namespace LabsCourseManagement.UnitTests
         {
             //Arrange
             var course = Course.Create("Test Course").Entity;
-            var laboratoryProfessor = Professor.Create("Name", "Surname").Entity;
-            var timeAndPlace = TimeAndPlace.Create("C408", DateTime.Parse("1 January 2022")).Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname", "0711445039").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse("1 January 2022"), "C408").Entity;
 
             //Act
             var result = Laboratory.Create(LaboratoryName, course, laboratoryProfessor, timeAndPlace);
@@ -39,8 +39,8 @@ namespace LabsCourseManagement.UnitTests
         {
             //Arrange
             var course = Course.Create("Test Course").Entity;
-            var laboratoryProfessor = Professor.Create("Name", "Surname").Entity;
-            var timeAndPlace = TimeAndPlace.Create("C408", DateTime.Parse("1 January 2022")).Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname", "0733448769").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse("1 January 2022"), "C408").Entity;
 
             //Act
             var result = Laboratory.Create(null, course, laboratoryProfessor, timeAndPlace);
@@ -150,8 +150,8 @@ namespace LabsCourseManagement.UnitTests
         private Laboratory CreateLaboratorySUT()
         {
             var course = Course.Create("Test Course").Entity;
-            var laboratoryProfessor = Professor.Create("Name", "Surname").Entity;
-            var timeAndPlace = TimeAndPlace.Create("C408", DateTime.Parse("1 January 2022")).Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname", "0755776138").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse("1 January 2022"), "C408").Entity;
             var laboratory = Laboratory.Create(LaboratoryName, course, laboratoryProfessor, timeAndPlace).Entity;
             return laboratory;
         }
@@ -178,9 +178,9 @@ namespace LabsCourseManagement.UnitTests
 
         private List<GradingInfo> CreateGradingInfosSUT()
         {
-            var gradingInfo1 = GradingInfo.Create(ExaminationType.Test, 5, 10, "This is a mandatory test!").Entity;
-            var gradingInfo2 = GradingInfo.Create(ExaminationType.Project, 7, 10, "Choose your project from this list: link").Entity;
-            var gradingInfo3 = GradingInfo.Create(ExaminationType.MidTermExam, 2.5, 10, "The midterm examination will be on a Saturday.").Entity;
+            var gradingInfo1 = GradingInfo.Create(ExaminationType.Test, 5, 10, true, "This is a mandatory test!", TimeAndPlace.Create(DateTime.Now, "C2").Entity).Entity;
+            var gradingInfo2 = GradingInfo.Create(ExaminationType.Project, 7, 10, false, "Choose your project from this list: link", TimeAndPlace.Create(DateTime.Now, "C3").Entity).Entity;
+            var gradingInfo3 = GradingInfo.Create(ExaminationType.MidTermExam, 2.5, 10, true, "The midterm examination will be on a Saturday.", TimeAndPlace.Create(DateTime.Now, "C112").Entity).Entity;
 
             var gradingInfos = new List<GradingInfo> { gradingInfo1, gradingInfo2, gradingInfo3 };
             return gradingInfos;

@@ -117,6 +117,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -287,7 +288,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ContactInfoId")
+                    b.Property<Guid?>("ContactInfoId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")
@@ -353,7 +354,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                     b.Property<Guid?>("CatalogId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("FinalGradeId")
+                    b.Property<Guid?>("FinalGradeId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("StudentId")
@@ -544,9 +545,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 {
                     b.HasOne("LabsCourseManagement.Domain.Contact", "ContactInfo")
                         .WithMany()
-                        .HasForeignKey("ContactInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContactInfoId");
 
                     b.Navigation("ContactInfo");
                 });
@@ -570,9 +569,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
 
                     b.HasOne("LabsCourseManagement.Domain.Grade", "FinalGrade")
                         .WithMany()
-                        .HasForeignKey("FinalGradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FinalGradeId");
 
                     b.HasOne("LabsCourseManagement.Domain.Student", "Student")
                         .WithMany()

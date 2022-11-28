@@ -12,7 +12,7 @@ namespace LabsCourseManagement.Domain
         public double MaxGrade { get; private set; }
         public string Description { get; private set; }
         public TimeAndPlace TimeAndPlace { get; private set; }
-        public static Result<GradingInfo> Create(ExaminationType type, double minGrade, double maxGrade, string Description)
+        public static Result<GradingInfo> Create(ExaminationType type, double minGrade, double maxGrade, bool isMandatory, string Description, TimeAndPlace timeAndPlace)
         {
             if ( minGrade <= 0 || maxGrade <= 0 || Description==null)
             {
@@ -24,8 +24,8 @@ namespace LabsCourseManagement.Domain
                 MinGrade = minGrade,
                 MaxGrade = maxGrade,
                 Description = Description,
-                IsMandatory = true,
-                TimeAndPlace = null,
+                IsMandatory = isMandatory,
+                TimeAndPlace = timeAndPlace,
             };
             return Result<GradingInfo>.Success(gradingInfo);
 

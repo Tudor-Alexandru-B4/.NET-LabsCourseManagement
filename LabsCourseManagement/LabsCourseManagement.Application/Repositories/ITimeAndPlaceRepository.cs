@@ -8,6 +8,7 @@ namespace LabsCourseManagement.Application.Repositories
         void Delete(TimeAndPlace timeAndPlace);
         TimeAndPlace Get(Guid id);
         List<TimeAndPlace> GetAll();
+        Boolean Exists(DateTime time, string place);
         void Save();
     }
 }

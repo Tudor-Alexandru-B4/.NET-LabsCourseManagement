@@ -27,7 +27,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true)
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +61,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Surname = table.Column<string>(type: "TEXT", nullable: true),
-                    ContactInfoId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ContactInfoId = table.Column<Guid>(type: "TEXT", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -71,8 +71,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         name: "FK_Professors_Contacts_ContactInfoId",
                         column: x => x.ContactInfoId,
                         principalTable: "Contacts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -345,7 +344,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     StudentId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FinalGradeId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    FinalGradeId = table.Column<Guid>(type: "TEXT", nullable: true),
                     CatalogId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -360,8 +359,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         name: "FK_StudentGrades_Grades_FinalGradeId",
                         column: x => x.FinalGradeId,
                         principalTable: "Grades",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_StudentGrades_Students_StudentId",
                         column: x => x.StudentId,

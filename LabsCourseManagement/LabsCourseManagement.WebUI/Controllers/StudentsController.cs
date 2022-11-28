@@ -7,13 +7,13 @@ namespace LabsCourseManagement.WebUI.Controllers
 {
     [Route("v1/api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class StudentsController : ControllerBase
     {
         private readonly IStudentRepository studentRepository;
         private readonly ICourseRepository courseRepository;
         private readonly ILaboratoryRepository laboratoryRepository;
 
-        public StudentController(IStudentRepository studentRepository, ICourseRepository courseRepository, ILaboratoryRepository laboratoryRepository)
+        public StudentsController(IStudentRepository studentRepository, ICourseRepository courseRepository, ILaboratoryRepository laboratoryRepository)
         {
             this.studentRepository = studentRepository;
             this.courseRepository = courseRepository;

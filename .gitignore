@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/LabsCourseManagement/LabsCourseManagement.WebUI/LabsCourseManagement.db-shm
+/LabsCourseManagement/LabsCourseManagement.WebUI/LabsCourseManagement.db-wal
