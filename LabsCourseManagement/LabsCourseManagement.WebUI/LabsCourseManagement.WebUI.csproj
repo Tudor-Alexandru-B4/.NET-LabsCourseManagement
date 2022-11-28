@@ -19,4 +19,8 @@
     <ProjectReference Include="..\LabsCourseManagement.Infrastructure\LabsCourseManagement.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\" />
+  </ItemGroup>
+
 </Project>
