@@ -31,6 +31,11 @@ namespace LabsCourseManagement.Application.Repositories
             return context.TimesAndPlaces.FirstOrDefault(t => t.Id == id);
         }
 
+        public Boolean Exists(DateTime time, string place)
+        {
+            return context.TimesAndPlaces.Where(t => t.DateAndTime == time && t.Classroom == place).ToList().Any();
+        }
+
         public void Save()
         {
             context.Save();

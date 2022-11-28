@@ -12,7 +12,7 @@ namespace LabsCourseManagement.Domain
         public List<Course>? Courses { get; private set; }
         public List<Laboratory>? Laboratories { get; private set; }
 
-        public static Result<Professor> Create(string name, string surname)
+        public static Result<Professor> Create(string name, string surname, string phoneNumber)
         {
             if (name == null || surname == null)
             {
@@ -23,7 +23,7 @@ namespace LabsCourseManagement.Domain
                 Id = Guid.NewGuid(),
                 Name = name,
                 Surname = surname,
-                ContactInfo = new Contact(),
+                ContactInfo = Contact.Create(phoneNumber).Entity,
                 Laboratories = new List<Laboratory>(),
                 Courses = new List<Course>(),
                 IsActive = true,

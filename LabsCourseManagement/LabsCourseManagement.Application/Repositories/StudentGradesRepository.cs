@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LabsCourseManagement.Application.Repositories
 {
@@ -18,12 +19,12 @@ namespace LabsCourseManagement.Application.Repositories
 
         public List<StudentGrades> GetAll()
         {
-            return context.StudentGrades.ToList();
+            return context.StudentGrades.Include(g => g.Grades).ToList();
         }
 
         public StudentGrades Get(Guid id)
         {
-            return context.StudentGrades.FirstOrDefault(c => c.Id == id);
+            return context.StudentGrades.Include(g => g.Grades).FirstOrDefault(c => c.Id == id);
         }
 
         public void Delete(StudentGrades studentGrades)

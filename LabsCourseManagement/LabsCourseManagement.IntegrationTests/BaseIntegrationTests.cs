@@ -10,16 +10,29 @@ namespace LabsCourseManagement.IntegrationTests
     {
         protected HttpClient HttpClientCourses { get; private set; }
         protected HttpClient HttpClientProfessor { get; private set; }
+        protected HttpClient HttpClientAnnouncements { get; private set; }
+        protected HttpClient HttpClientCatalogs { get; private set; }
+        protected HttpClient HttpClientStudents { get; private set; }
+        protected HttpClient HttpClientLaboratories { get; private set; }
+
         protected BaseIntegrationTests()
         {
             var applicationCourses = new WebApplicationFactory<CoursesController>().WithWebHostBuilder(builder => { });
             HttpClientCourses = applicationCourses.CreateClient();
             var applicationProfessors = new WebApplicationFactory<ProfessorsController>().WithWebHostBuilder(builder => { });
             HttpClientProfessor = applicationProfessors.CreateClient();
+            var applicationAnnouncements = new WebApplicationFactory<AnnouncementsController>().WithWebHostBuilder(builder => { });
+            HttpClientAnnouncements = applicationAnnouncements.CreateClient();
+            var applicationCatalogs = new WebApplicationFactory<CatalogsController>().WithWebHostBuilder(builder => { });
+            HttpClientCatalogs = applicationCatalogs.CreateClient();
+            var applicationStudents = new WebApplicationFactory<StudentsController>().WithWebHostBuilder(builder => { });
+            HttpClientStudents = applicationStudents.CreateClient();
+            var applicationLaboratories = new WebApplicationFactory<LaboratoriesController>().WithWebHostBuilder(builder => { });
+            HttpClientLaboratories = applicationLaboratories.CreateClient();
             CleanDatabases();
         }
 
-        private void CleanDatabases()
+        protected void CleanDatabases()
         {
             var databaseContext = new DatabaseContext();
 
