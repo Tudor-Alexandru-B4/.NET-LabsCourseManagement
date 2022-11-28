@@ -21,17 +21,4 @@
     <ProjectReference Include="..\LabsCourseManagement.Shared\LabsCourseManagement.Shared.csproj" />
   </ItemGroup>
 
-      <ItemGroup>
-        <UpToDateCheckInput Remove="Pages\StudentsOverview.razor" />
-      </ItemGroup>
-
-      <ItemGroup>
-        <_ContentIncludedByDefault Remove="Pages\StudentsOverview.razor" />
-      </ItemGroup>
-
-      <ItemGroup>
-        <None Include="Pages\LaboratoriesOverview.razor" />
-        <None Include="Pages\StudentsOverview.razor" />
-      </ItemGroup>
-
 </Project>
