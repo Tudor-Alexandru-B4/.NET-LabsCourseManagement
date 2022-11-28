@@ -13,6 +13,12 @@ builder.Services.AddHttpClient<IProfDataService, ProfDataService>
         = new Uri(builder.HostEnvironment.BaseAddress)
     );
 
+builder.Services.AddHttpClient<IStudentDataService, StudentDataService>
+    (
+        client => client.BaseAddress
+        = new Uri(builder.HostEnvironment.BaseAddress)
+    );
+
 builder.Services.AddHttpClient<ILaboratoryDataService, LaboratoryDataService>
     (
         client => client.BaseAddress
