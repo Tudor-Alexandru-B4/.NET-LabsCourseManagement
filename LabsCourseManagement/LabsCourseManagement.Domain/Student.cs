@@ -42,7 +42,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddCourse(List<Course> courses)
         {
-            if (courses.Any(course => course == null))
+            if (!courses.Any())
             {
                 return Result.Failure("Courses cannot be null");
             }
@@ -53,7 +53,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddLaboratories(List<Laboratory> laboratories)
         {
-            if (laboratories.Any(laboratory => laboratory == null))
+            if (!laboratories.Any())
             {
                 return Result.Failure("Laboratories cannot be null");
             }
