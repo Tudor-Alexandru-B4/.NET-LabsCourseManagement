@@ -1,0 +1,32 @@
+﻿@*@page "/StudentsOverview"
+
+<h2>Students Overview</h2>
+@if (Students == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <tabel class="table table-light">
+        <thead class="table-primary">
+        <th>Person Id</th>
+        <th>Person Name</th>
+        <th>Person Surname</th>
+        <th>Person Age</th>
+        <th>Person Gender</th>
+        </thead>
+        <tbody>
+            @foreach (var person in Students)
+            {
+                <tr>
+                    <td>@person.Id</td>
+                    <td>@person.Name</td>
+                    <td>@person.Surname</td>
+                    <td>@person.Age</td>
+                    <td>@person.Gender</td>
+                </tr>
+            }
+        </tbody>
+    </tabel>
+}
+*@
