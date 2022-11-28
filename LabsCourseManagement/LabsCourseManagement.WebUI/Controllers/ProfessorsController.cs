@@ -38,7 +38,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateProfessorDto professorDto)
         {
-            var professor = Professor.Create(professorDto.Name, professorDto.Surname);
+            var professor = Professor.Create(professorDto.Name, professorDto.Surname, professorDto.PhoneNumber);
             if (professor.IsSuccess)
             {
                 professorRepository.Add(professor.Entity);

@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LabsCourseManagement.Application.Repositories
 {
@@ -18,12 +19,12 @@ namespace LabsCourseManagement.Application.Repositories
 
         public List<Catalog> GetAll()
         {
-            return context.Catalogs.ToList();
+            return context.Catalogs.Include(s => s.StudentGrades).ToList();
         }
 
         public Catalog Get(Guid id)
         {
-            return context.Catalogs.FirstOrDefault(c => c.Id == id);
+            return context.Catalogs.Include(s => s.StudentGrades).FirstOrDefault(c => c.Id == id);
         }
 
         public void Delete(Catalog catalog)

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace LabsCourseManagement.IntegrationTests
 {
-    public class ProfessorControllerTests:BaseIntegrationTests
+    public class ProfessorsControllerTests:BaseIntegrationTests
     {
         private const string ApiUrl = "v1/api/professors";
         [Fact]
@@ -33,7 +33,8 @@ namespace LabsCourseManagement.IntegrationTests
             return new CreateProfessorDto
             {
                 Name = "Florin",
-                Surname = "Olariu"
+                Surname = "Olariu",
+                PhoneNumber = "0733156778",
             };
         }
     }
