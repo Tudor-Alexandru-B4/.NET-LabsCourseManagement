@@ -30,6 +30,15 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("labsCourseCors", policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,6 +49,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("labsCourseCors");
 
 app.UseAuthorization();
 
