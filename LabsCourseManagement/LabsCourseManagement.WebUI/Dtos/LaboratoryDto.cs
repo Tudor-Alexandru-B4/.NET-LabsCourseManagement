@@ -6,5 +6,6 @@ namespace LabsCourseManagement.WebUI.Dtos
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public List<StudentDto> LaboratoryStudents { get; set; }
     }
 }

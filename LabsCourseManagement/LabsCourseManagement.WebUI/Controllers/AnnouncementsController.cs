@@ -46,8 +46,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             }
             return BadRequest(announcement.Error);
         }
-        [HttpDelete]
-        public IActionResult Delete([FromBody] Guid announcementId)
+        [HttpDelete("{announcementId:guid}")]
+        public IActionResult Delete(Guid announcementId)
         {
             var announcement = announcementRepository.GetById(announcementId);
             if (announcement == null)

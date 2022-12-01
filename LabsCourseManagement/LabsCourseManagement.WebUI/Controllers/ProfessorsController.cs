@@ -48,8 +48,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             return BadRequest(professor.Error);
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromBody] Guid professorId)
+        [HttpDelete("{professorId:guid}")]
+        public IActionResult Delete(Guid professorId)
         {
             var professor = professorRepository.GetById(professorId);
             if (professor == null)

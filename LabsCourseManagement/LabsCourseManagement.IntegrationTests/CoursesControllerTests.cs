@@ -1,5 +1,7 @@
-﻿using Swashbuckle.AspNetCore.SwaggerUI;
+﻿using LabsCourseManagement.Domain;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LabsCourseManagement.IntegrationTests
@@ -69,6 +71,107 @@ namespace LabsCourseManagement.IntegrationTests
             deleteCourseResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
 
             getCourseAfterDeleteResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async void When_AddProfessorsToCourse_Then_ShouldBeAdded()
+        {
+            //Arrange
+            CreateCourseDto courseDto = await SUT();
+            var professorDto = new CreateProfessorDto()
+            {
+                Name = "AddedProfessorName",
+                Surname = "AddedProfessorSurname",
+                PhoneNumber = "AddedProfessorPhoneNumber"
+            };
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
+            var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            //Act
+            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync(ApiUrl, courseDto);
+            var getCourseResponse = await HttpClientCourses.GetAsync(ApiUrl);
+            var courses = await getCourseResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
+            ProfessorDto professor = professors.FirstOrDefault(p => p.Name == "AddedProfessorName");
+            var addProfessorResponse = await HttpClientCourses.PostAsJsonAsync($"{ApiUrl}/{courses[courses.Count - 1].Id}/professors", new List<Guid>
+            {
+                professor.Id
+            });
+
+            var getCourseAfterAddResponse = await HttpClientCourses.GetAsync(ApiUrl);
+            var coursesAfterAdd = await getCourseAfterAddResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
+
+            //Assert
+            
+            addProfessorResponse.EnsureSuccessStatusCode();
+            addProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+
+            coursesAfterAdd[coursesAfterAdd.Count - 1].Professors.Count.Should().Be(2);
+            coursesAfterAdd[coursesAfterAdd.Count - 1].Professors[1].Id.Should().Be(professor.Id);
+            coursesAfterAdd[coursesAfterAdd.Count - 1].Professors[1].Name.Should().Be(professor.Name);
+            coursesAfterAdd[coursesAfterAdd.Count - 1].Professors[1].Surname.Should().Be(professor.Surname);
+        }
+
+        [Fact]
+        public async void When_AddStudentsToCourse_Then_ShouldBeAdded()
+        {
+            //Arrange
+            CreateCourseDto courseDto = await SUT();
+            var studentDto = new CreateStudentDto
+            {
+                Name = "AddedStudentName",
+                Surname = "AddedStudentSurname",
+                Year = 1,
+                Group = "AddedStudentGroup",
+                RegistrationNumber = "AddedStudentRegistrationNumber",
+                PhoneNumber = "AddedStudentPhoneNumber"
+            };
+            var createStudentResponse = await HttpClientStudents.PostAsJsonAsync("v1/api/students", studentDto);
+            var getStudentResult = await HttpClientStudents.GetAsync("v1/api/students");
+            var students = await getStudentResult.Content.ReadFromJsonAsync<List<StudentDto>>();
+
+            //Act
+            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync(ApiUrl, courseDto);
+            var getCourseResponse = await HttpClientCourses.GetAsync(ApiUrl);
+            var courses = await getCourseResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
+            var addStudentResponse = await HttpClientCourses.PostAsJsonAsync($"{ApiUrl}/{courses[courses.Count - 1].Id}/students", new List<Guid>
+            {
+                students[0].StudentId
+            });
+
+            var getCourseAfterAddResponse = await HttpClientCourses.GetAsync(ApiUrl);
+            var coursesAfterAdd = await getCourseAfterAddResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
+
+            //Assert
+
+            addStudentResponse.EnsureSuccessStatusCode();
+            addStudentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+
+            coursesAfterAdd[coursesAfterAdd.Count - 1].Students.Count.Should().Be(1);
+            coursesAfterAdd[coursesAfterAdd.Count - 1].Students[0].StudentId.Should().Be(students[students.Count - 1].StudentId);
+            coursesAfterAdd[coursesAfterAdd.Count - 1].Students[0].Name.Should().Be(students[students.Count - 1].Name);
+            coursesAfterAdd[coursesAfterAdd.Count - 1].Students[0].Surname.Should().Be(students[students.Count - 1].Surname);
+        }
+
+        [Fact]
+        public async void When_GetByIdCourse_Then_ShouldGetCourse()
+        {
+            //Arrange
+            CreateCourseDto courseDto = await SUT();
+
+            //Act
+            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync(ApiUrl, courseDto);
+            var getCourseResponse = await HttpClientCourses.GetAsync(ApiUrl);
+            var courses = await getCourseResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
+            var getCourseByIdResponse = await HttpClientCourses.GetAsync($"{ApiUrl}/{courses[courses.Count - 1].Id}");
+
+            //Assert
+            getCourseByIdResponse.EnsureSuccessStatusCode();
+            getCourseByIdResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            var course = await getCourseByIdResponse.Content.ReadFromJsonAsync<CourseDto>();
+
+            course.Should().NotBeNull();
+            course.Id.Should().Be(courses[courses.Count - 1].Id);
         }
 
         private async Task<CreateCourseDto> SUT()

@@ -1,4 +1,5 @@
-﻿using LabsCourseManagement.WebUI.Dtos;
+﻿using LabsCourseManagement.Domain;
+using LabsCourseManagement.WebUI.Dtos;
 
 namespace LabsCourseManagement.IntegrationTests
 {
@@ -35,6 +36,65 @@ namespace LabsCourseManagement.IntegrationTests
             announcements.Should().NotBeNull();
             announcements.Should().NotBeEmpty();
             announcements.Count.Should().Be(1);
+        }
+
+        [Fact]
+        public async void When_DeleteAnnouncement_Then_ShouldNotReturnAnnouncementInGetRequest()
+        {
+            //Arrange
+            var announcementDto = SUT();
+            var professorDto = new CreateProfessorDto()
+            {
+                Name = "ProfessorName",
+                Surname = "ProfessorSurname",
+                PhoneNumber = "ProfessorPhoneNumber"
+            };
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
+            var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            //Act
+            var createAnnouncementResponse = await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{professors[0].Id}", announcementDto);
+            var getAnnouncementResponse = await HttpClientAnnouncements.GetAsync(ApiUrl);
+            var announcements = await getAnnouncementResponse.Content.ReadFromJsonAsync<List<AnnouncementDto>>();
+            var deleteAnnouncementResponse = await HttpClientAnnouncements.DeleteAsync($"{ApiUrl}/{announcements[announcements.Count - 1].Id}");
+            var getAnnouncementAfterDeleteResponse = await HttpClientAnnouncements.GetAsync($"{ApiUrl}/{announcements[announcements.Count - 1].Id}");
+
+            //Assert
+            deleteAnnouncementResponse.EnsureSuccessStatusCode();
+            deleteAnnouncementResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+
+            getAnnouncementAfterDeleteResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async void When_GetByIdAnnouncement_Then_ShouldGetAnnouncement()
+        {
+            //Arrange
+            var announcementDto = SUT();
+            var professorDto = new CreateProfessorDto()
+            {
+                Name = "ProfessorName",
+                Surname = "ProfessorSurname",
+                PhoneNumber = "ProfessorPhoneNumber"
+            };
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
+            var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            //Act
+            var createAnnouncementResponse = await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{professors[0].Id}", announcementDto);
+            var getAnnouncementResponse = await HttpClientAnnouncements.GetAsync(ApiUrl);
+            var announcements = await getAnnouncementResponse.Content.ReadFromJsonAsync<List<AnnouncementDto>>();
+            var getAnnouncementByIdResponse = await HttpClientAnnouncements.GetAsync($"{ApiUrl}/{announcements[announcements.Count - 1].Id}");
+
+            //Assert
+            getAnnouncementByIdResponse.EnsureSuccessStatusCode();
+            getAnnouncementByIdResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            var announcement = await getAnnouncementByIdResponse.Content.ReadFromJsonAsync<AnnouncementDto>();
+
+            announcement.Should().NotBeNull();
+            announcement.Id.Should().Be(announcements[announcements.Count - 1].Id);
         }
 
         private static CreateAnnouncementDto SUT()
