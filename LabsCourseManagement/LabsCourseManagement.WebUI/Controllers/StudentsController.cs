@@ -108,8 +108,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromBody] Guid studentId)
+        [HttpDelete("{studentId:guid}")]
+        public IActionResult Delete(Guid studentId)
         {
             var student = studentRepository.Get(studentId);
             if (student == null)

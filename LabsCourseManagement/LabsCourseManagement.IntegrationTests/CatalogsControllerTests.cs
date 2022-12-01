@@ -26,6 +26,27 @@ namespace LabsCourseManagement.IntegrationTests
             catalogs.Count.Should().Be(1);
         }
 
+        [Fact]
+        public async void When_GetByIdCatalog_Then_ShouldGetCatalog()
+        {
+            //Arrange
+            var courseDto = await SUT();
+
+            //Act
+            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
+            var getCatalogResult = await HttpClientCatalogs.GetAsync(ApiUrl);
+            var catalogs = await getCatalogResult.Content.ReadFromJsonAsync<List<CatalogDto>>();
+            var getCatalogByIdResponse = await HttpClientCatalogs.GetAsync($"{ApiUrl}/{catalogs[catalogs.Count - 1].Id}");
+
+            //Assert
+            getCatalogByIdResponse.EnsureSuccessStatusCode();
+            getCatalogByIdResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            var catalog = await getCatalogByIdResponse.Content.ReadFromJsonAsync<CatalogDto>();
+
+            catalog.Should().NotBeNull();
+            catalog.Id.Should().Be(catalogs[catalogs.Count - 1].Id);
+        }
+
         private async Task<CreateCourseDto> SUT()
         {
             var professorDto = new CreateProfessorDto()
