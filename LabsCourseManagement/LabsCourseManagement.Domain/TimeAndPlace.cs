@@ -10,6 +10,11 @@ namespace LabsCourseManagement.Domain
 
         public static Result<TimeAndPlace> Create(DateTime dateTime, string classroom)
         {
+            if(classroom == null)
+            {
+                return Result<TimeAndPlace>.Failure("Classroom cannot be null");
+            }
+
             var timeAndPlace = new TimeAndPlace
             {
                 Id = Guid.NewGuid(),

@@ -10,6 +10,11 @@ namespace LabsCourseManagement.Domain
 
         public static Result<Contact> Create(string phoneNumber)
         {
+            if (phoneNumber == null)
+            {
+                return Result<Contact>.Failure("Phone number cannot be null");
+            }
+
             var contact = new Contact
             {
                 Id = Guid.NewGuid(),
@@ -21,10 +26,11 @@ namespace LabsCourseManagement.Domain
 
         public Result AddEmailAddressToList(List<InformationString> emailAddresses)
         {
-            if (emailAddresses == null)
+            if (emailAddresses.Any(email => email == null))
             {
                 return Result.Failure("Email cannot be null");
             }
+
             emailAddresses.ForEach(emailAddresses => EmailAddresses.Add(emailAddresses));
             return Result.Success();
         }
