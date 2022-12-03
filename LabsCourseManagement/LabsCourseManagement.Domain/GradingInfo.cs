@@ -20,6 +20,7 @@ namespace LabsCourseManagement.Domain
             }
             var gradingInfo = new GradingInfo
             {
+                Id=Guid.NewGuid(),
                 ExaminationType = type,
                 MinGrade = minGrade,
                 MaxGrade = maxGrade,
