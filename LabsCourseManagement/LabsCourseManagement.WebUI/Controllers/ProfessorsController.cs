@@ -12,12 +12,14 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly IProfessorRepository professorRepository;
         private readonly ICourseRepository courseRepository;
         private readonly ILaboratoryRepository laboratoryRepository;
+        private readonly IContactRepository contactRepository;
 
-        public ProfessorsController(IProfessorRepository professorRepository, ICourseRepository courseRepository, ILaboratoryRepository laboratoryRepository)
+        public ProfessorsController(IProfessorRepository professorRepository, ICourseRepository courseRepository, ILaboratoryRepository laboratoryRepository, IContactRepository contactRepository)
         {
             this.professorRepository = professorRepository;
             this.courseRepository = courseRepository;
             this.laboratoryRepository = laboratoryRepository;
+            this.contactRepository = contactRepository;
         }
         [HttpGet]
         public IActionResult Get()
@@ -61,7 +63,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return NoContent();
         }
         [HttpPost("{professorId:guid}/courses")]
-        public ActionResult UpdateCourses(Guid professorId,[FromBody] List<Guid> coursesId)
+        public ActionResult UpdateCourses(Guid professorId, [FromBody] List<Guid> coursesId)
         {
             var courses = new List<Course>();
             var professor = professorRepository.GetById(professorId);
@@ -100,7 +102,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             foreach (var laboratoryId in laboratoriesId)
             {
                 var laboratory = laboratoryRepository.Get(laboratoryId);
-                if(laboratory== null)
+                if (laboratory == null)
                 {
                     return NotFound();
                 }
@@ -112,10 +114,23 @@ namespace LabsCourseManagement.WebUI.Controllers
             return NoContent();
 
         }
+        [HttpPost("{professorId:guid}/{contactId:guid}/phoneNumber")]
+        public ActionResult UpdatePhoneNumber(Guid professorId, Guid contactId, [FromBody] string phoneNumber)
+        {
+            var professor = professorRepository.GetById(professorId);
+            var contact = contactRepository.Get(contactId);
+
+            if (professor == null || contact == null)
+            {
+                return NotFound();
+            }
+            professor.UpdatePhoneNumber(phoneNumber);
+            contactRepository.Delete(contact);
+            professorRepository.Save();
+            contactRepository.Save();
+
+            return NoContent();
+        }
 
     }
 }
-
-
-//6813d89b-5055-4694-8beb-ef0ff63a895b curs
-//

@@ -1,5 +1,4 @@
 ﻿using LabsCourseManagement.Domain.Helpers;
-
 namespace LabsCourseManagement.Domain
 {
     public class Professor
@@ -50,5 +49,29 @@ namespace LabsCourseManagement.Domain
             laboratories.ForEach(Laboratory => Laboratories.Add(Laboratory));
             return Result.Success();
         }
+        public Result UpdatePhoneNumber(string phoneNumber)
+        {
+            Contact NewContactInfo = new Contact();
+            List<InformationString> emailAddresses = new List<InformationString>();
+            if (ContactInfo.EmailAddresses != null)
+            {
+                emailAddresses = ContactInfo.EmailAddresses.ToList();
+            }
+            foreach (char c in phoneNumber)
+            {
+                if (!char.IsDigit(c))
+                {
+                    return Result.Failure("Invalid Phone Number");
+                }
+            }
+
+            NewContactInfo = Contact.Create(phoneNumber).Entity;
+            NewContactInfo.AddEmailAddressToList(emailAddresses);
+            ContactInfo = NewContactInfo;
+
+            return Result.Success();
+        }
+
+
     }
 }

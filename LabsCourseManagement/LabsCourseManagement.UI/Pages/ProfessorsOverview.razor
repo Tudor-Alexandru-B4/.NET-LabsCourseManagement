@@ -4,8 +4,7 @@
 
 @if (Professors == null)
 {
-	<p><em>Loading...</em></p>
-
+    <p><em>Loading...</em></p>
 }
 else
 {
@@ -13,8 +12,10 @@ else
     <tabel class="table table-light">
         <thead class="table-primary">
         <th>Professor Id</th>
-        <th>Professor Name</th>
-        <th>Professor Surname</th>
+        <th>Name</th>
+        <th>Surname</th>
+@*        <th>Phone Number</th>*@
+
         </thead>
         <tbody>
             @foreach (var professor in Professors)
@@ -23,8 +24,59 @@ else
                     <td>@professor.Id</td>
                     <td>@professor.Name</td>
                     <td>@professor.Surname</td>
+@*                    <td>@professor.ContactInfo?.PhoneNumber</td>*@
+
                 </tr>
             }
         </tbody>
     </tabel>
+}
+<section id="create-professor" class="mt-5">
+    <h3>Add new Professor</h3>
+    @if (NewProfessor == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <EditForm Model="@NewProfessor" OnValidSubmit="@CreateProfessor">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <label>
+                Name <br />
+                <InputText id="name" @bind-Value=NewProfessor.Name DisplayName="Name" />
+                <br />
+            </label>
+            <label>
+                Surname <br />
+                <InputText id="surname" @bind-Value=NewProfessor.Surname DisplayName="Surname" />
+                <br />
+            </label>
+            <label>
+                Phone Number <br />
+                <InputText id="surname" @bind-Value=NewProfessor.PhoneNumber DisplayName="PhoneNumber" />
+                <br />
+            </label>
+            <button type="submit">Add</button>
+        </EditForm>
+    }
+</section>
+@if (Professors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <section id="delete-professors" class="mt-5">
+        <h3>Delete Professor by Id</h3>
+        <div class="col-sm-10">
+            <InputSelect id="delete-professor" @bind-Value="GuidForDelete" class="form-control">
+                @foreach (var prof in Professors)
+                {
+                    <option value="@prof.Id" class="text-black">@prof.Id</option>
+                }
+            </InputSelect>
+        </div>
+        <button type="submit" onclick="@DeleteProfessor">Delete</button>
+    </section>
 }

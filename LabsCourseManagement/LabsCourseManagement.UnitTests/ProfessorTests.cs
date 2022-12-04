@@ -51,7 +51,7 @@ namespace LabsCourseManagement.UnitTests
         public void When_AddCourses_Then_ShouldAddCourses()
         {
             //Arrange
-            var courses=new List<Course>();
+            var courses = new List<Course>();
             var course1 = Course.Create(".net").Entity;
             var course2 = Course.Create("imr").Entity;
             courses.Add(course1);
@@ -60,7 +60,7 @@ namespace LabsCourseManagement.UnitTests
             var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
 
             //Act
-            var result=professor.AddCourses(courses);
+            var result = professor.AddCourses(courses);
 
             //Assert
             result.IsSuccess.Should().BeTrue();
@@ -95,8 +95,8 @@ namespace LabsCourseManagement.UnitTests
         {
             //Arrange
             var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
-            var courses=new List<Course>();
-            
+            var courses = new List<Course>();
+
             //Act
             var result = professor.AddCourses(courses);
 
@@ -119,6 +119,33 @@ namespace LabsCourseManagement.UnitTests
             result.IsFailure.Should().BeTrue();
             result.Error.Should().Be("Laboratories can not be null");
             professor.Laboratories.Should().BeEmpty();
+        }
+        [Fact]
+        public void When_AddInvalidPhoneNumber_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+
+            //Act
+            var result = professor.UpdatePhoneNumber("phoneNumber");
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Invalid Phone Number");
+            professor.ContactInfo.PhoneNumber.Should().Be("0712345678");
+        }
+        [Fact]
+        public void When_AddValidPhoneNumber_Then_ShouldAddValidPhoneNumber()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "07646788989").Entity;
+
+            //Act
+            var result = professor.UpdatePhoneNumber("0701234567");
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            professor.ContactInfo.PhoneNumber.Should().Be("0701234567");
         }
 
     }
