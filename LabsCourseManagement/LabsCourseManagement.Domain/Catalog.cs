@@ -19,7 +19,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddStudentGradesToCatalog(List<StudentGrades> studentGrades)
         {
-            if(!studentGrades.Any())
+            if(studentGrades.Any(studentGrade => studentGrade == null))
             {
                 return Result.Failure("StudentGrades cannot be null");
             }
