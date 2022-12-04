@@ -42,7 +42,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddProfessors(List<Professor> professors)
         {
-            if (!professors.Any())
+            if (professors.Any(professor => professor == null))
             {
                 return Result.Failure("Professors cannot be null");
             }
@@ -53,7 +53,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddLaboratories(List<Laboratory> laboratories)
         {
-            if (!laboratories.Any())
+            if (laboratories.Any(laboratory => laboratory == null))
             {
                 return Result.Failure("Laboratories cannot be null");
             }
@@ -64,7 +64,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddCourseStudents(List<Student> students)
         {
-            if (!students.Any())
+            if (students.Any(student => student == null))
             {
                 return Result.Failure("Students cannot be null");
             }
@@ -75,7 +75,7 @@ namespace LabsCourseManagement.Domain
         
         public Result AddCoursePrograms(List<TimeAndPlace> timesAndPlaces)
         {
-            if (!timesAndPlaces.Any())
+            if (timesAndPlaces.Any(timeAndPlace => timeAndPlace == null))
             {
                 return Result.Failure("TimesAndPlaces cannot be null");
             }
@@ -86,7 +86,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddCourseAnnouncements(List<Announcement> announcements)
         {
-            if (!announcements.Any())
+            if (announcements.Any(announcement => announcement == null))
             {
                 return Result.Failure("Announcements cannot be null");
             }
@@ -97,7 +97,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddCourseGradingInfos(List<GradingInfo> gradingInfos)
         {
-            if (!gradingInfos.Any())
+            if (gradingInfos.Any(gradingInfo => gradingInfo == null))
             {
                 return Result.Failure("GradingInfos cannot be null");
             }
@@ -108,7 +108,7 @@ namespace LabsCourseManagement.Domain
 
         public Result AddHelpfulMaterials(List<InformationString> helpfulMaterials)
         {
-            if (!helpfulMaterials.Any())
+            if (helpfulMaterials.Any(helpfulMaterial => helpfulMaterial == null))
             {
                 return Result.Failure("HelpfulMaterials cannot be null");
             }
