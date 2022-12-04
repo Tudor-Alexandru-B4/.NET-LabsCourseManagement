@@ -1,7 +1,8 @@
-﻿using System.Text.Json;
-using LabsCourseManagement.Shared.Domain;
+﻿using LabsCourseManagement.Shared.Domain;
+using System.Text.Json;
 
-namespace LabsCourseManage.UI.Pages.Services
+
+namespace LabsCourseManagement.UI.Pages.Services
 {
     public class LaboratoryDataService : ILaboratoryDataService
     {
@@ -12,10 +13,10 @@ namespace LabsCourseManage.UI.Pages.Services
         {
             this.httpClient = httpClient;
         }
-        public async Task<IEnumerable<Laboratory>> GetAllLaboratories()
+        public async Task<IEnumerable<LaboratoryModel>> GetAllLaboratories()
         {
             return await JsonSerializer
-                .DeserializeAsync<IEnumerable<Laboratory>>
+                .DeserializeAsync<IEnumerable<LaboratoryModel>>
                 (await httpClient.GetStreamAsync(ApiURL),
                 new JsonSerializerOptions()
                 {
@@ -23,7 +24,7 @@ namespace LabsCourseManage.UI.Pages.Services
                 });
         }
 
-        public async Task<Laboratory> GetLaboratoryDetails(Guid laboratoryId)
+        public async Task<LaboratoryModel> GetLaboratoryDetails(Guid laboratoryId)
         {
             throw new NotImplementedException();
         }
