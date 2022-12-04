@@ -23,6 +23,7 @@ builder.Services.AddScoped<IStudentGradesRepository, StudentGradesRepository>();
 builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ITimeAndPlaceRepository, TimeAndPlaceRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

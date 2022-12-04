@@ -23,12 +23,12 @@ namespace LabsCourseManagement.Application.Repositories
         public Professor GetById(Guid id)
         {
             return context.Professors.Include(c => c.Courses)
-                .Include(l=>l.Laboratories).FirstOrDefault(p => p.Id == id);
+                .Include(l => l.Laboratories).Include(contact => contact.ContactInfo).FirstOrDefault(p => p.Id == id);
         }
         public List<Professor> GetAll()
         {
-            return context.Professors.Include(c =>c.Courses)
-                .Include(l => l.Laboratories).ToList();
+            return context.Professors.Include(c => c.Courses)
+                .Include(l => l.Laboratories).Include(contact => contact.ContactInfo).ToList();
         }
         public void Save()
         {
