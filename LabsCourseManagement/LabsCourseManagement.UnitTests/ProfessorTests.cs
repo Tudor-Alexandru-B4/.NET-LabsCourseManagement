@@ -120,33 +120,33 @@ namespace LabsCourseManagement.UnitTests
             result.Error.Should().Be("Laboratories can not be null");
             professor.Laboratories.Should().BeEmpty();
         }
-        [Fact]
-        public void When_AddInvalidPhoneNumber_Then_ShouldReturnFailure()
-        {
-            //Arrange
-            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+        //[Fact]
+        //public void When_AddInvalidPhoneNumber_Then_ShouldReturnFailure()
+        //{
+        //    //Arrange
+        //    var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
 
-            //Act
-            var result = professor.UpdatePhoneNumber("phoneNumber");
+        //    //Act
+        //    var result = professor.UpdatePhoneNumber("phoneNumber");
 
-            //Assert
-            result.IsFailure.Should().BeTrue();
-            result.Error.Should().Be("Invalid Phone Number");
-            professor.ContactInfo.PhoneNumber.Should().Be("0712345678");
-        }
-        [Fact]
-        public void When_AddValidPhoneNumber_Then_ShouldAddValidPhoneNumber()
-        {
-            //Arrange
-            var professor = Professor.Create("Florin", "Olariu", "07646788989").Entity;
+        //    //Assert
+        //    result.IsFailure.Should().BeTrue();
+        //    result.Error.Should().Be("Invalid Phone Number");
+        //    professor.ContactInfo.PhoneNumber.Should().Be("0712345678");
+        //}
+        //[Fact]
+        //public void When_AddValidPhoneNumber_Then_ShouldAddValidPhoneNumber()
+        //{
+        //    //Arrange
+        //    var professor = Professor.Create("Florin", "Olariu", "07646788989").Entity;
 
-            //Act
-            var result = professor.UpdatePhoneNumber("0701234567");
+        //    //Act
+        //    var result = professor.UpdatePhoneNumber("0701234567");
 
-            //Assert
-            result.IsSuccess.Should().BeTrue();
-            professor.ContactInfo.PhoneNumber.Should().Be("0701234567");
-        }
+        //    //Assert
+        //    result.IsSuccess.Should().BeTrue();
+        //    professor.ContactInfo.PhoneNumber.Should().Be("0701234567");
+        //}
 
     }
 }

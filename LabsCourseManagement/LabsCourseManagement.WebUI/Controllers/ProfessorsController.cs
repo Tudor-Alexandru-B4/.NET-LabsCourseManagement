@@ -125,7 +125,6 @@ namespace LabsCourseManagement.WebUI.Controllers
                 return NotFound();
             }
             professor.UpdatePhoneNumber(phoneNumber);
-            contactRepository.Delete(contact);
             professorRepository.Save();
             contactRepository.Save();
 

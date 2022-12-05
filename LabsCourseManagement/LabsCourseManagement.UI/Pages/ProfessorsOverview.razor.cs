@@ -12,9 +12,19 @@ namespace LabsCourseManagement.UI.Pages
         public List<ProfessorModel> Professors { get; set; } = default!;
         List<Guid> Guids = new List<Guid>();
         Guid GuidForDelete;
+        Guid GuidProfessorForUpdate;
+        Guid GuidConatctForUpdate;
+        public List<ContactModel> Contacts=new List<ContactModel>();
+        String PhoneNumber;
         protected override async Task OnInitializedAsync()
         {
             Professors = (await ProfDataService.GetAllProfessors()).ToList();
+            foreach (var prof in Professors)
+            {
+                var contact = new ContactModel(prof.ContactInfo.Id);
+                Contacts.Add(contact);
+            }
+
         }
         private async void CreateProfessor()
         {
@@ -29,6 +39,11 @@ namespace LabsCourseManagement.UI.Pages
             }
             await ProfDataService.DeleteProfessor(GuidForDelete);
 
+        }
+        private async void UpdateProfessor()
+        {
+
+            await ProfDataService.UpdateProfessorPhoneNumber(GuidProfessorForUpdate, GuidConatctForUpdate, PhoneNumber);
         }
 
     }
