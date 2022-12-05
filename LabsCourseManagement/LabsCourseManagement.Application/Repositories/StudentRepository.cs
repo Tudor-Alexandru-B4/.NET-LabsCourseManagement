@@ -34,6 +34,13 @@ namespace LabsCourseManagement.Application.Repositories
                 .FirstOrDefault(s => s.StudentId == id);
         }
 
+        public void ChangeGroup(Student student, string newGroup)
+        {
+            var id = student.StudentId;
+            context.Students.FirstOrDefault(s => s.StudentId == id).Group = newGroup;
+            //context.Students.Find(s => s.Id == id).Group = student.Group;
+        }
+      
         public void Save()
         {
             context.Save();

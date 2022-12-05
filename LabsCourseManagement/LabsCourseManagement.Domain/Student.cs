@@ -10,7 +10,7 @@ namespace LabsCourseManagement.Domain
         public string Surname { get; private set; }
         public Contact ContactInfo { get; private set; }
         public int Year { get; private set; }
-        public string Group { get; private set; }
+        public string Group { get; set; }
         public bool IsActive { get; private set; }
         public string RegistrationNumber { get; private set; }
         public List<Course> Courses { get; private set; }
@@ -61,6 +61,8 @@ namespace LabsCourseManagement.Domain
             laboratories.ForEach(lab => Laboratories.Add(lab));
             return Result.Success();
         }
+
+
     }
 
 
