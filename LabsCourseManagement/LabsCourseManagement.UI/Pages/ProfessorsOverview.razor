@@ -14,7 +14,6 @@ else
         <th>Professor Id</th>
         <th>Name</th>
         <th>Surname</th>
-@*        <th>Phone Number</th>*@
 
         </thead>
         <tbody>
@@ -24,7 +23,6 @@ else
                     <td>@professor.Id</td>
                     <td>@professor.Name</td>
                     <td>@professor.Surname</td>
-@*                    <td>@professor.ContactInfo?.PhoneNumber</td>*@
 
                 </tr>
             }
@@ -80,3 +78,35 @@ else
         <button type="submit" onclick="@DeleteProfessor">Delete</button>
     </section>
 }
+<section id="update-professors" class="mt-5">
+    <h3>Update Professor Phone Number</h3>
+    <div class="col-sm-10">
+        Select Professor Id
+        @if (Professors == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <InputSelect id="update-professor" @bind-Value="GuidProfessorForUpdate" class="form-control">
+                @foreach (var prof in Professors)
+                {
+                    <option value="@prof.Id" class="text-black">@prof.Id</option>
+                }
+            </InputSelect>
+            <p>Select Contact Id</p>
+            <InputSelect id="update-professor-contact" @bind-Value="GuidConatctForUpdate" class="form-control">
+                @foreach (var contact in Contacts)
+                {
+                    <option value="@contact.Id" class="text-black-50">@contact.Id</option>
+                }
+            </InputSelect>
+        }
+        <label>
+            Phone Number <br />
+            <InputText id="surname" @bind-Value=PhoneNumber DisplayName="PhoneNumber" />
+            <br />
+        </label>
+    </div>
+    <button type="submit" onclick="@UpdateProfessor">Update</button>
+</section>
