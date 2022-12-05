@@ -6,6 +6,11 @@ namespace LabsCourseManagement.Infrastructure
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        {
+            this.Database.EnsureCreated();
+        }
+
         public DbSet<Announcement> Announcements => Set<Announcement>();
         public DbSet<Catalog> Catalogs => Set<Catalog>();
         public DbSet<Contact> Contacts => Set<Contact>();
