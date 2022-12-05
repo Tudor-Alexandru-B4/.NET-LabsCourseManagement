@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsCourseManagement.Integr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsCourseManagement.Shared", "LabsCourseManagement.Shared\LabsCourseManagement.Shared.csproj", "{20261A29-5FB1-4C79-8D7B-B3AE978A0208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabsCourseManagement.UI", "LabsCourseManagement.UI\LabsCourseManagement.UI.csproj", "{4797608B-2C45-4FF0-A6AC-00393EA5F76F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabsCourseManagement.UI", "LabsCourseManagement.UI\LabsCourseManagement.UI.csproj", "{4797608B-2C45-4FF0-A6AC-00393EA5F76F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
