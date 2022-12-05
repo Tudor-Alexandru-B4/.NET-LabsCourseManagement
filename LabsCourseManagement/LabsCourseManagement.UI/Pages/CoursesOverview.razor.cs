@@ -19,6 +19,7 @@ namespace LabsCourseManagement.UI.Pages
         public List<ProfessorModel> Professors { get; set; } = default!;
 
         public Guid id;
+        public Guid updateCourseId;
         public Guid updateProfessorId;
         
         protected override async Task OnInitializedAsync()
@@ -37,7 +38,7 @@ namespace LabsCourseManagement.UI.Pages
 
         private async void AddProfessorToCourse()
         {
-            await CourseDataService.AddProfessorToCourse(id, updateProfessorId);
+            await CourseDataService.AddProfessorToCourse(updateCourseId, updateProfessorId);
         }
     }
 }
