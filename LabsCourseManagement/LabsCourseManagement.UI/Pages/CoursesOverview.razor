@@ -84,11 +84,11 @@ else
     }
     else
     {
-        <EditForm Model="@id" OnValidSubmit="@AddProfessorToCourse">
+        <EditForm Model="@updateCourseId" OnValidSubmit="@AddProfessorToCourse">
             <DataAnnotationsValidator />
             <ValidationSummary />
             <label>
-                <InputSelect id="select-course" @bind-Value="id" class="form-control">
+                <InputSelect id="select-course" @bind-Value="updateCourseId" class="form-control">
                     @foreach (var course in Courses)
                     {
                         <option value="@course.Id" class="text-black">@course.Id</option>
