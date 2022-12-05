@@ -1,0 +1,109 @@
+﻿@page "/courses-overview"
+
+<h3>Courses Overview</h3>
+
+@if (Courses == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    <tabel class="table table-light">
+        <thead class="table-primary">
+        <th>Course Id</th>
+        <th>Name</th>
+        </thead>
+
+        <tbody>
+            @foreach (var course in Courses)
+            {
+                <tr>
+                    <td>@course.Id</td>
+                    <td>@course.Name</td>
+                </tr>
+            }
+        </tbody>
+    </tabel>
+}
+
+@if (Courses == null)
+{
+        <p><em>Loading...</em></p>
+}
+else
+{
+        <section id="delete-course" class="mt-5">
+            <h3>Delete Course by Id</h3>
+            <div class="col-sm-10">
+                <InputSelect id="delete-course" @bind-Value="id" class="form-control">
+                @foreach (var course in Courses)
+                {
+                    <option value="@course.Id" class="text-black">@course.Id</option>
+                }
+                </InputSelect>
+            </div>
+            <button type="submit" onclick="@DeleteCourse">Delete</button>
+        </section>
+}
+
+<section id="create-course" class="mt-5">
+    <h3>Add new course</h3>
+    @if (NewCourse == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <EditForm Model="@NewCourse" OnValidSubmit="@CreateCourse">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <label>
+                Name <br />
+                <InputText id="name" @bind-Value=NewCourse.Name DisplayName="Name" />
+                <br />
+            </label>
+            <label>
+                <InputSelect id="select-professor" @bind-Value="NewCourse.ProfessorId" class="form-control">
+                    @foreach (var prof in Professors)
+                    {
+                        <option value="@prof.Id" class="text-black">@prof.Id</option>
+                    }
+                </InputSelect>
+            </label>
+            <button type="submit">Add</button>
+        </EditForm>
+    }
+</section>
+
+<section id="update-course" class="mt-5">
+    <h3>Add professor to course</h3>
+    @if (NewCourse == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <EditForm Model="@id" OnValidSubmit="@AddProfessorToCourse">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <label>
+                <InputSelect id="select-course" @bind-Value="id" class="form-control">
+                    @foreach (var course in Courses)
+                    {
+                        <option value="@course.Id" class="text-black">@course.Id</option>
+                    }
+                </InputSelect>
+            </label>
+            <label>
+                <InputSelect id="select-professor" @bind-Value="updateProfessorId" class="form-control">
+                    @foreach (var prof in Professors)
+                    {
+                        <option value="@prof.Id" class="text-black">@prof.Id</option>
+                    }
+                </InputSelect>
+            </label>
+            <button type="submit">Add</button>
+        </EditForm>
+    }
+</section>
