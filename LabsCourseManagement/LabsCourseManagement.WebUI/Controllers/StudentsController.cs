@@ -120,5 +120,19 @@ namespace LabsCourseManagement.WebUI.Controllers
             studentRepository.Save();
             return NoContent();
         }
+
+        [HttpPost("{studentId:guid}/changeGroup")]
+        public IActionResult ChangeStudentGroup(Guid studentId, [FromBody] string newGroup)
+        {
+            var student = studentRepository.Get(studentId);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            studentRepository.ChangeGroup(student, newGroup);
+            studentRepository.Save();
+            return NoContent();
+        }
+
     }
 }
