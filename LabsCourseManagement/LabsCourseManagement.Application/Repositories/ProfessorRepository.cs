@@ -12,23 +12,23 @@ namespace LabsCourseManagement.Application.Repositories
         {
             this.context = context;
         }
-        public void Add(Professor professor)
+        public async void Add(Professor professor)
         {
-            context.Professors.Add(professor);
+            await context.Professors.AddAsync(professor);
         }
         public void Delete(Professor professor)
         {
             context.Professors.Remove(professor);
         }
-        public Professor GetById(Guid id)
+        public async Task<Professor> GetById(Guid id)
         {
-            return context.Professors.Include(c => c.Courses)
-                .Include(l => l.Laboratories).Include(contact => contact.ContactInfo).FirstOrDefault(p => p.Id == id);
+            return await context.Professors.Include(c => c.Courses)
+                .Include(l => l.Laboratories).Include(contact => contact.ContactInfo).FirstOrDefaultAsync(p => p.Id == id);
         }
-        public List<Professor> GetAll()
+        public async Task<List<Professor>> GetAll()
         {
-            return context.Professors.Include(c => c.Courses)
-                .Include(l => l.Laboratories).Include(contact => contact.ContactInfo).ToList();
+            return await context.Professors.Include(c => c.Courses)
+                .Include(l => l.Laboratories).Include(contact => contact.ContactInfo).ToListAsync();
         }
         public void Save()
         {

@@ -29,13 +29,13 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(laboratoryRepository.GetAll());
+            return Ok(laboratoryRepository.GetAll().Result);
         }
 
         [HttpGet("{laboratoryId:guid}")]
         public IActionResult Get(Guid laboratoryId)
         {
-            var laboratory = laboratoryRepository.Get(laboratoryId);
+            var laboratory = laboratoryRepository.Get(laboratoryId).Result;
             if (laboratory == null)
             {
                 return NotFound();
@@ -61,8 +61,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             timeAndPlaceRepository.Add(timeAndPlace);
             timeAndPlaceRepository.Save();
 
-            var laboratory = Laboratory.Create(laboratoryDto.Name, course, 
-                laboratoryProfessor, timeAndPlace);
+            var laboratory = Laboratory.Create(laboratoryDto.Name, course.Result, 
+                laboratoryProfessor.Result, timeAndPlace);
 
             if (laboratory.IsSuccess)
             {
@@ -81,7 +81,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
-            laboratoryRepository.Delete(laboratory);
+            laboratoryRepository.Delete(laboratory.Result);
             laboratoryRepository.Save();
             return NoContent();
         }
@@ -97,10 +97,15 @@ namespace LabsCourseManagement.WebUI.Controllers
                 }
             }
 
-            var students = studentsIds.Select(studentRepository.Get).ToList();
+            var students=new List<Student>();
+            foreach (var studentId in studentsIds)
+            {
+                var student= studentRepository.Get(studentId).Result;
+                students.Add(student);
+            }
 
             var laboratory = laboratoryRepository.Get(laboratoryId);
-            var addStudentsResult = laboratory.AddStudents(students);
+            var addStudentsResult = laboratory.Result.AddStudents(students);
 
             if (addStudentsResult.IsSuccess)
             {

@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LabsCourseManagement.Application.Repositories
 {
@@ -11,9 +12,9 @@ namespace LabsCourseManagement.Application.Repositories
             this.context = context;
         }
 
-        public void Add(TimeAndPlace timeAndPlace)
+        public async void Add(TimeAndPlace timeAndPlace)
         {
-            context.TimesAndPlaces.Add(timeAndPlace);
+            await context.TimesAndPlaces.AddAsync(timeAndPlace);
         }
 
         public void Delete(TimeAndPlace timeAndPlace)
@@ -21,14 +22,14 @@ namespace LabsCourseManagement.Application.Repositories
             context.TimesAndPlaces.Remove(timeAndPlace);
         }
 
-        public List<TimeAndPlace> GetAll()
+        public async Task<List<TimeAndPlace>> GetAll()
         {
-            return context.TimesAndPlaces.ToList();
+            return await context.TimesAndPlaces.ToListAsync();
         }
 
-        public TimeAndPlace Get(Guid id)
+        public async Task<TimeAndPlace> Get(Guid id)
         {
-            return context.TimesAndPlaces.FirstOrDefault(t => t.Id == id);
+            return await context.TimesAndPlaces.FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public Boolean Exists(DateTime time, string place)

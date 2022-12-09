@@ -6,8 +6,8 @@ namespace LabsCourseManagement.Application.Repositories
     {
         void Add(Catalog catalog);
         void Delete(Catalog catalog);
-        Catalog Get(Guid id);
-        List<Catalog> GetAll();
+        Task<Catalog> Get(Guid id);
+        Task<List<Catalog>> GetAll();
         void Save();
     }
 }

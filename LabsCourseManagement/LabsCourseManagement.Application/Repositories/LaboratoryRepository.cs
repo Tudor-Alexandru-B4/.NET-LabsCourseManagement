@@ -12,23 +12,23 @@ namespace LabsCourseManagement.Application.Repositories
             this.context = context;
         }
 
-        public void Add(Laboratory laboratory)
+        public async void Add(Laboratory laboratory)
         {
-            context.Laboratories.Add(laboratory);
+            await context.Laboratories.AddAsync(laboratory);
         }
 
-        public List<Laboratory> GetAll()
+        public async Task<List<Laboratory>> GetAll()
         {
-            return context.Laboratories.Include(s => s.LaboratoryStudents)
+            return await context.Laboratories.Include(s => s.LaboratoryStudents)
                 .Include(a => a.LaboratoryAnnouncements)
-                .Include(g => g.LaboratoryGradingInfo).ToList();
+                .Include(g => g.LaboratoryGradingInfo).ToListAsync();
         }
 
-        public Laboratory Get(Guid id)
+        public async Task<Laboratory> Get(Guid id)
         {
-            return context.Laboratories.Include(s => s.LaboratoryStudents)
+            return await context.Laboratories.Include(s => s.LaboratoryStudents)
                 .Include(a => a.LaboratoryAnnouncements)
-                .Include(g => g.LaboratoryGradingInfo).FirstOrDefault(c => c.Id == id);
+                .Include(g => g.LaboratoryGradingInfo).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(Laboratory laboratory)

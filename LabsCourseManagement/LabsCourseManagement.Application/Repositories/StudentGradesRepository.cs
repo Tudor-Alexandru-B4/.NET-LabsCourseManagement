@@ -12,19 +12,19 @@ namespace LabsCourseManagement.Application.Repositories
             this.context = context;
         }
 
-        public void Add(StudentGrades studentGrades)
+        public async void Add(StudentGrades studentGrades)
         {
-            context.StudentGrades.Add(studentGrades);
+            await context.StudentGrades.AddAsync(studentGrades);
         }
 
-        public List<StudentGrades> GetAll()
+        public async Task<List<StudentGrades>> GetAll()
         {
-            return context.StudentGrades.Include(g => g.Grades).ToList();
+            return await context.StudentGrades.Include(g => g.Grades).ToListAsync();
         }
 
-        public StudentGrades Get(Guid id)
+        public async Task<StudentGrades> Get(Guid id)
         {
-            return context.StudentGrades.Include(g => g.Grades).FirstOrDefault(c => c.Id == id);
+            return await context.StudentGrades.Include(g => g.Grades).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(StudentGrades studentGrades)

@@ -24,12 +24,12 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(professorRepository.GetAll());
+            return Ok(professorRepository.GetAll().Result);
         }
         [HttpGet("{professorId:guid}")]
         public IActionResult Get(Guid professorId)
         {
-            var professor = professorRepository.GetById(professorId);
+            var professor = professorRepository.GetById(professorId).Result;
             if (professor == null)
             {
                 return NotFound();
@@ -58,7 +58,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
-            professorRepository.Delete(professor);
+            professorRepository.Delete(professor.Result);
             professorRepository.Save();
             return NoContent();
         }
@@ -80,11 +80,11 @@ namespace LabsCourseManagement.WebUI.Controllers
                 {
                     return NotFound();
                 }
-                courses.Add(course);
-                professors.Add(professor);
-                course.AddProfessors(professors);
+                courses.Add(course.Result);
+                professors.Add(professor.Result);
+                course.Result.AddProfessors(professors);
             }
-            professor.AddCourses(courses);
+            professor.Result.AddCourses(courses);
             professorRepository.Save();
             courseRepository.Save();
             return NoContent();
@@ -106,10 +106,10 @@ namespace LabsCourseManagement.WebUI.Controllers
                 {
                     return NotFound();
                 }
-                laboratories.Add(laboratory);
+                laboratories.Add(laboratory.Result);
 
             }
-            professor.AddLaboratories(laboratories);
+            professor.Result.AddLaboratories(laboratories);
             professorRepository.Save();
             return NoContent();
 
@@ -124,7 +124,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
-            professor.UpdatePhoneNumber(phoneNumber);
+            professor.Result.UpdatePhoneNumber(phoneNumber);
             professorRepository.Save();
             contactRepository.Save();
 

@@ -13,31 +13,31 @@ namespace LabsCourseManagement.Application.Repositories
             this.context = context;
         }
 
-        public void Add(Course course)
+        public async void Add(Course course)
         {
-            context.Courses.Add(course);
+            await context.Courses.AddAsync(course);
         }
 
-        public List<Course> GetAll()
+        public async Task<List<Course>> GetAll()
         {
-            return context.Courses.Include(p => p.Professors)
+            return await context.Courses.Include(p => p.Professors)
                 .Include(l => l.Laboratories)
                 .Include(s => s.Students)
                 .Include(t => t.CourseProgram)
                 .Include(a => a.CourseAnnouncements)
                 .Include(g => g.CourseGradingInfo)
-                .Include(h => h.HelpfulMaterials).ToList();
+                .Include(h => h.HelpfulMaterials).ToListAsync();
         }
 
-        public Course Get(Guid id)
+        public async Task<Course> Get(Guid id)
         {
-            return context.Courses.Include(p => p.Professors)
+            return await context.Courses.Include(p => p.Professors)
                 .Include(l => l.Laboratories)
                 .Include(s => s.Students)
                 .Include(t => t.CourseProgram)
                 .Include(a => a.CourseAnnouncements)
                 .Include(g => g.CourseGradingInfo)
-                .Include(h => h.HelpfulMaterials).FirstOrDefault(c => c.Id == id);
+                .Include(h => h.HelpfulMaterials).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(Course course)

@@ -6,8 +6,8 @@ namespace LabsCourseManagement.Application.Repositories
     {
         void Add(GradingInfo gradingInfo);
         void Delete(GradingInfo gradingInfo);
-        GradingInfo Get(Guid id);
-        List<GradingInfo> GetAll();
+        Task<GradingInfo> Get(Guid id);
+        Task<List<GradingInfo>> GetAll();
         void Save();
     }
 }

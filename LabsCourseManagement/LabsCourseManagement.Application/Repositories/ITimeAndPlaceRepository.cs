@@ -6,8 +6,8 @@ namespace LabsCourseManagement.Application.Repositories
     {
         void Add(TimeAndPlace timeAndPlace);
         void Delete(TimeAndPlace timeAndPlace);
-        TimeAndPlace Get(Guid id);
-        List<TimeAndPlace> GetAll();
+        Task<TimeAndPlace> Get(Guid id);
+        Task<List<TimeAndPlace>> GetAll();
         Boolean Exists(DateTime time, string place);
         void Save();
     }

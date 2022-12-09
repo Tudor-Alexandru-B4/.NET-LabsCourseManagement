@@ -23,13 +23,13 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(studentRepository.GetAll());
+            return Ok(studentRepository.GetAll().Result);
         }
 
         [HttpGet("{studentId:guid}")]
         public IActionResult Get(Guid studentId)
         {
-            var student = studentRepository.Get(studentId);
+            var student = studentRepository.Get(studentId).Result;
             if (student == null)
             {
                 return NotFound();
@@ -72,9 +72,9 @@ namespace LabsCourseManagement.WebUI.Controllers
                 {
                     return NotFound($"Course with id {courseId} does not exist");
                 }
-                courses.Add(course);
+                courses.Add(course.Result);
             }
-            student.AddCourse(courses);
+            student.Result.AddCourse(courses);
             studentRepository.Save();
             return NoContent();
         }
@@ -101,9 +101,9 @@ namespace LabsCourseManagement.WebUI.Controllers
                 {
                     return NotFound($"Laboratory with id {laboratoryId} does not exist");
                 }
-                laboratories.Add(laboratory);
+                laboratories.Add(laboratory.Result);
             }
-            student.AddLaboratories(laboratories);
+            student.Result.AddLaboratories(laboratories);
             studentRepository.Save();
             return NoContent();
         }
@@ -116,7 +116,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
-            studentRepository.Delete(student);
+            studentRepository.Delete(student.Result);
             studentRepository.Save();
             return NoContent();
         }
@@ -129,7 +129,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
-            studentRepository.ChangeGroup(student, newGroup);
+            studentRepository.ChangeGroup(student.Result, newGroup);
             studentRepository.Save();
             return NoContent();
         }

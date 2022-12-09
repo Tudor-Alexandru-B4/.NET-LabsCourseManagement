@@ -23,13 +23,13 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(courseRepository.GetAll());
+            return Ok(courseRepository.GetAll().Result);
         }
 
         [HttpGet("{courseId:guid}")]
         public IActionResult Get(Guid courseId)
         {
-            var course = courseRepository.Get(courseId);
+            var course = courseRepository.Get(courseId).Result;
             if (course == null)
             {
                 return NotFound();
@@ -49,10 +49,10 @@ namespace LabsCourseManagement.WebUI.Controllers
             var course = Course.Create(courseDto.Name);
             if (course.IsSuccess)
             {
-                course.Entity.AddProfessors(new List<Professor> { professor });
+                course.Entity.AddProfessors(new List<Professor> { professor.Result });
                 courseRepository.Add(course.Entity);
                 courseRepository.Save();
-                professor.AddCourses(new List<Course> { course.Entity });
+                professor.Result.AddCourses(new List<Course> { course.Entity });
                 return Created(nameof(Get), course);
             }
             return BadRequest(course.Error);
@@ -80,11 +80,11 @@ namespace LabsCourseManagement.WebUI.Controllers
                 {
                     return NotFound($"Professor with id {professorId} does not exist");
                 }
-                professor.AddCourses(new List<Course> { course });
-                professors.Add(professor);
+                professor.Result.AddCourses(new List<Course> { course.Result });
+                professors.Add(professor.Result);
             }
             
-            course.AddProfessors(professors);
+            course.Result.AddProfessors(professors);
             courseRepository.Save();
             professorRepository.Save();
             return NoContent();
@@ -112,11 +112,11 @@ namespace LabsCourseManagement.WebUI.Controllers
                 {
                     return NotFound($"Student with {studentId} does not exist");
                 }
-                student.AddCourse(new List<Course>() { course });
-                students.Add(student);
+                student.Result.AddCourse(new List<Course>() { course.Result });
+                students.Add(student.Result);
             }
 
-            course.AddCourseStudents(students);
+            course.Result.AddCourseStudents(students);
             courseRepository.Save();
             studentRepository.Save();
             return NoContent();
@@ -130,7 +130,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
-            courseRepository.Delete(course);
+            courseRepository.Delete(course.Result);
             courseRepository.Save();
             return NoContent();
         }

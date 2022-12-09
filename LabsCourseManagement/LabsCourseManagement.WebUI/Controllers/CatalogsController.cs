@@ -17,13 +17,13 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(catalogRepository.GetAll());
+            return Ok(catalogRepository.GetAll().Result);
         }
 
         [HttpGet("{catalogId:guid}")]
         public IActionResult Get(Guid catalogId)
         {
-            var catalog = catalogRepository.Get(catalogId);
+            var catalog = catalogRepository.Get(catalogId).Result;
             if(catalog == null)
             {
                 return NotFound();

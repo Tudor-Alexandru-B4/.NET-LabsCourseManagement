@@ -12,9 +12,9 @@ namespace LabsCourseManagement.Application.Repositories
             this.context = context;
         }
 
-        public void Add(Contact contact)
+        public async void Add(Contact contact)
         {
-            context.Contacts.Add(contact);
+            await context.Contacts.AddAsync(contact);
         }
 
         public void Delete(Contact contact)
@@ -22,14 +22,14 @@ namespace LabsCourseManagement.Application.Repositories
             context.Contacts.Remove(contact);
         }
 
-        public List<Contact> GetAll()
+        public async Task<List<Contact>> GetAll()
         {
-            return context.Contacts.Include(e => e.EmailAddresses).ToList();
+            return await context.Contacts.Include(e => e.EmailAddresses).ToListAsync();
         }
 
-        public Contact Get(Guid id)
+        public async Task<Contact> Get(Guid id)
         {
-            return context.Contacts.Include(e => e.EmailAddresses).FirstOrDefault(c => c.Id == id);
+            return await context.Contacts.Include(e => e.EmailAddresses).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Save()

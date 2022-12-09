@@ -20,13 +20,13 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(announcementRepository.GetAll());
+            return Ok(announcementRepository.GetAll().Result);
         }
 
         [HttpGet("{announcementId:guid}")]
         public IActionResult Get(Guid announcementId)
         {
-            var announcement = announcementRepository.GetById(announcementId);
+            var announcement = announcementRepository.GetById(announcementId).Result;
             if (announcement == null)
             {
                 return NotFound();
@@ -37,7 +37,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         public IActionResult Create([FromBody] CreateAnnouncementDto announcementDto, Guid professorId)
         {
             var writter=professorRepository.GetById(professorId);
-            var announcement = Announcement.Create(announcementDto.Header, announcementDto.Text, writter);
+            var announcement = Announcement.Create(announcementDto.Header, announcementDto.Text, writter.Result);
             if(announcement.IsSuccess)
             {
                 announcementRepository.Add(announcement.Entity);
@@ -54,7 +54,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
-            announcementRepository.Delete(announcement);
+            announcementRepository.Delete(announcement.Result);
             announcementRepository.Save();
             return NoContent();
         }
