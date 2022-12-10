@@ -12,19 +12,19 @@ namespace LabsCourseManagement.Application.Repositories
             this.context = context;
         }
 
-        public void Add(Catalog catalog)
+        public async void Add(Catalog catalog)
         {
-            context.Catalogs.Add(catalog);
+            await context.Catalogs.AddAsync(catalog);
         }
 
-        public List<Catalog> GetAll()
+        public async Task<List<Catalog>> GetAll()
         {
-            return context.Catalogs.Include(s => s.StudentGrades).ToList();
+            return await context.Catalogs.Include(s => s.StudentGrades).ToListAsync();
         }
 
-        public Catalog Get(Guid id)
+        public async Task<Catalog> Get(Guid id)
         {
-            return context.Catalogs.Include(s => s.StudentGrades).FirstOrDefault(c => c.Id == id);
+            return await context.Catalogs.Include(s => s.StudentGrades).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(Catalog catalog)

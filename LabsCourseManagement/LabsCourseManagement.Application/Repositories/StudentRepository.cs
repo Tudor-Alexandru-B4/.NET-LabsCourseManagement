@@ -11,9 +11,9 @@ namespace LabsCourseManagement.Application.Repositories
         {
             this.context = context;
         }
-        public void Add(Student student)
+        public async void Add(Student student)
         {
-            context.Students.Add(student);
+            await context.Students.AddAsync(student);
         }
 
         public void Delete(Student student)
@@ -21,24 +21,23 @@ namespace LabsCourseManagement.Application.Repositories
             context.Students.Remove(student);
         }
 
-        public List<Student> GetAll()
+        public async Task<List<Student>> GetAll()
         {
-            return context.Students.Include(c => c.Courses)
-                .Include(l => l.Laboratories).ToList();
+            return await context.Students.Include(c => c.Courses)
+                .Include(l => l.Laboratories).ToListAsync();
         }
 
-        public Student Get(Guid id)
+        public async Task<Student> Get(Guid id)
         {
-            return context.Students.Include(c => c.Courses)
+            return await context.Students.Include(c => c.Courses)
                 .Include(l => l.Laboratories)
-                .FirstOrDefault(s => s.StudentId == id);
+                .FirstOrDefaultAsync(s => s.StudentId == id);
         }
 
         public void ChangeGroup(Student student, string newGroup)
         {
             var id = student.StudentId;
             context.Students.FirstOrDefault(s => s.StudentId == id).Group = newGroup;
-            //context.Students.Find(s => s.Id == id).Group = student.Group;
         }
 
         public void Save()

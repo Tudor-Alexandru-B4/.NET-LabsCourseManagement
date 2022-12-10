@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,19 +17,19 @@ namespace LabsCourseManagement.Application.Repositories
             this.context = context;
         }
 
-        public void Add(GradingInfo gradingInfo)
+        public async void Add(GradingInfo gradingInfo)
         {
-            context.GradingInfos.Add(gradingInfo);
+            await context.GradingInfos.AddAsync(gradingInfo);
         }
 
-        public List<GradingInfo> GetAll()
+        public async Task<List<GradingInfo>> GetAll()
         {
-            return context.GradingInfos.ToList();
+            return await context.GradingInfos.ToListAsync();
         }
 
-        public GradingInfo Get(Guid id)
+        public async Task<GradingInfo> Get(Guid id)
         {
-            return context.GradingInfos.FirstOrDefault(c => c.Id == id);
+            return await context.GradingInfos.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(GradingInfo gradingInfo)

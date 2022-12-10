@@ -24,9 +24,9 @@ namespace LabsCourseManagement.Infrastructure
         public DbSet<StudentGrades> StudentGrades => Set<StudentGrades>();
         public DbSet<TimeAndPlace> TimesAndPlaces => Set<TimeAndPlace>();
 
-        public void Save()
+        public async void Save()
         {
-            SaveChanges();
+            await SaveChangesAsync();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace LabsCourseManagement.Application.Repositories
@@ -12,19 +13,19 @@ namespace LabsCourseManagement.Application.Repositories
             this.context = context;
         }
 
-        public void Add(Grade grade)
+        public async void Add(Grade grade)
         {
-            context.Grades.Add(grade);
+            await context.Grades.AddAsync(grade);
         }
 
-        public List<Grade> GetAll()
+        public async Task<List<Grade>> GetAll()
         {
-            return context.Grades.ToList();
+            return await context.Grades.ToListAsync();
         }
 
-        public Grade Get(Guid id)
+        public async Task<Grade> Get(Guid id)
         {
-            return context.Grades.FirstOrDefault(c => c.Id == id);
+            return await context.Grades.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(Grade grade)

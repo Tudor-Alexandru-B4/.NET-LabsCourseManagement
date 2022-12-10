@@ -11,22 +11,21 @@ namespace LabsCourseManagement.Application.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        public void Add(Announcement announcement)
+        public async void Add(Announcement announcement)
         {
-            databaseContext.Announcements.Add(announcement);
+            await databaseContext.Announcements.AddAsync(announcement);
         }
         public void Delete(Announcement announcement)
         {
             databaseContext.Announcements.Remove(announcement);
         }
-        public Announcement GetById(Guid id)
+        public async Task<Announcement> GetById(Guid id)
         {
-            return databaseContext.Announcements.Find(id);
+            return await databaseContext.Announcements.FindAsync(id);
         }
-        public List<Announcement> GetAll()
+        public async Task<List<Announcement>> GetAll()
         {
-            return databaseContext.Announcements.Include(a => a.Writer).ToList();
-            //return context.Announcements.ToList();
+            return await databaseContext.Announcements.Include(a => a.Writer).ToListAsync();
         }
         public void Save()
         {
