@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace LabsCourseManagement.IntegrationTests
 {
+    [Collection("Sequential")]
     public class LaboratoriesControllerTests : BaseIntegrationTests
     {
         private const string ApiUrl = "v1/api/laboratories";
@@ -11,6 +12,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_CreateLaboratory_Then_ShouldGetLaboratoryInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             var laboratoryDto = await SUT();
 
@@ -33,6 +35,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_DeleteLaboratory_Then_ShouldNotReturnLaboratoryInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             CreateLaboratoryDto laboratoryDto = await SUT();
 
@@ -53,6 +56,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_AddStudentsToLaboratory_Then_ShouldBeAdded()
         {
+            CleanDatabases();
             //Arrange
             CreateLaboratoryDto laboratoryDto = await SUT();
             var studentDto = new CreateStudentDto
@@ -94,6 +98,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_GetByIdLaboratory_Then_ShouldGetLaboratory()
         {
+            CleanDatabases();
             //Arrange
             CreateLaboratoryDto laboratoryDto = await SUT();
 

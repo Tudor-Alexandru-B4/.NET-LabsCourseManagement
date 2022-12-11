@@ -2,6 +2,7 @@
 
 namespace LabsCourseManagement.IntegrationTests
 {
+    [Collection("Sequential")]
     public class StudentsControllerTests : BaseIntegrationTests
     {
         private const string ApiUrl = "v1/api/students";
@@ -9,6 +10,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_CreateStudent_Then_ShouldReturnStudentInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             var studentDto = SUT();
 
@@ -31,6 +33,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_DeleteStudent_Then_ShouldNotReturnStudentInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             CreateStudentDto studentDto = SUT();
 
@@ -51,6 +54,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_AddCoursesToStudent_Then_ShouldBeAdded()
         {
+            CleanDatabases();
             //Arrange
             CreateStudentDto studentDto = SUT();
 
@@ -100,6 +104,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_AddLaboratoriesToStudent_Then_ShouldBeAdded()
         {
+            CleanDatabases();
             //Arrange
             CreateStudentDto studentDto = SUT();
 
@@ -161,6 +166,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_GetByIdStudent_Then_ShouldGetStudent()
         {
+            CleanDatabases();
             //Arrange
             CreateStudentDto studentDto = SUT();
 

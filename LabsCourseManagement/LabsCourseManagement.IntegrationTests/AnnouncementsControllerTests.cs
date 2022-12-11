@@ -3,6 +3,7 @@ using LabsCourseManagement.WebUI.Dtos;
 
 namespace LabsCourseManagement.IntegrationTests
 {
+    [Collection("Sequential")]
     public class AnnouncementsControllerTests : BaseIntegrationTests
     {
         private const string ApiUrl = "v1/api/announcements";
@@ -10,6 +11,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_CreateAnnouncement_Then_ShouldReturnAnnouncementInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             var announcementDto = SUT();
             var professorDto = new CreateProfessorDto()
@@ -41,6 +43,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_DeleteAnnouncement_Then_ShouldNotReturnAnnouncementInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             var announcementDto = SUT();
             var professorDto = new CreateProfessorDto()
@@ -70,6 +73,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_GetByIdAnnouncement_Then_ShouldGetAnnouncement()
         {
+            CleanDatabases();
             //Arrange
             var announcementDto = SUT();
             var professorDto = new CreateProfessorDto()
