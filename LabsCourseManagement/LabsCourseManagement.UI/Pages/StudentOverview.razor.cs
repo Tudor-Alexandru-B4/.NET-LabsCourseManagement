@@ -7,20 +7,25 @@ namespace LabsCourseManagement.UI.Pages
     public partial class StudentOverview : ComponentBase
     {
         [Inject]
+        public NavigationManager uriHelper { get; set; } = default!;
+        [Inject]
         public IStudentDataService StudentDataService { get; set; } = default!;
-        public StudentCreateModel NewStudent = new StudentCreateModel();
+        public StudentCreateModel NewStudent { get; set; } = new StudentCreateModel();
         public List<StudentModel> Students { get; set; } = default!;
-        List<Guid> Guids = new List<Guid>();
-        Guid GuidForDelete;
-        Guid GuidForChangeGroup;
-        string Group = default!;
+        
+        private List<Guid> Guids = new List<Guid>();
+        private Guid GuidForDelete;
+        private Guid GuidForChangeGroup;
+        private string Group = default!;
+
         protected override async Task OnInitializedAsync()
         {
             Students = (await StudentDataService.GetAllStudent() ?? new List<StudentModel>()).ToList();
         }
         private async Task CreateStudent()
         {
-            await StudentDataService.CreateStudent(NewStudent);   
+            await StudentDataService.CreateStudent(NewStudent);
+            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
         }
         private async Task DeleteStudent()
         {

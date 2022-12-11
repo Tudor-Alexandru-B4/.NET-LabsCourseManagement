@@ -6,7 +6,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class LaboratoryDataService : ILaboratoryDataService
     {
-        private const string ApiURL = "https://localhost:7200/v1/api/laboratories";
+        private string apiUrl = new Uri("https://localhost:7200/v1/api/laboratories").ToString();
         private readonly HttpClient httpClient;
 
         public LaboratoryDataService(HttpClient httpClient)
@@ -17,7 +17,7 @@ namespace LabsCourseManagement.UI.Pages.Services
         {
             return await JsonSerializer
                 .DeserializeAsync<IEnumerable<LaboratoryModel>>
-                (await httpClient.GetStreamAsync(ApiURL),
+                (await httpClient.GetStreamAsync(apiUrl),
                 new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true,

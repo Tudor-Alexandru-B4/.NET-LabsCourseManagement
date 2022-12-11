@@ -135,7 +135,7 @@ namespace LabsCourseManagement.WebUI.Controllers
 
             var contact = contactRepository.Get(contactId);
 
-            if (professor == null || contact == null)
+            if (contact == null)
             {
                 return NotFound();
             }

@@ -34,7 +34,7 @@ namespace LabsCourseManagement.Application.Repositories
 
         public Boolean Exists(DateTime time, string place)
         {
-            return context.TimesAndPlaces.Where(t => t.DateAndTime == time && t.Classroom == place).ToList().Any();
+            return context.TimesAndPlaces.Where(t => t.DateAndTime == time && t.Classroom == place).Any();
         }
 
         public void Save()

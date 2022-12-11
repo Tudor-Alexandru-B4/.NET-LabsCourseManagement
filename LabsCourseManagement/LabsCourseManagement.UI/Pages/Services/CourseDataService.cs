@@ -1,6 +1,7 @@
 ﻿using LabsCourseManagement.Shared.Domain;
 using LabsCourseManagement.UI.Pages.InputClasses;
 using System.Net.Http.Json;
+using System.Net.Security;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -9,7 +10,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class CourseDataService : ICourseDataService
     {
-        private const string apiUrl = "https://localhost:7200/v1/api/courses";
+        private string apiUrl = new Uri("https://localhost:7200/v1/api/courses").ToString();
         private readonly HttpClient httpClient;
 
         public CourseDataService(HttpClient httpClient)
@@ -34,12 +35,12 @@ namespace LabsCourseManagement.UI.Pages.Services
             obj.Add("professorId", course.ProfessorId.ToString());
 
             var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
-            var result = await httpClient.PostAsync(apiUrl, content);
+            await httpClient.PostAsync(apiUrl, content);
         }
 
         public async Task DeleteCourse(Guid courseId)
         {
-            await httpClient.DeleteAsync(apiUrl + "/" + courseId.ToString());
+            await httpClient.DeleteAsync(new Uri(apiUrl + "/" + courseId.ToString()));
         }
 
         public async Task AddProfessorToCourse(Guid courseId, Guid professorId)

@@ -13,14 +13,14 @@ namespace LabsCourseManagement.UI.Pages
         [Inject]
         public IProfDataService ProfDataService { get; set; } = default!;
        
-        public CourseInput NewCourse = new CourseInput();
+        public CourseInput NewCourse { get; set; } = new CourseInput();
         public List<CourseModel> Courses { get; set; } = default!;
         public List<ProfessorModel> Professors { get; set; } = default!;
 
-        public Guid id;
-        public Guid updateCourseId;
-        public Guid updateProfessorId;
-        
+        public Guid id { get; set; }
+        public Guid updateCourseId { get; set; }
+        public Guid updateProfessorId { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             Courses = (await CourseDataService.GetAllCourses() ?? new List<CourseModel>()).ToList();

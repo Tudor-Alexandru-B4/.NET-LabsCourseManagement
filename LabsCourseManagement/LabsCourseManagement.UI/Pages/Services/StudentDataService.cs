@@ -8,7 +8,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class StudentDataService : IStudentDataService
     {
-        private const string ApiURL = "https://localhost:7200/v1/api/students";
+        private string apiURL = new Uri("https://localhost:7200/v1/api/students").ToString();
         private readonly HttpClient httpClient;
 
         public StudentDataService(HttpClient httpClient)
@@ -18,6 +18,11 @@ namespace LabsCourseManagement.UI.Pages.Services
 
         public async Task CreateStudent(StudentCreateModel student)
         {
+            if (student.Name == null || student.Surname == null || student.Group == null || student.PhoneNumber == null || student.RegistrationNumber == null)
+            {
+                return;
+            }
+
             JsonObject obj = new JsonObject();
             obj.Add("name", student.Name.ToString());
             obj.Add("surname", student.Surname.ToString());
@@ -27,7 +32,7 @@ namespace LabsCourseManagement.UI.Pages.Services
             obj.Add("registrationNumber", student.RegistrationNumber.ToString());
 
             var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
-            var result = await httpClient.PostAsync(ApiURL, content);
+            await httpClient.PostAsync(apiURL, content);
         }
 
         public async Task DeleteStudent(Guid studentId)
@@ -35,24 +40,24 @@ namespace LabsCourseManagement.UI.Pages.Services
             JsonObject obj = new JsonObject();
             obj.Add("studentId", studentId.ToString());
             var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
-            var url = ApiURL + "/" + studentId;
-            var result = await httpClient.PostAsync(url, content);
-            await httpClient.DeleteAsync(ApiURL + "/" + studentId.ToString());
+            var url = new Uri(apiURL + "/" + studentId).ToString();
+            await httpClient.PostAsync(url, content);
+            await httpClient.DeleteAsync(new Uri(apiURL + "/" + studentId.ToString()).ToString());
         }
 
         public async Task UpdateStudentGroup(Guid studentId, string groupName)
         {
             var json = JsonConvert.SerializeObject(groupName);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = ApiURL + "/" + studentId.ToString() + "/" + "changeGroup";
-            var result = await httpClient.PostAsync(url, data);
+            var url = new Uri(apiURL + "/" + studentId.ToString() + "/" + "changeGroup").ToString();
+            await httpClient.PostAsync(url, data);
         }
 
         public async Task<IEnumerable<StudentModel>?> GetAllStudent()
         {
             return await System.Text.Json.JsonSerializer
                 .DeserializeAsync<IEnumerable<StudentModel>>
-                (await httpClient.GetStreamAsync(ApiURL),
+                (await httpClient.GetStreamAsync(apiURL),
                 new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true,

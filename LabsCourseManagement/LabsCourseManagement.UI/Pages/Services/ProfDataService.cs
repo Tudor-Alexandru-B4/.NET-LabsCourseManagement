@@ -9,7 +9,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class ProfDataService : IProfDataService
     {
-        private const string apiUrl = "https://localhost:7200/v1/api/Professors";
+        private string apiUrl = new Uri("https://localhost:7200/v1/api/professors").ToString();
         private readonly HttpClient httpClient;
 
         public ProfDataService(HttpClient httpClient)
@@ -19,17 +19,22 @@ namespace LabsCourseManagement.UI.Pages.Services
 
         public async Task CreateProfessor(ProfessorCreateModel professor)
         {
+            if(professor.Name == null || professor.Surname == null || professor.PhoneNumber == null)
+            {
+                return;
+            }
+
             JsonObject obj = new JsonObject();
             obj.Add("name", professor.Name.ToString());
             obj.Add("surname", professor.Surname.ToString());
             obj.Add("phoneNumber", professor.PhoneNumber.ToString());
             var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
-            var result = await httpClient.PostAsync(apiUrl, content);
+            await httpClient.PostAsync(apiUrl, content);
         }
 
         public async Task DeleteProfessor(Guid professorId)
         {
-            await httpClient.DeleteAsync(apiUrl + "/" + professorId.ToString());
+            await httpClient.DeleteAsync(new Uri(apiUrl + "/" + professorId.ToString()).ToString());
         }
 
         public async Task<IEnumerable<ProfessorModel>?> GetAllProfessors()
@@ -53,13 +58,10 @@ namespace LabsCourseManagement.UI.Pages.Services
         }
         public async Task UpdateProfessorPhoneNumber(Guid professorId, Guid contactId, string phoneNumber)
         {
-            //JsonObject obj = new JsonObject();
-            //obj.Add("phoneNumber", phoneNumber.ToString());
-            //var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
             var json = JsonConvert.SerializeObject(phoneNumber);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url=apiUrl+"/"+professorId.ToString()+"/"+contactId.ToString()+"/"+"phoneNumber";
-            var result = await httpClient.PostAsync(url, data);
+            var url = new Uri(apiUrl + "/" + professorId.ToString() + "/" + contactId.ToString() + "/" + "phoneNumber").ToString();
+            await httpClient.PostAsync(url, data);
         }
     }
 }
