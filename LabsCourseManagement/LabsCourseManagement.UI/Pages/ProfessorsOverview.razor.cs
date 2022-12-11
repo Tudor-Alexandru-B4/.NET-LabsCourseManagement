@@ -7,6 +7,8 @@ namespace LabsCourseManagement.UI.Pages
     public partial class ProfessorsOverview : ComponentBase
     {
         [Inject]
+        public ICourseDataService CourseDataService { get; set; }
+        [Inject]
         public IProfDataService ProfDataService { get; set; }
         public ProfessorCreateModel NewProfessor = new ProfessorCreateModel();
         public List<ProfessorModel> Professors { get; set; } = default!;
@@ -16,9 +18,13 @@ namespace LabsCourseManagement.UI.Pages
         Guid GuidConatctForUpdate;
         public List<ContactModel> Contacts=new List<ContactModel>();
         String PhoneNumber;
+        Guid CourseGuid;
+        List<CourseModel> Courses= new List<CourseModel>();
+
         protected override async Task OnInitializedAsync()
         {
             Professors = (await ProfDataService.GetAllProfessors()).ToList();
+            Courses = (await CourseDataService.GetAllCourses()).ToList();
             foreach (var prof in Professors)
             {
                 var contact = new ContactModel(prof.ContactInfo.Id);
@@ -44,6 +50,10 @@ namespace LabsCourseManagement.UI.Pages
         {
 
             await ProfDataService.UpdateProfessorPhoneNumber(GuidProfessorForUpdate, GuidConatctForUpdate, PhoneNumber);
+        }
+        private async void AddCourses()
+        {
+            await ProfDataService.AddCourse(CourseGuid, GuidProfessorForUpdate);
         }
 
     }

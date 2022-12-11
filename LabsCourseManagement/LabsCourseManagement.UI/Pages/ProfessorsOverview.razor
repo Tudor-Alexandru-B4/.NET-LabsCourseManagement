@@ -1,7 +1,7 @@
 ﻿@page "/professors-overview"
 
 <h3>ProfessorsOverview</h3>
-
+<h3 class="fw-bold">Professors</h3>
 @if (Professors == null)
 {
     <p><em>Loading...</em></p>
@@ -14,15 +14,18 @@ else
         <th>Professor Id</th>
         <th>Name</th>
         <th>Surname</th>
+        <th></th>
 
         </thead>
         <tbody>
             @foreach (var professor in Professors)
             {
+                GuidForDelete = professor.Id;
                 <tr>
                     <td>@professor.Id</td>
                     <td>@professor.Name</td>
                     <td>@professor.Surname</td>
+                    <td><button class="btn-outline-secondary" onclick="@DeleteProfessor">Delete</button></td>
 
                 </tr>
             }
@@ -30,7 +33,7 @@ else
     </tabel>
 }
 <section id="create-professor" class="mt-5">
-    <h3>Add new Professor</h3>
+    <h3 class="fw-bold">Add new Professor</h3>
     @if (NewProfessor == null)
     {
         <p><em>Loading...</em></p>
@@ -59,29 +62,11 @@ else
         </EditForm>
     }
 </section>
-@if (Professors == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <section id="delete-professors" class="mt-5">
-        <h3>Delete Professor by Id</h3>
-        <div class="col-sm-10">
-            <InputSelect id="delete-professor" @bind-Value="GuidForDelete" class="form-control">
-                @foreach (var prof in Professors)
-                {
-                    <option value="@prof.Id" class="text-black">@prof.Id</option>
-                }
-            </InputSelect>
-        </div>
-        <button type="submit" onclick="@DeleteProfessor">Delete</button>
-    </section>
-}
 <section id="update-professors" class="mt-5">
-    <h3>Update Professor Phone Number</h3>
+    <h3 class="fw-bold">Edit a professor</h3>
+
     <div class="col-sm-10">
-        Select Professor Id
+        Select Professor
         @if (Professors == null)
         {
             <p><em>Loading...</em></p>
@@ -91,9 +76,10 @@ else
             <InputSelect id="update-professor" @bind-Value="GuidProfessorForUpdate" class="form-control">
                 @foreach (var prof in Professors)
                 {
-                    <option value="@prof.Id" class="text-black">@prof.Id</option>
+                    <option value="@prof.Id" class="text-black">@prof.Id @prof.Name @prof.Surname</option>
                 }
             </InputSelect>
+            <p class="fw-bold">Update Professor Phone Number</p>
             <p>Select Contact Id</p>
             <InputSelect id="update-professor-contact" @bind-Value="GuidConatctForUpdate" class="form-control">
                 @foreach (var contact in Contacts)
@@ -101,12 +87,22 @@ else
                     <option value="@contact.Id" class="text-black-50">@contact.Id</option>
                 }
             </InputSelect>
+            <label>
+                Phone Number <br />
+                <InputText id="surname" @bind-Value=PhoneNumber DisplayName="PhoneNumber" />
+                <br />
+            </label>
+            <button type="submit" onclick="@UpdateProfessor">Update</button>
+            <p class="fw-bold">Add Courses</p>
+            <p>Select Courses</p>
+            <InputSelect @bind-Value="CourseGuid">
+                @foreach (var course in Courses)
+                {
+                    <option value="@course.Id" class="text-black-50">@course.Id @course.Name</option>
+                }
+            </InputSelect>
+            <button type="submit" onclick="@AddCourses">Add</button>
         }
-        <label>
-            Phone Number <br />
-            <InputText id="surname" @bind-Value=PhoneNumber DisplayName="PhoneNumber" />
-            <br />
-        </label>
+
     </div>
-    <button type="submit" onclick="@UpdateProfessor">Update</button>
 </section>
