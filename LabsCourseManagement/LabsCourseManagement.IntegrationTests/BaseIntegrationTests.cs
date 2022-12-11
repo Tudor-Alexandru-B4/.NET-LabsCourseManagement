@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Net.Http;
-using System.Xml;
 
 namespace LabsCourseManagement.IntegrationTests
 {
@@ -38,23 +37,10 @@ namespace LabsCourseManagement.IntegrationTests
             HttpClientLaboratories = applicationLaboratories.CreateClient();
 
             databaseContext = new DatabaseContext(options);
-            //CleanDatabases();
         }
 
         protected void CleanDatabases()
         {
-            //databaseContext.Announcements.ExecuteDelete();
-            //databaseContext.Catalogs.ExecuteDelete();
-            //databaseContext.Contacts.ExecuteDelete();
-            //databaseContext.Courses.ExecuteDelete();
-            //databaseContext.Grades.ExecuteDelete();
-            //databaseContext.GradingInfos.ExecuteDelete();
-            //databaseContext.Laboratories.ExecuteDelete();
-            //databaseContext.MyStrings.ExecuteDelete();
-            //databaseContext.Professors.ExecuteDelete();
-            //databaseContext.Students.ExecuteDelete();
-            //databaseContext.StudentGrades.ExecuteDelete();
-            //databaseContext.TimesAndPlaces.ExecuteDelete();
             databaseContext.RemoveRange(databaseContext.Announcements.ToList());
             databaseContext.RemoveRange(databaseContext.Catalogs.ToList());
             databaseContext.RemoveRange(databaseContext.Contacts.ToList());

@@ -1,7 +1,4 @@
-﻿using LabsCourseManagement.Domain;
-using LabsCourseManagement.WebUI.Dtos;
-
-namespace LabsCourseManagement.IntegrationTests
+﻿namespace LabsCourseManagement.IntegrationTests
 {
     [Collection("Sequential")]
     public class AnnouncementsControllerTests : BaseIntegrationTests
@@ -37,7 +34,7 @@ namespace LabsCourseManagement.IntegrationTests
 
             announcements.Should().NotBeNull();
             announcements.Should().NotBeEmpty();
-            //announcements.Count.Should().Be(1);
+            announcements.Count.Should().Be(1);
         }
 
         [Fact]

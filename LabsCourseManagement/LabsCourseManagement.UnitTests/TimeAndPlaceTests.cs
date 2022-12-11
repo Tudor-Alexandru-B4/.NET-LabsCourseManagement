@@ -1,5 +1,4 @@
 ﻿using LabsCourseManagement.Domain;
-using Microsoft.VisualBasic;
 using System;
 
 namespace LabsCourseManagement.UnitTests
