@@ -194,7 +194,7 @@ namespace LabsCourseManagement.IntegrationTests
                 Year = 1,
                 Group = "StudentGroup",
                 RegistrationNumber = "StudentRegistrationNumber",
-                PhoneNumber = "StudentPhoneNumber"
+                PhoneNumber = "0799445721"
             };
         }
     }

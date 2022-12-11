@@ -1,14 +1,27 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using LabsCourseManagement.Application;
 using LabsCourseManagement.Application.Repositories;
 using LabsCourseManagement.Infrastructure;
+using LabsCourseManagement.WebUI.Dtos;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+//builder.Services.AddControllers()
+//    .AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+
+builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssembly(typeof(AnnouncementValidator).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(CourseValidator).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(LaboratoryValidator).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(ProfessorValidator).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(StudentValidator).Assembly);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -38,7 +51,6 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
 
 builder.Services.AddCors(options =>
 {
