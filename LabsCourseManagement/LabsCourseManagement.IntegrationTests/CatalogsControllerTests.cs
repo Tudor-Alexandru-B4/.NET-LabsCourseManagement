@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace LabsCourseManagement.IntegrationTests
 {
+    [Collection("Sequential")]
     public class CatalogsControllerTests : BaseIntegrationTests
     {
         private const string ApiUrl = "v1/api/catalogs";
@@ -10,6 +11,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_CreatingCatalog_Then_ShouldReturnGatalogInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             var courseDto = await SUT();
 
@@ -29,6 +31,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_GetByIdCatalog_Then_ShouldGetCatalog()
         {
+            CleanDatabases();
             //Arrange
             var courseDto = await SUT();
 

@@ -8,12 +8,14 @@ using System;
 
 namespace LabsCourseManagement.IntegrationTests
 {
+    [Collection("Sequential")]
     public class ProfessorsControllerTests:BaseIntegrationTests
     {
         private const string ApiUrl = "v1/api/professors";
         [Fact]
         public async void When_CreatedProfessor_Then_ShouldReturnProfessorInTheGetRequest()
         {
+            CleanDatabases();
             CreateProfessorDto professorDto = CreateSUT();
             //ACT
             var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
@@ -33,6 +35,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_DeleteProfessor_Then_ShouldNotReturnProfessorInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             CreateProfessorDto professorDto = CreateSUT();
 
@@ -53,6 +56,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_AddCoursesToProfessor_Then_ShouldBeAdded()
         {
+            CleanDatabases();
             //Arrange
             CreateProfessorDto professorDto = CreateSUT();
 
@@ -92,6 +96,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_AddLaboratoriesToProfessor_Then_ShouldBeAdded()
         {
+            CleanDatabases();
             //Arrange
             CreateProfessorDto professorDto = CreateSUT();
 
@@ -143,6 +148,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_GetByIdProfessor_Then_ShouldGetProfessor()
         {
+            CleanDatabases();
             //Arrange
             CreateProfessorDto professorDto = CreateSUT();
 

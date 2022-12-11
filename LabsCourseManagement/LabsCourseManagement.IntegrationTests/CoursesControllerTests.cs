@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LabsCourseManagement.IntegrationTests
 {
+    [Collection("Sequential")]
     public class CoursesControllerTests : BaseIntegrationTests
     {
         private const string ApiUrl = "v1/api/courses";
@@ -13,6 +14,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_CreateCourse_Then_ShouldReturnCourseInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             CreateCourseDto courseDto = await SUT();
 
@@ -34,8 +36,8 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_CreateCourse_Then_ProfessorsShouldNotBeEmpty()
         {
-            //Arrange
             CleanDatabases();
+            //Arrange
             CreateCourseDto courseDto = await SUT();
 
             //Act
@@ -56,6 +58,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_DeleteCourse_Then_ShouldNotReturnCourseInGetRequest()
         {
+            CleanDatabases();
             //Arrange
             CreateCourseDto courseDto = await SUT();
 
@@ -76,6 +79,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_AddProfessorsToCourse_Then_ShouldBeAdded()
         {
+            CleanDatabases();
             //Arrange
             CreateCourseDto courseDto = await SUT();
             var professorDto = new CreateProfessorDto()
@@ -106,15 +110,26 @@ namespace LabsCourseManagement.IntegrationTests
             addProfessorResponse.EnsureSuccessStatusCode();
             addProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
 
+            ProfessorDto professorAdded = null;
+            foreach (var prof in coursesAfterAdd[coursesAfterAdd.Count - 1].Professors)
+            {
+                if (prof.Id == professor.Id)
+                {
+                    professorAdded = prof;
+                    break;
+                }
+            }
+
             coursesAfterAdd[coursesAfterAdd.Count - 1].Professors.Count.Should().Be(2);
-            coursesAfterAdd[coursesAfterAdd.Count - 1].Professors[1].Id.Should().Be(professor.Id);
-            coursesAfterAdd[coursesAfterAdd.Count - 1].Professors[1].Name.Should().Be(professor.Name);
-            coursesAfterAdd[coursesAfterAdd.Count - 1].Professors[1].Surname.Should().Be(professor.Surname);
+            professorAdded.Id.Should().Be(professor.Id);
+            professorAdded.Name.Should().Be(professor.Name);
+            professorAdded.Surname.Should().Be(professor.Surname);
         }
 
         [Fact]
         public async void When_AddStudentsToCourse_Then_ShouldBeAdded()
         {
+            CleanDatabases();
             //Arrange
             CreateCourseDto courseDto = await SUT();
             var studentDto = new CreateStudentDto
@@ -156,6 +171,7 @@ namespace LabsCourseManagement.IntegrationTests
         [Fact]
         public async void When_GetByIdCourse_Then_ShouldGetCourse()
         {
+            CleanDatabases();
             //Arrange
             CreateCourseDto courseDto = await SUT();
 
