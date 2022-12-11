@@ -40,14 +40,19 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateCourseDto courseDto)
         {
+            if(courseDto.Name == null)
+            {
+                return BadRequest();
+            }
+
             var professor = professorRepository.GetById(courseDto.ProfessorId);
-            if (professor == null)
+            if (professor == null || professor.Result == null)
             {
                 return NotFound($"Professor with id {courseDto.ProfessorId} does not exist");
             }
 
             var course = Course.Create(courseDto.Name);
-            if (course.IsSuccess)
+            if (course.IsSuccess && course.Entity != null)
             {
                 course.Entity.AddProfessors(new List<Professor> { professor.Result });
                 courseRepository.Add(course.Entity);
@@ -62,7 +67,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         public IActionResult AddProfessorsToCourse(Guid courseId, [FromBody] List<Guid> professorsId)
         {
             var course = courseRepository.Get(courseId);
-            if (course == null)
+            if (course == null || course.Result == null)
             {
                 return NotFound($"Course with id {courseId} does not exist");
             }
@@ -76,7 +81,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             foreach(var professorId in professorsId)
             {
                 var professor = professorRepository.GetById(professorId);
-                if (professor== null)
+                if (professor== null || professor.Result == null)
                 {
                     return NotFound($"Professor with id {professorId} does not exist");
                 }
@@ -94,7 +99,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         public IActionResult AddStudentsToCourse(Guid courseId, [FromBody] List<Guid> studentsId)
         {
             var course = courseRepository.Get(courseId);
-            if (course == null)
+            if (course == null || course.Result == null)
             {
                 return NotFound($"Course with id {courseId} does not exist");
             }
@@ -108,7 +113,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             foreach (var studentId in studentsId)
             {
                 var student = studentRepository.Get(studentId);
-                if (student == null)
+                if (student == null || student.Result == null)
                 {
                     return NotFound($"Student with {studentId} does not exist");
                 }
@@ -126,7 +131,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         public IActionResult Delete(Guid courseId)
         {
             var course = courseRepository.Get(courseId);
-            if (course == null)
+            if (course == null || course.Result == null)
             {
                 return NotFound();
             }

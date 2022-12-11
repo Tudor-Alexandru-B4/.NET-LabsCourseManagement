@@ -1,5 +1,4 @@
-﻿using LabsCourseManagement.Domain;
-using LabsCourseManagement.Shared.Domain;
+﻿using LabsCourseManagement.Shared.Domain;
 
 namespace LabsCourseManagement.UI.Pages.Services
 {
@@ -8,8 +7,7 @@ namespace LabsCourseManagement.UI.Pages.Services
         Task CreateProfessor(ProfessorCreateModel professor);
         Task DeleteProfessor(Guid professorId);
         Task UpdateProfessorPhoneNumber(Guid professorId, Guid contactId, string phoneNumber);
-        Task<IEnumerable<ProfessorModel>> GetAllProfessors();
-        Task<ProfessorModel> GetProfessorDetail(Guid professorId);
+        Task<IEnumerable<ProfessorModel>?> GetAllProfessors();
         Task AddCourse(Guid courseId, Guid professorId);
     }
 }

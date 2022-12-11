@@ -5,7 +5,7 @@ namespace LabsCourseManagement.Domain
     public class Catalog
     {
         public Guid Id { get; private set; }
-        public List<StudentGrades> StudentGrades { get; private set; }
+        public List<StudentGrades>? StudentGrades { get; private set; }
     
         public static Result<Catalog> Create()
         {
@@ -24,7 +24,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("StudentGrades cannot be null");
             }
 
-            studentGrades.ForEach(studentGrades => StudentGrades.Add(studentGrades));
+            studentGrades.ForEach(studentGrades => StudentGrades?.Add(studentGrades));
             return Result.Success();
         }
     

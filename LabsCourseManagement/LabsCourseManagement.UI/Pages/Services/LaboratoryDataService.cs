@@ -13,7 +13,7 @@ namespace LabsCourseManagement.UI.Pages.Services
         {
             this.httpClient = httpClient;
         }
-        public async Task<IEnumerable<LaboratoryModel>> GetAllLaboratories()
+        public async Task<IEnumerable<LaboratoryModel>?> GetAllLaboratories()
         {
             return await JsonSerializer
                 .DeserializeAsync<IEnumerable<LaboratoryModel>>
@@ -22,11 +22,6 @@ namespace LabsCourseManagement.UI.Pages.Services
                 {
                     PropertyNameCaseInsensitive = true,
                 });
-        }
-
-        public async Task<LaboratoryModel> GetLaboratoryDetails(Guid laboratoryId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

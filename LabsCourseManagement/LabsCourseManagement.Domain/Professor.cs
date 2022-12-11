@@ -37,7 +37,7 @@ namespace LabsCourseManagement.Domain
             {
                 return Result.Failure("Courses can not be null");
             }
-            courses.ForEach(course => Courses.Add(course));
+            courses.ForEach(course => Courses?.Add(course));
             return Result.Success();
         }
         public Result AddLaboratories(List<Laboratory> laboratories)
@@ -46,12 +46,12 @@ namespace LabsCourseManagement.Domain
             {
                 return Result.Failure("Laboratories can not be null");
             }
-            laboratories.ForEach(Laboratory => Laboratories.Add(Laboratory));
+            laboratories.ForEach(Laboratory => Laboratories?.Add(Laboratory));
             return Result.Success();
         }
         public Result UpdatePhoneNumber(string phoneNumber)
         {
-            ContactInfo.UpdateContact(phoneNumber);
+            ContactInfo?.UpdateContact(phoneNumber);
 
             return Result.Success();
         }

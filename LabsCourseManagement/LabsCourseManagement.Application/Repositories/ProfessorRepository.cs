@@ -20,7 +20,7 @@ namespace LabsCourseManagement.Application.Repositories
         {
             context.Professors.Remove(professor);
         }
-        public async Task<Professor> GetById(Guid id)
+        public async Task<Professor?> GetById(Guid id)
         {
             return await context.Professors.Include(c => c.Courses)
                 .Include(l => l.Laboratories).Include(contact => contact.ContactInfo).FirstOrDefaultAsync(p => p.Id == id);

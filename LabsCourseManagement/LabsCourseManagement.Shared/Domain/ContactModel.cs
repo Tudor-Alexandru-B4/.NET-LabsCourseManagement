@@ -1,7 +1,4 @@
-﻿
-using LabsCourseManagement.Domain;
-
-namespace LabsCourseManagement.Shared.Domain
+﻿namespace LabsCourseManagement.Shared.Domain
 {
     public class ContactModel
     {

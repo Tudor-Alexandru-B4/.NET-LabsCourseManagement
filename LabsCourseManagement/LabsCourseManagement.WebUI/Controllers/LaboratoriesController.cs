@@ -46,25 +46,40 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateLaboratoryDto laboratoryDto)
         {
-            if (courseRepository.Get(laboratoryDto.CourseId) == null)
+            if (laboratoryDto.DateTime == null || laboratoryDto.Place == null || laboratoryDto.Name == null)
+            {
+                return BadRequest();
+            }
+
+            var laboratoryProfessor = professorRepository.GetById(laboratoryDto.ProfessorId);
+            if (laboratoryProfessor == null || laboratoryProfessor.Result== null)
             {
                 return NotFound();
             }
 
-            var laboratoryProfessor = professorRepository.GetById(laboratoryDto.ProfessorId);
             var course = courseRepository.Get(laboratoryDto.CourseId);
+            if (course == null || course.Result== null)
+            {
+                return NotFound();
+            }
+
             if (timeAndPlaceRepository.Exists(DateTime.Parse(laboratoryDto.DateTime), laboratoryDto.Place))
             {
                 return BadRequest($"Room {laboratoryDto.Place} is occupied at {laboratoryDto.DateTime}");
             }
+
             var timeAndPlace = TimeAndPlace.Create(DateTime.Parse(laboratoryDto.DateTime), laboratoryDto.Place).Entity;
+            if (timeAndPlace == null)
+            {
+                return BadRequest("Invalid time or place format");
+            }
             timeAndPlaceRepository.Add(timeAndPlace);
             timeAndPlaceRepository.Save();
 
             var laboratory = Laboratory.Create(laboratoryDto.Name, course.Result, 
                 laboratoryProfessor.Result, timeAndPlace);
 
-            if (laboratory.IsSuccess)
+            if (laboratory.IsSuccess && laboratory.Entity != null)
             {
                 laboratoryRepository.Add(laboratory.Entity);
                 laboratoryRepository.Save();
@@ -77,7 +92,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         public IActionResult Delete(Guid laboratoryId)
         {
             var laboratory = laboratoryRepository.Get(laboratoryId);
-            if (laboratory == null)
+            if (laboratory == null || laboratory.Result == null)
             {
                 return NotFound();
             }
@@ -101,10 +116,18 @@ namespace LabsCourseManagement.WebUI.Controllers
             foreach (var studentId in studentsIds)
             {
                 var student= studentRepository.Get(studentId).Result;
-                students.Add(student);
+                if (student != null)
+                {
+                    students.Add(student);
+                }
             }
 
             var laboratory = laboratoryRepository.Get(laboratoryId);
+            if(laboratory == null || laboratory.Result == null)
+            {
+                return NotFound();
+            }
+
             var addStudentsResult = laboratory.Result.AddStudents(students);
 
             if (addStudentsResult.IsSuccess)

@@ -27,7 +27,7 @@ namespace LabsCourseManagement.Application.Repositories
                 .Include(l => l.Laboratories).ToListAsync();
         }
 
-        public async Task<Student> Get(Guid id)
+        public async Task<Student?> Get(Guid id)
         {
             return await context.Students.Include(c => c.Courses)
                 .Include(l => l.Laboratories)

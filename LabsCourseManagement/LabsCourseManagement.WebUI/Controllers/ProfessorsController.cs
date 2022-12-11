@@ -40,8 +40,13 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateProfessorDto professorDto)
         {
+            if (professorDto.Name == null || professorDto.Surname == null || professorDto.PhoneNumber == null)
+            {
+                return BadRequest();
+            }
+
             var professor = Professor.Create(professorDto.Name, professorDto.Surname, professorDto.PhoneNumber);
-            if (professor.IsSuccess)
+            if (professor.IsSuccess && professor.Entity != null)
             {
                 professorRepository.Add(professor.Entity);
                 professorRepository.Save();
@@ -54,7 +59,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         public IActionResult Delete(Guid professorId)
         {
             var professor = professorRepository.GetById(professorId);
-            if (professor == null)
+            if (professor == null || professor.Result == null)
             {
                 return NotFound();
             }
@@ -69,14 +74,14 @@ namespace LabsCourseManagement.WebUI.Controllers
             var professor = professorRepository.GetById(professorId);
             var professors = new List<Professor>();
 
-            if (professor == null)
+            if (professor == null || professor.Result == null)
             {
                 return NotFound();
             }
             foreach (var courseId in coursesId)
             {
                 var course = courseRepository.Get(courseId);
-                if (course == null)
+                if (course == null || course.Result == null)
                 {
                     return NotFound();
                 }
@@ -95,14 +100,14 @@ namespace LabsCourseManagement.WebUI.Controllers
         {
             var laboratories = new List<Laboratory>();
             var professor = professorRepository.GetById(professorId);
-            if (professor == null)
+            if (professor == null || professor.Result == null)
             {
                 return NotFound();
             }
             foreach (var laboratoryId in laboratoriesId)
             {
                 var laboratory = laboratoryRepository.Get(laboratoryId);
-                if (laboratory == null)
+                if (laboratory == null || laboratory.Result == null)
                 {
                     return NotFound();
                 }
@@ -117,7 +122,17 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpPost("{professorId:guid}/{contactId:guid}/phoneNumber")]
         public ActionResult UpdatePhoneNumber(Guid professorId, Guid contactId, [FromBody] string phoneNumber)
         {
+            if (phoneNumber == null)
+            {
+                return BadRequest();
+            }
+
             var professor = professorRepository.GetById(professorId);
+            if(professor == null || professor.Result == null)
+            {
+                return NotFound();
+            }
+
             var contact = contactRepository.Get(contactId);
 
             if (professor == null || contact == null)

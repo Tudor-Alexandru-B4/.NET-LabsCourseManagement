@@ -4,7 +4,6 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public interface ILaboratoryDataService
     {
-        Task<IEnumerable<LaboratoryModel>> GetAllLaboratories();
-        Task<LaboratoryModel> GetLaboratoryDetails(Guid laboratoryId);
+        Task<IEnumerable<LaboratoryModel>?> GetAllLaboratories();
     }
 }
