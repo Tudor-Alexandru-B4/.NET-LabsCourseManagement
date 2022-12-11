@@ -26,11 +26,11 @@ namespace LabsCourseManagement.UI.Pages
             }
 
         }
-        private async void CreateProfessor()
+        private async Task CreateProfessor()
         {
             await ProfDataService.CreateProfessor(NewProfessor);
         }
-        private async void DeleteProfessor()
+        private async Task DeleteProfessor()
         {
 
             foreach (var professor in Professors)
@@ -40,7 +40,7 @@ namespace LabsCourseManagement.UI.Pages
             await ProfDataService.DeleteProfessor(GuidForDelete);
 
         }
-        private async void UpdateProfessor()
+        private async Task UpdateProfessor()
         {
 
             await ProfDataService.UpdateProfessorPhoneNumber(GuidProfessorForUpdate, GuidConatctForUpdate, PhoneNumber);

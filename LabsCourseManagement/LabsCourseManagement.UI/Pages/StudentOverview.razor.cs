@@ -18,11 +18,11 @@ namespace LabsCourseManagement.UI.Pages
         {
             Students = (await StudentDataService.GetAllStudent()).ToList();
         }
-        private async void CreateStudent()
+        private async Task CreateStudent()
         {
             await StudentDataService.CreateStudent(NewStudent);   
         }
-        private async void DeleteStudent()
+        private async Task DeleteStudent()
         {
             foreach(var student in Students)
             {
@@ -31,7 +31,7 @@ namespace LabsCourseManagement.UI.Pages
             await StudentDataService.DeleteStudent(GuidForDelete);
         }
 
-        private async void UpdateStudent()
+        private async Task UpdateStudent()
         {
             await StudentDataService.UpdateStudentGroup(GuidForChangeGroup, Group);
         }
