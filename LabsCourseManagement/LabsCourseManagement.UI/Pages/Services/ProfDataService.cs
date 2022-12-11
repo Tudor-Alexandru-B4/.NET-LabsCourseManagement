@@ -4,6 +4,8 @@ using System.Text.Json;
 using System.Text;
 using System;
 using Newtonsoft.Json;
+using LabsCourseManagement.Domain;
+using System.Net.Http.Json;
 
 namespace LabsCourseManagement.UI.Pages.Services
 {
@@ -48,6 +50,14 @@ namespace LabsCourseManagement.UI.Pages.Services
             throw new NotImplementedException();
         }
 
+        public async Task AddCourse(Guid courseId,Guid professorId)
+        {
+            await httpClient.PostAsJsonAsync($"{apiUrl}/{professorId}/courses", new List<Guid>
+            {
+                courseId
+            });
+
+        }
         public async Task UpdateProfessorPhoneNumber(Guid professorId, Guid contactId, string phoneNumber)
         {
             //JsonObject obj = new JsonObject();

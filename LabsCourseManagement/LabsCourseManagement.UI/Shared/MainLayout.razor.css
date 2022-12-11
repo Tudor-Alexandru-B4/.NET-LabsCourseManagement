@@ -20,6 +20,13 @@ main {
     display: flex;
     align-items: center;
 }
+.title {
+    font-weight: bold;
+    color: #3b4151
+}
+.btn-red{
+    background-color: darkred;
+}
 
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
