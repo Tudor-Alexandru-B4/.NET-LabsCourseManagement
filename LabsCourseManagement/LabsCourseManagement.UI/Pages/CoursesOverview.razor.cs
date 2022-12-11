@@ -8,14 +8,13 @@ namespace LabsCourseManagement.UI.Pages
     public partial class CoursesOverview : ComponentBase
     {
         [Inject]
-        public ICourseDataService CourseDataService { get; set; }
+        public ICourseDataService CourseDataService { get; set; } = default!;
 
         [Inject]
-        public IProfDataService ProfDataService { get; set; }
+        public IProfDataService ProfDataService { get; set; } = default!;
        
         public CourseInput NewCourse = new CourseInput();
         public List<CourseModel> Courses { get; set; } = default!;
-
         public List<ProfessorModel> Professors { get; set; } = default!;
 
         public Guid id;
@@ -24,8 +23,8 @@ namespace LabsCourseManagement.UI.Pages
         
         protected override async Task OnInitializedAsync()
         {
-            Courses = (await CourseDataService.GetAllCourses()).ToList();
-            Professors = (await ProfDataService.GetAllProfessors()).ToList();
+            Courses = (await CourseDataService.GetAllCourses() ?? new List<CourseModel>()).ToList();
+            Professors = (await ProfDataService.GetAllProfessors() ?? new List<ProfessorModel>()).ToList();
         }
         private async Task CreateCourse()
         {

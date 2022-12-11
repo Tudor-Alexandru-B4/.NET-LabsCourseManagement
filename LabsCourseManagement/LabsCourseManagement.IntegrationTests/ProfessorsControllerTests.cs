@@ -26,7 +26,7 @@ namespace LabsCourseManagement.IntegrationTests
             createProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
             getProfessorResult.EnsureSuccessStatusCode();
             var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<CreateProfessorDto>>();
-            //professors.Count.Should().Be(1);
+            professors.Count.Should().Be(1);
             professors.Should().HaveCount(1);
             professors.Should().NotBeNull();
 

@@ -5,7 +5,7 @@ namespace LabsCourseManagement.Domain
     public class InformationString
     {
         public Guid Id { get; private set; }
-        public string String { get; private set; }
+        public string? String { get; private set; }
 
         public static Result<InformationString> Create(string String)
         {

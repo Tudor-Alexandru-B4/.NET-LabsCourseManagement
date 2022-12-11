@@ -1,5 +1,4 @@
-﻿using LabsCourseManagement.Domain;
-using LabsCourseManagement.Shared.Domain;
+﻿using LabsCourseManagement.Shared.Domain;
 using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
@@ -49,7 +48,7 @@ namespace LabsCourseManagement.UI.Pages.Services
             var result = await httpClient.PostAsync(url, data);
         }
 
-        public async Task<IEnumerable<StudentModel>> GetAllStudent()
+        public async Task<IEnumerable<StudentModel>?> GetAllStudent()
         {
             return await System.Text.Json.JsonSerializer
                 .DeserializeAsync<IEnumerable<StudentModel>>
@@ -58,11 +57,6 @@ namespace LabsCourseManagement.UI.Pages.Services
                 {
                     PropertyNameCaseInsensitive = true,
                 });
-        }
-
-        public async Task<StudentModel> GetStudentDetail(Guid studentId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

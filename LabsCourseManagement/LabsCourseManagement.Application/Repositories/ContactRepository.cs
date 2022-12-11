@@ -27,7 +27,7 @@ namespace LabsCourseManagement.Application.Repositories
             return await context.Contacts.Include(e => e.EmailAddresses).ToListAsync();
         }
 
-        public async Task<Contact> Get(Guid id)
+        public async Task<Contact?> Get(Guid id)
         {
             return await context.Contacts.Include(e => e.EmailAddresses).FirstOrDefaultAsync(c => c.Id == id);
         }

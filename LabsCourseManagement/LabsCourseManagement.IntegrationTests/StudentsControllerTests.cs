@@ -27,7 +27,7 @@ namespace LabsCourseManagement.IntegrationTests
 
             students.Should().NotBeNull();
             students.Should().NotBeEmpty();
-            //students.Count.Should().Be(1);
+            students.Count.Should().Be(1);
         }
 
         [Fact]

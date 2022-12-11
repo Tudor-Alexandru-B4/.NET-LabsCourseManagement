@@ -6,8 +6,8 @@ namespace LabsCourseManagement.Domain
 
 
         public Guid Id { get; private set; }
-        public string PhoneNumber { get; private set; }
-        public List<InformationString> EmailAddresses { get; private set; }
+        public string? PhoneNumber { get; private set; }
+        public List<InformationString>? EmailAddresses { get; private set; }
 
         public static Result<Contact> Create(string phoneNumber)
         {
@@ -32,7 +32,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Email cannot be null");
             }
 
-            emailAddresses.ForEach(emailAddresses => EmailAddresses.Add(emailAddresses));
+            emailAddresses.ForEach(emailAddresses => EmailAddresses?.Add(emailAddresses));
             return Result.Success();
         }
         public Result UpdateContact(string phoneNumber)

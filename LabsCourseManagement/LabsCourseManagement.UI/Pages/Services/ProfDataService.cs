@@ -2,9 +2,7 @@
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Text;
-using System;
 using Newtonsoft.Json;
-using LabsCourseManagement.Domain;
 using System.Net.Http.Json;
 
 namespace LabsCourseManagement.UI.Pages.Services
@@ -34,7 +32,7 @@ namespace LabsCourseManagement.UI.Pages.Services
             await httpClient.DeleteAsync(apiUrl + "/" + professorId.ToString());
         }
 
-        public async Task<IEnumerable<ProfessorModel>> GetAllProfessors()
+        public async Task<IEnumerable<ProfessorModel>?> GetAllProfessors()
         {
             return await System.Text.Json.JsonSerializer
                 .DeserializeAsync<IEnumerable<ProfessorModel>>
@@ -43,11 +41,6 @@ namespace LabsCourseManagement.UI.Pages.Services
                 {
                     PropertyNameCaseInsensitive = true,
                 });
-        }
-
-        public async Task<ProfessorModel> GetProfessorDetail(Guid professorId)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task AddCourse(Guid courseId,Guid professorId)

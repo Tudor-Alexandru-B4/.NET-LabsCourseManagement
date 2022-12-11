@@ -27,7 +27,7 @@ namespace LabsCourseManagement.Application.Repositories
             return await context.TimesAndPlaces.ToListAsync();
         }
 
-        public async Task<TimeAndPlace> Get(Guid id)
+        public async Task<TimeAndPlace?> Get(Guid id)
         {
             return await context.TimesAndPlaces.FirstOrDefaultAsync(t => t.Id == id);
         }

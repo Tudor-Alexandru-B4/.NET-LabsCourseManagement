@@ -22,7 +22,7 @@ namespace LabsCourseManagement.Application.Repositories
             return await context.Catalogs.Include(s => s.StudentGrades).ToListAsync();
         }
 
-        public async Task<Catalog> Get(Guid id)
+        public async Task<Catalog?> Get(Guid id)
         {
             return await context.Catalogs.Include(s => s.StudentGrades).FirstOrDefaultAsync(c => c.Id == id);
         }

@@ -1,5 +1,4 @@
-﻿using LabsCourseManagement.Domain;
-using LabsCourseManagement.Shared.Domain;
+﻿using LabsCourseManagement.Shared.Domain;
 using LabsCourseManagement.UI.Pages.InputClasses;
 using System.Net.Http.Json;
 using System.Text;
@@ -17,7 +16,7 @@ namespace LabsCourseManagement.UI.Pages.Services
         {
             this.httpClient = httpClient;
         }
-        public async Task<IEnumerable<CourseModel>> GetAllCourses()
+        public async Task<IEnumerable<CourseModel>?> GetAllCourses()
         {
             return await JsonSerializer
                 .DeserializeAsync<IEnumerable<CourseModel>>
@@ -28,15 +27,10 @@ namespace LabsCourseManagement.UI.Pages.Services
                 });
         }
 
-        public async Task<CourseModel> GetCourseDetails(Guid couseId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task CreateCourse(CourseInput course)
         {
             JsonObject obj = new JsonObject();
-            obj.Add("name", course.Name.ToString());
+            obj.Add("name", course.Name?.ToString());
             obj.Add("professorId", course.ProfessorId.ToString());
 
             var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");

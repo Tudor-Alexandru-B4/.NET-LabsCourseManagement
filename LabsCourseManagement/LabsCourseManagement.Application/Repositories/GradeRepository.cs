@@ -23,7 +23,7 @@ namespace LabsCourseManagement.Application.Repositories
             return await context.Grades.ToListAsync();
         }
 
-        public async Task<Grade> Get(Guid id)
+        public async Task<Grade?> Get(Guid id)
         {
             return await context.Grades.FirstOrDefaultAsync(c => c.Id == id);
         }

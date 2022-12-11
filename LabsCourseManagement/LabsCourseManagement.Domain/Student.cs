@@ -6,15 +6,15 @@ namespace LabsCourseManagement.Domain
     public class Student
     {
         public Guid StudentId { get; private set; }
-        public string Name { get; private set; }
-        public string Surname { get; private set; }
-        public Contact ContactInfo { get; private set; }
+        public string? Name { get; private set; }
+        public string? Surname { get; private set; }
+        public Contact? ContactInfo { get; private set; }
         public int Year { get; private set; }
-        public string Group { get; set; }
+        public string? Group { get; set; }
         public bool IsActive { get; private set; }
-        public string RegistrationNumber { get; private set; }
-        public List<Course> Courses { get; private set; }
-        public List<Laboratory> Laboratories { get; private set; }
+        public string? RegistrationNumber { get; private set; }
+        public List<Course>? Courses { get; private set; }
+        public List<Laboratory>? Laboratories { get; private set; }
 
         public static Result<Student> Create(string name, string surname, string group, int year, string registrationNumber, string phoneNumber)
         {
@@ -47,7 +47,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Courses cannot be null");
             }
 
-            courses.ForEach(course => Courses.Add(course));
+            courses.ForEach(course => Courses?.Add(course));
             return Result.Success();
         }
 
@@ -58,7 +58,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Laboratories cannot be null");
             }
 
-            laboratories.ForEach(lab => Laboratories.Add(lab));
+            laboratories.ForEach(lab => Laboratories?.Add(lab));
             return Result.Success();
         }
 

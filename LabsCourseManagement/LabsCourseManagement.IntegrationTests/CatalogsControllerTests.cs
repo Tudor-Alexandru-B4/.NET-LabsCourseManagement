@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace LabsCourseManagement.IntegrationTests
 {
@@ -25,7 +24,7 @@ namespace LabsCourseManagement.IntegrationTests
 
             catalogs.Should().NotBeNull();
             catalogs.Should().NotBeEmpty();
-            //catalogs.Count.Should().Be(1);
+            catalogs.Count.Should().Be(1);
         }
 
         [Fact]

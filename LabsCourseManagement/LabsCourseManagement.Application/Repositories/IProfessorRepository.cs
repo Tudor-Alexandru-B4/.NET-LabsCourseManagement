@@ -7,7 +7,7 @@ namespace LabsCourseManagement.Application.Repositories
         void Add(Professor professor);
         void Delete(Professor professor);
         Task<List<Professor>> GetAll();
-        Task<Professor> GetById(Guid id);
+        Task<Professor?> GetById(Guid id);
         void Save();
     }
 }

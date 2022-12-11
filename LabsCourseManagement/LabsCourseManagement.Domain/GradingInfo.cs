@@ -10,8 +10,8 @@ namespace LabsCourseManagement.Domain
         public bool IsMandatory { get; private set; }
         public double MinGrade { get; private set; }
         public double MaxGrade { get; private set; }
-        public string Description { get; private set; }
-        public TimeAndPlace TimeAndPlace { get; private set; }
+        public string? Description { get; private set; }
+        public TimeAndPlace? TimeAndPlace { get; private set; }
         public static Result<GradingInfo> Create(ExaminationType type, double minGrade, double maxGrade, bool isMandatory, string Description, TimeAndPlace timeAndPlace)
         {
             if ( minGrade <= 0 || maxGrade <= 0 || Description==null)

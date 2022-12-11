@@ -6,7 +6,7 @@ namespace LabsCourseManagement.Application.Repositories
     {
         void Add(Grade grade);
         void Delete(Grade grade);
-        Task<Grade> Get(Guid id);
+        Task<Grade?> Get(Guid id);
         Task<List<Grade>> GetAll();
         void Save();
     }

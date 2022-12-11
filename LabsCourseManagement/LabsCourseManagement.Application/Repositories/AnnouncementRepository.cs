@@ -19,7 +19,7 @@ namespace LabsCourseManagement.Application.Repositories
         {
             databaseContext.Announcements.Remove(announcement);
         }
-        public async Task<Announcement> GetById(Guid id)
+        public async Task<Announcement?> GetById(Guid id)
         {
             return await databaseContext.Announcements.FindAsync(id);
         }

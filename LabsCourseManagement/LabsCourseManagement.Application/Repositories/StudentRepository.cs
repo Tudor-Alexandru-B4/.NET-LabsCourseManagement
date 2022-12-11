@@ -27,7 +27,7 @@ namespace LabsCourseManagement.Application.Repositories
                 .Include(l => l.Laboratories).ToListAsync();
         }
 
-        public async Task<Student> Get(Guid id)
+        public async Task<Student?> Get(Guid id)
         {
             return await context.Students.Include(c => c.Courses)
                 .Include(l => l.Laboratories)
@@ -37,9 +37,10 @@ namespace LabsCourseManagement.Application.Repositories
         public void ChangeGroup(Student student, string newGroup)
         {
             var id = student.StudentId;
-            if (context.Students.FirstOrDefault(s => s.StudentId == id) != null)
+            var searchedStudent = context.Students.FirstOrDefault(s => s.StudentId == id);
+            if (searchedStudent != null)
             {
-                context.Students.FirstOrDefault(s => s.StudentId == id).Group = newGroup;
+                searchedStudent.Group = newGroup;
             }
             
         }

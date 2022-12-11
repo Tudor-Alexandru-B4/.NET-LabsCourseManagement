@@ -7,9 +7,9 @@ namespace LabsCourseManagement.UI.Pages
     public partial class ProfessorsOverview : ComponentBase
     {
         [Inject]
-        public ICourseDataService CourseDataService { get; set; }
+        public ICourseDataService CourseDataService { get; set; } = default!;
         [Inject]
-        public IProfDataService ProfDataService { get; set; }
+        public IProfDataService ProfDataService { get; set; } = default!;
         public ProfessorCreateModel NewProfessor = new ProfessorCreateModel();
         public List<ProfessorModel> Professors { get; set; } = default!;
         List<Guid> Guids = new List<Guid>();
@@ -17,20 +17,23 @@ namespace LabsCourseManagement.UI.Pages
         Guid GuidProfessorForUpdate;
         Guid GuidConatctForUpdate;
         public List<ContactModel> Contacts=new List<ContactModel>();
-        String PhoneNumber;
+        string PhoneNumber = default!;
         Guid CourseGuid;
         List<CourseModel> Courses= new List<CourseModel>();
 
         protected override async Task OnInitializedAsync()
         {
-            Professors = (await ProfDataService.GetAllProfessors()).ToList();
-            Courses = (await CourseDataService.GetAllCourses()).ToList();
+            Professors = (await ProfDataService.GetAllProfessors() ?? new List<ProfessorModel>()).ToList();
+            Courses = (await CourseDataService.GetAllCourses() ?? new List<CourseModel>()).ToList();
             foreach (var prof in Professors)
             {
-                var contact = new ContactModel(prof.ContactInfo.Id);
-                Contacts.Add(contact);
+                var contactInfo = prof.ContactInfo;
+                if (contactInfo != null)
+                {
+                    var contact = new ContactModel(contactInfo.Id);
+                    Contacts.Add(contact);
+                }
             }
-
         }
         private async Task CreateProfessor()
         {
@@ -51,7 +54,7 @@ namespace LabsCourseManagement.UI.Pages
 
             await ProfDataService.UpdateProfessorPhoneNumber(GuidProfessorForUpdate, GuidConatctForUpdate, PhoneNumber);
         }
-        private async void AddCourses()
+        private async Task AddCourses()
         {
             await ProfDataService.AddCourse(CourseGuid, GuidProfessorForUpdate);
         }
@@ -59,10 +62,9 @@ namespace LabsCourseManagement.UI.Pages
     }
     public class ProfessorCreateModel
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string PhoneNumber { get; set; }
-        public ProfessorCreateModel() { }
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }
 

@@ -27,7 +27,7 @@ namespace LabsCourseManagement.Application.Repositories
             return await context.GradingInfos.ToListAsync();
         }
 
-        public async Task<GradingInfo> Get(Guid id)
+        public async Task<GradingInfo?> Get(Guid id)
         {
             return await context.GradingInfos.FirstOrDefaultAsync(c => c.Id == id);
         }

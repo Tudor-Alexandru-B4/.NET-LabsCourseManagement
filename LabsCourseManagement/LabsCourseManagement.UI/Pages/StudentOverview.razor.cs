@@ -7,16 +7,16 @@ namespace LabsCourseManagement.UI.Pages
     public partial class StudentOverview : ComponentBase
     {
         [Inject]
-        public IStudentDataService StudentDataService { get; set; }
+        public IStudentDataService StudentDataService { get; set; } = default!;
         public StudentCreateModel NewStudent = new StudentCreateModel();
         public List<StudentModel> Students { get; set; } = default!;
         List<Guid> Guids = new List<Guid>();
         Guid GuidForDelete;
         Guid GuidForChangeGroup;
-        string Group;
+        string Group = default!;
         protected override async Task OnInitializedAsync()
         {
-            Students = (await StudentDataService.GetAllStudent()).ToList();
+            Students = (await StudentDataService.GetAllStudent() ?? new List<StudentModel>()).ToList();
         }
         private async Task CreateStudent()
         {
@@ -39,14 +39,12 @@ namespace LabsCourseManagement.UI.Pages
 
     public class StudentCreateModel
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string PhoneNumber { get; set; }
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
+        public string? PhoneNumber { get; set; }
         public int Year { get; set; }
-        public string Group { get; set; }
+        public string? Group { get; set; }
         public bool IsActive { get; set; }
-        public string RegistrationNumber { get; set; }
-        public StudentCreateModel() { }
-
+        public string? RegistrationNumber { get; set; }
     }
 }

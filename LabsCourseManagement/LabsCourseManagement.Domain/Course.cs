@@ -5,16 +5,16 @@ namespace LabsCourseManagement.Domain
     public class Course
     {
         public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public Catalog CourseCatalog { get; private set; }
+        public string? Name { get; private set; }
+        public Catalog? CourseCatalog { get; private set; }
         public bool IsActive { get; private set; }
-        public List<Professor> Professors { get; private set; }
-        public List<Laboratory> Laboratories { get; private set; }
-        public List<Student> Students { get; private set; }
-        public List<TimeAndPlace> CourseProgram { get; private set; }
-        public List<Announcement> CourseAnnouncements { get; private set; }
-        public List<GradingInfo> CourseGradingInfo { get; private set; }
-        public List<InformationString> HelpfulMaterials { get; private set; }
+        public List<Professor>? Professors { get; private set; }
+        public List<Laboratory>? Laboratories { get; private set; }
+        public List<Student>? Students { get; private set; }
+        public List<TimeAndPlace>? CourseProgram { get; private set; }
+        public List<Announcement>? CourseAnnouncements { get; private set; }
+        public List<GradingInfo>? CourseGradingInfo { get; private set; }
+        public List<InformationString>? HelpfulMaterials { get; private set; }
 
         public static Result<Course> Create(string name)
         {
@@ -47,7 +47,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Professors cannot be null");
             }
 
-            professors.ForEach(professor => Professors.Add(professor));
+            professors.ForEach(professor => Professors?.Add(professor));
             return Result.Success();
         }
 
@@ -58,7 +58,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Laboratories cannot be null");
             }
 
-            laboratories.ForEach(lab => Laboratories.Add(lab));
+            laboratories.ForEach(lab => Laboratories?.Add(lab));
             return Result.Success();
         }
 
@@ -69,7 +69,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Students cannot be null");
             }
 
-            students.ForEach(student => Students.Add(student));
+            students.ForEach(student => Students?.Add(student));
             return Result.Success();
         }
         
@@ -80,7 +80,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("TimesAndPlaces cannot be null");
             }
 
-            timesAndPlaces.ForEach(timeAndPlace => CourseProgram.Add(timeAndPlace));
+            timesAndPlaces.ForEach(timeAndPlace => CourseProgram?.Add(timeAndPlace));
             return Result.Success();
         }
 
@@ -91,7 +91,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Announcements cannot be null");
             }
 
-            announcements.ForEach(announcement => CourseAnnouncements.Add(announcement));
+            announcements.ForEach(announcement => CourseAnnouncements?.Add(announcement));
             return Result.Success();
         }
 
@@ -102,7 +102,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("GradingInfos cannot be null");
             }
 
-            gradingInfos.ForEach(gradingInfo => CourseGradingInfo.Add(gradingInfo));
+            gradingInfos.ForEach(gradingInfo => CourseGradingInfo?.Add(gradingInfo));
             return Result.Success();
         }
 
@@ -113,7 +113,7 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("HelpfulMaterials cannot be null");
             }
 
-            helpfulMaterials.ForEach(helpfulMaterial => HelpfulMaterials.Add(helpfulMaterial));
+            helpfulMaterials.ForEach(helpfulMaterial => HelpfulMaterials?.Add(helpfulMaterial));
             return Result.Success();
         }
 

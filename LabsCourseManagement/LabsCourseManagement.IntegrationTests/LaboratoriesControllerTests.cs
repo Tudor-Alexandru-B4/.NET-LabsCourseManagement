@@ -29,7 +29,7 @@ namespace LabsCourseManagement.IntegrationTests
 
             laboratories.Should().NotBeNull();
             laboratories.Should().NotBeEmpty();
-            //laboratories.Count.Should().Be(1);
+            laboratories.Count.Should().Be(1);
         }
 
         [Fact]
