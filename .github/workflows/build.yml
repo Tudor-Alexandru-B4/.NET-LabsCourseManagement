@@ -44,5 +44,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"Tudor-Alexandru-B4_.NET-LabsCourseManagement" /o:"yigrek" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build LabsCourseManagement/LabsCourseManagement.sln
-          dotnet test --collect "Code Coverage"
+          dotnet test --collect "Code Coverage" LabsCourseManagement/LabsCourseManagement.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
