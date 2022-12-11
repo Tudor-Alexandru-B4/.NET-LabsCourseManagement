@@ -55,7 +55,7 @@ namespace LabsCourseManagement.IntegrationTests
             {
                 Name = "ProfessorName",
                 Surname = "ProfessorSurname",
-                PhoneNumber = "ProfessorPhoneNumber"
+                PhoneNumber = "0799446257"
             };
             var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
             var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");

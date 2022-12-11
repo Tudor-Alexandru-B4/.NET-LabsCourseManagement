@@ -66,7 +66,7 @@ namespace LabsCourseManagement.IntegrationTests
                 Year = 1,
                 Group = "AddedStudentGroup",
                 RegistrationNumber = "AddedStudentRegistrationNumber",
-                PhoneNumber = "AddedStudentPhoneNumber"
+                PhoneNumber = "0799445678"
             };
             var createStudentResponse = await HttpClientStudents.PostAsJsonAsync("v1/api/students", studentDto);
             var getStudentResult = await HttpClientStudents.GetAsync("v1/api/students");
@@ -123,7 +123,7 @@ namespace LabsCourseManagement.IntegrationTests
             {
                 Name = "ProfessorName",
                 Surname = "ProfessorSurname",
-                PhoneNumber = "ProfessorPhoneNumber"
+                PhoneNumber = "0744556324"
             };
             var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
             var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
