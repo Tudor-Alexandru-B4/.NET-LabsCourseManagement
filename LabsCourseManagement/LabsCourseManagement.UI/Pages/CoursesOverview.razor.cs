@@ -27,16 +27,16 @@ namespace LabsCourseManagement.UI.Pages
             Courses = (await CourseDataService.GetAllCourses()).ToList();
             Professors = (await ProfDataService.GetAllProfessors()).ToList();
         }
-        private async void CreateCourse()
+        private async Task CreateCourse()
         {
             await CourseDataService.CreateCourse(NewCourse);
         }
-        private async void DeleteCourse()
+        private async Task DeleteCourse()
         {
             await CourseDataService.DeleteCourse(id);
         }
 
-        private async void AddProfessorToCourse()
+        private async Task AddProfessorToCourse()
         {
             await CourseDataService.AddProfessorToCourse(updateCourseId, updateProfessorId);
         }
