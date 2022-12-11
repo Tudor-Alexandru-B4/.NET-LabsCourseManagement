@@ -51,7 +51,7 @@ namespace LabsCourseManagement.UI.Pages
 
             await ProfDataService.UpdateProfessorPhoneNumber(GuidProfessorForUpdate, GuidConatctForUpdate, PhoneNumber);
         }
-        private async void AddCourses()
+        private async Task AddCourses()
         {
             await ProfDataService.AddCourse(CourseGuid, GuidProfessorForUpdate);
         }
