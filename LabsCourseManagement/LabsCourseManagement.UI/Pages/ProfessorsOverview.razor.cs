@@ -10,24 +10,24 @@ namespace LabsCourseManagement.UI.Pages
         public ICourseDataService CourseDataService { get; set; } = default!;
         [Inject]
         public IProfDataService ProfDataService { get; set; } = default!;
-        public ProfessorCreateModel NewProfessor = new ProfessorCreateModel();
+        public ProfessorCreateModel NewProfessor { get; set; } = new ProfessorCreateModel();
         public List<ProfessorModel> Professors { get; set; } = default!;
-        List<Guid> Guids = new List<Guid>();
-        Guid GuidForDelete;
-        Guid GuidProfessorForUpdate;
-        Guid GuidConatctForUpdate;
-        public List<ContactModel> Contacts=new List<ContactModel>();
-        string PhoneNumber = default!;
-        Guid CourseGuid;
-        List<CourseModel> Courses= new List<CourseModel>();
+        public List<ContactModel> Contacts { get; set; } = new List<ContactModel>();
+
+        private List<Guid> Guids = new List<Guid>();
+        private Guid GuidForDelete;
+        private Guid GuidProfessorForUpdate;
+        private Guid GuidConatctForUpdate;
+        private string PhoneNumber = default!;
+        private Guid CourseGuid;
+        private List<CourseModel> Courses = new List<CourseModel>();
 
         protected override async Task OnInitializedAsync()
         {
             Professors = (await ProfDataService.GetAllProfessors() ?? new List<ProfessorModel>()).ToList();
             Courses = (await CourseDataService.GetAllCourses() ?? new List<CourseModel>()).ToList();
-            foreach (var prof in Professors)
+            foreach (var contactInfo in Professors.Select(prof => prof.ContactInfo))
             {
-                var contactInfo = prof.ContactInfo;
                 if (contactInfo != null)
                 {
                     var contact = new ContactModel(contactInfo.Id);

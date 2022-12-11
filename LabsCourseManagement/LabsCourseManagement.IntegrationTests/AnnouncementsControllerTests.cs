@@ -11,12 +11,7 @@
             CleanDatabases();
             //Arrange
             var announcementDto = SUT();
-            var professorDto = new CreateProfessorDto()
-            {
-                Name = "ProfessorName",
-                Surname = "ProfessorSurname",
-                PhoneNumber = "ProfessorPhoneNumber"
-            };
+            var professorDto = ProfessorSUT();
             var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
             var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
             var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
@@ -43,12 +38,7 @@
             CleanDatabases();
             //Arrange
             var announcementDto = SUT();
-            var professorDto = new CreateProfessorDto()
-            {
-                Name = "ProfessorName",
-                Surname = "ProfessorSurname",
-                PhoneNumber = "ProfessorPhoneNumber"
-            };
+            var professorDto = ProfessorSUT();
             var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
             var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
             var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
@@ -73,12 +63,7 @@
             CleanDatabases();
             //Arrange
             var announcementDto = SUT();
-            var professorDto = new CreateProfessorDto()
-            {
-                Name = "ProfessorName",
-                Surname = "ProfessorSurname",
-                PhoneNumber = "ProfessorPhoneNumber"
-            };
+            CreateProfessorDto professorDto = ProfessorSUT();
             var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
             var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
             var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
@@ -96,6 +81,16 @@
 
             announcement.Should().NotBeNull();
             announcement.Id.Should().Be(announcements[announcements.Count - 1].Id);
+        }
+
+        private static CreateProfessorDto ProfessorSUT()
+        {
+            return new CreateProfessorDto()
+            {
+                Name = "ProfessorName",
+                Surname = "ProfessorSurname",
+                PhoneNumber = "0799568741"
+            };
         }
 
         private static CreateAnnouncementDto SUT()
