@@ -42,12 +42,15 @@ namespace LabsCourseManagement.UI.Pages.Services
             await httpClient.DeleteAsync(new Uri(apiUrl + "/" + courseId.ToString()).ToString());
         }
 
-        public async Task AddProfessorToCourse(Guid courseId, Guid professorId)
+        public async Task AddProfessorsToCourse(Guid courseId, List<Guid> professorsIds)
         {
-            await httpClient.PostAsJsonAsync($"{apiUrl}/{courseId}/professors", new List<Guid>
-            {
-                professorId
-            });
+            await httpClient.PostAsJsonAsync($"{apiUrl}/{courseId}/professors", professorsIds);
         }
+
+        public async Task AddStudentsToCourse(Guid courseId, List<Guid> studentsIds)
+        {
+            await httpClient.PostAsJsonAsync($"{apiUrl}/{courseId}/students", studentsIds);
+        }
+
     }
 }
