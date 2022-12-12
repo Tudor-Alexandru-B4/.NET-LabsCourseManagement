@@ -51,7 +51,12 @@ namespace LabsCourseManagement.Domain
         }
         public Result UpdatePhoneNumber(string phoneNumber)
         {
-            ContactInfo?.UpdateContact(phoneNumber);
+            var result = ContactInfo?.UpdateContact(phoneNumber);
+
+            if(result == null || result.IsFailure)
+            {
+                return Result.Failure("Invalid phone number format");
+            }
 
             return Result.Success();
         }

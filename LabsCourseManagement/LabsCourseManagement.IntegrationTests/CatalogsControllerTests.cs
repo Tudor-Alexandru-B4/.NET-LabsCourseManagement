@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace LabsCourseManagement.IntegrationTests
 {
@@ -47,6 +48,19 @@ namespace LabsCourseManagement.IntegrationTests
 
             catalog.Should().NotBeNull();
             catalog.Id.Should().Be(catalogs[catalogs.Count - 1].Id);
+        }
+
+        [Fact]
+        public async void When_GetByIdNonexistantCatalog_Then_ShouldReturnNotFound()
+        {
+            CleanDatabases();
+            //Arrange
+
+            //Act
+            var getCatalogByIdResponse = await HttpClientCatalogs.GetAsync($"{ApiUrl}/{Guid.NewGuid()}");
+
+            //Assert
+            getCatalogByIdResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
         private async Task<CreateCourseDto> SUT()

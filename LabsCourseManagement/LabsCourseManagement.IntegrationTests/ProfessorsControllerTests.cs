@@ -33,6 +33,59 @@ namespace LabsCourseManagement.IntegrationTests
         }
 
         [Fact]
+        public async void When_CreatedProfessorWithNullName_Then_ShouldReturnBadRequest()
+        {
+            CleanDatabases();
+            CreateProfessorDto professorDto = CreateSUT();
+            professorDto.Name = null;
+            //ACT
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+
+            //assert
+            createProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async void When_CreatedProfessorWithNullSurname_Then_ShouldReturnBadRequest()
+        {
+            CleanDatabases();
+            CreateProfessorDto professorDto = CreateSUT();
+            professorDto.Surname = null;
+            //ACT
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+
+            //assert
+            createProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async void When_CreatedProfessorWithNullPhoneNumber_Then_ShouldReturnBadRequest()
+        {
+            CleanDatabases();
+            CreateProfessorDto professorDto = CreateSUT();
+            professorDto.PhoneNumber = null;
+            //ACT
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+
+            //assert
+            createProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async void When_CreatedProfessorWithInvalidPhoneNumber_Then_ShouldReturnBadRequest()
+        {
+            CleanDatabases();
+            CreateProfessorDto professorDto = CreateSUT();
+            professorDto.PhoneNumber = "PhoneNumber";
+            //ACT
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+
+            //assert
+            createProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+
+        }
+
+        [Fact]
         public async void When_DeleteProfessor_Then_ShouldNotReturnProfessorInGetRequest()
         {
             CleanDatabases();
@@ -51,6 +104,19 @@ namespace LabsCourseManagement.IntegrationTests
             deleteProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
 
             getProfessorAfterDeleteResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async void When_DeleteNonexistantProfessor_Then_ShouldNotReturnBadRequest()
+        {
+            CleanDatabases();
+            //Arrange
+
+            //Act
+            var deleteProfessorResponse = await HttpClientProfessor.DeleteAsync($"{ApiUrl}/{Guid.NewGuid()}");
+
+            //Assert
+            deleteProfessorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -91,6 +157,60 @@ namespace LabsCourseManagement.IntegrationTests
             professorsAfterAdd[professorsAfterAdd.Count - 1].Courses.Count.Should().Be(1);
             professorsAfterAdd[professorsAfterAdd.Count - 1].Courses[0].Id.Should().Be(courses[courses.Count - 1].Id);
             professorsAfterAdd[professorsAfterAdd.Count - 1].Courses[0].Name.Should().Be(courses[courses.Count - 1].Name);
+        }
+
+        [Fact]
+        public async void When_AddCoursesToNonexistentProfessor_Then_ShouldReturnNotFound()
+        {
+            CleanDatabases();
+            //Arrange
+            CreateProfessorDto professorDto = CreateSUT();
+
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+            var getProfessorResponse = await HttpClientProfessor.GetAsync(ApiUrl);
+            var professors = await getProfessorResponse.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            var courseDto = new CreateCourseDto()
+            {
+                Name = "AddedProfessorName",
+                ProfessorId = professors[professors.Count - 1].Id
+            };
+
+            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
+            var getCourseResponse = await HttpClientCourses.GetAsync("v1/api/courses");
+            var courses = await getCourseResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
+
+            //Act
+            var addCourseResponse = await HttpClientProfessor.PostAsJsonAsync($"{ApiUrl}/{Guid.NewGuid()}/courses", new List<Guid>
+            {
+                courses[courses.Count - 1].Id
+            });
+
+            //Assert
+
+            addCourseResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async void When_AddNonexistantCoursesToProfessor_Then_ShouldReturnNotFound()
+        {
+            CleanDatabases();
+            //Arrange
+            CreateProfessorDto professorDto = CreateSUT();
+
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+            var getProfessorResponse = await HttpClientProfessor.GetAsync(ApiUrl);
+            var professors = await getProfessorResponse.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            //Act
+            var addCourseResponse = await HttpClientProfessor.PostAsJsonAsync($"{ApiUrl}/{professors[professors.Count - 1].Id}/courses", new List<Guid>()
+            {
+                Guid.NewGuid()
+            });
+
+            //Assert
+
+            addCourseResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -143,6 +263,71 @@ namespace LabsCourseManagement.IntegrationTests
             professorsAfterAdd[professorsAfterAdd.Count - 1].Laboratories.Count.Should().Be(1);
             professorsAfterAdd[professorsAfterAdd.Count - 1].Laboratories[0].Id.Should().Be(laboratories[laboratories.Count - 1].Id);
             professorsAfterAdd[professorsAfterAdd.Count - 1].Laboratories[0].Name.Should().Be(laboratories[laboratories.Count - 1].Name);
+        }
+
+        [Fact]
+        public async void When_AddLaboratoriesToNonexistentProfessor_Then_ShouldReturnNotFound()
+        {
+            CleanDatabases();
+            //Arrange
+            CreateProfessorDto professorDto = CreateSUT();
+
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+            var getProfessorResponse = await HttpClientProfessor.GetAsync(ApiUrl);
+            var professors = await getProfessorResponse.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            var courseDto = new CreateCourseDto()
+            {
+                Name = "AddedProfessorName",
+                ProfessorId = professors[professors.Count - 1].Id
+            };
+
+            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
+            var getCourseResponse = await HttpClientCourses.GetAsync("v1/api/courses");
+            var courses = await getCourseResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
+
+            var laboratoryDto = new CreateLaboratoryDto()
+            {
+                Name = "LaboratoryName",
+                CourseId = courses[0].Id,
+                ProfessorId = professors[0].Id,
+                DateTime = "20-11-22 3:55",
+                Place = "C409"
+            };
+
+            var createLaboratoryResponse = await HttpClientLaboratories.PostAsJsonAsync("v1/api/laboratories", laboratoryDto);
+            var getLaboratoryResponse = await HttpClientLaboratories.GetAsync("v1/api/laboratories");
+            var laboratories = await getLaboratoryResponse.Content.ReadFromJsonAsync<List<LaboratoryDto>>();
+
+            //Act
+            var addLaboratoryResponse = await HttpClientProfessor.PostAsJsonAsync($"{ApiUrl}/{Guid.NewGuid()}/laboratories", new List<Guid>
+            {
+                laboratories[laboratories.Count - 1].Id
+            });
+
+            //Assert
+            addLaboratoryResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async void When_AddNonexistentLaboratoriesToProfessor_Then_ShouldBeAdded()
+        {
+            CleanDatabases();
+            //Arrange
+            CreateProfessorDto professorDto = CreateSUT();
+
+            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+            var getProfessorResponse = await HttpClientProfessor.GetAsync(ApiUrl);
+            var professors = await getProfessorResponse.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            //Act
+            var addLaboratoryResponse = await HttpClientProfessor.PostAsJsonAsync($"{ApiUrl}/{professors[professors.Count - 1].Id}/laboratories", new List<Guid>
+            {
+                Guid.NewGuid()
+            });
+
+            //Assert
+            addLaboratoryResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
         [Fact]

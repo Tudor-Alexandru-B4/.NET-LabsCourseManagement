@@ -25,13 +25,27 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
-        public void When_CreateGradeWithInvalidMark_Then_Should_ReturnFailure()
+        public void When_CreateGradeWithInvalidMarkUpperBound_Then_Should_ReturnFailure()
         {
             //Arrange
             var gradeTuple = CreateGradeSUT();
 
             //Act
             var result = Grade.Create(gradeTuple.Item1, 12.0, gradeTuple.Item3, gradeTuple.Item4);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("The mark has to be a value greater than 0 and lower or equal to 10");
+        }
+
+        [Fact]
+        public void When_CreateGradeWithInvalidMarkLowerBound_Then_Should_ReturnFailure()
+        {
+            //Arrange
+            var gradeTuple = CreateGradeSUT();
+
+            //Act
+            var result = Grade.Create(gradeTuple.Item1, -1.0, gradeTuple.Item3, gradeTuple.Item4);
 
             //Assert
             result.IsFailure.Should().BeTrue();

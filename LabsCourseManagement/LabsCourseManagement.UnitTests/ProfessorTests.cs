@@ -120,33 +120,36 @@ namespace LabsCourseManagement.UnitTests
             result.Error.Should().Be("Laboratories can not be null");
             professor.Laboratories.Should().BeEmpty();
         }
-        //[Fact]
-        //public void When_AddInvalidPhoneNumber_Then_ShouldReturnFailure()
-        //{
-        //    //Arrange
-        //    var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
 
-        //    //Act
-        //    var result = professor.UpdatePhoneNumber("phoneNumber");
+        [Fact]
+        public void When_UpdatePhoneNumber_Then_ShouldUpdatePhoneNumber()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            string newPhoneNumber = "0799556147";
 
-        //    //Assert
-        //    result.IsFailure.Should().BeTrue();
-        //    result.Error.Should().Be("Invalid Phone Number");
-        //    professor.ContactInfo.PhoneNumber.Should().Be("0712345678");
-        //}
-        //[Fact]
-        //public void When_AddValidPhoneNumber_Then_ShouldAddValidPhoneNumber()
-        //{
-        //    //Arrange
-        //    var professor = Professor.Create("Florin", "Olariu", "07646788989").Entity;
+            //Act
+            var result = professor.UpdatePhoneNumber(newPhoneNumber);
 
-        //    //Act
-        //    var result = professor.UpdatePhoneNumber("0701234567");
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            professor.ContactInfo.PhoneNumber.Should().Be(newPhoneNumber);
+        }
 
-        //    //Assert
-        //    result.IsSuccess.Should().BeTrue();
-        //    professor.ContactInfo.PhoneNumber.Should().Be("0701234567");
-        //}
+        [Fact]
+        public void When_UpdatePhoneNumberWithInvalidFormat_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            string newPhoneNumber = "PhoneNumber";
+
+            //Act
+            var result = professor.UpdatePhoneNumber(newPhoneNumber);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Invalid phone number format");
+        }
 
     }
 }

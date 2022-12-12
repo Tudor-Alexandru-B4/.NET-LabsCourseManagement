@@ -67,6 +67,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             professorRepository.Save();
             return NoContent();
         }
+        
         [HttpPost("{professorId:guid}/courses")]
         public ActionResult UpdateCourses(Guid professorId, [FromBody] List<Guid> coursesId)
         {
