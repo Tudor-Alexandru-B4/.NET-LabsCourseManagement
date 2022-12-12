@@ -1,7 +1,7 @@
 ﻿@page "/courses-overview"
 
 <h3>Courses Overview</h3>
-
+<h3 class="fw-bold">Courses</h3>
 @if (Courses == null)
 {
     <p><em>Loading...</em></p>
@@ -11,44 +11,30 @@ else
 
     <tabel class="table table-light">
         <thead class="table-primary">
-        <th>Course Id</th>
-        <th>Name</th>
+            <th>No.</th>
+            <th>Course Id</th>
+            <th>Name</th>
+            <th>Active</th>
         </thead>
 
         <tbody>
             @foreach (var course in Courses)
             {
+                id = course.Id;
                 <tr>
+                    <td>@Courses.IndexOf(course)+1</td>
                     <td>@course.Id</td>
                     <td>@course.Name</td>
+                    <td>@course.IsActive</td>
+                    <td><button class="btn-outline-secondary" onclick="@DeleteCourse">Delete</button></td>
                 </tr>
             }
         </tbody>
     </tabel>
 }
 
-@if (Courses == null)
-{
-        <p><em>Loading...</em></p>
-}
-else
-{
-        <section id="delete-course" class="mt-5">
-            <h3>Delete Course by Id</h3>
-            <div class="col-sm-10">
-                <InputSelect id="delete-course" @bind-Value="id" class="form-control">
-                @foreach (var course in Courses)
-                {
-                    <option value="@course.Id" class="text-black">@course.Id</option>
-                }
-                </InputSelect>
-            </div>
-            <button type="submit" onclick="@DeleteCourse">Delete</button>
-        </section>
-}
-
 <section id="create-course" class="mt-5">
-    <h3>Add new course</h3>
+    <h3 class="fw-bold">Add new course</h3>
     @if (NewCourse == null)
     {
         <p><em>Loading...</em></p>
@@ -58,52 +44,82 @@ else
         <EditForm Model="@NewCourse" OnValidSubmit="@CreateCourse">
             <DataAnnotationsValidator />
             <ValidationSummary />
-            <label>
-                Name <br />
-                <InputText id="name" @bind-Value=NewCourse.Name DisplayName="Name" />
-                <br />
-            </label>
-            <label>
-                <InputSelect id="select-professor" @bind-Value="NewCourse.ProfessorId" class="form-control">
-                    @foreach (var prof in Professors)
-                    {
-                        <option value="@prof.Id" class="text-black">@prof.Id</option>
-                    }
-                </InputSelect>
-            </label>
+            <div>
+                <label>
+                    Name <br />
+                    <InputText id="name" @bind-Value=NewCourse.Name DisplayName="Name" />
+                    <br />
+                </label>
+            </div>
+            <div>
+                <p>Select a professor</p>
+                <label>
+                    <InputSelect id="select-professor" @bind-Value="NewCourse.ProfessorId" class="form-control">
+                        @foreach (var prof in Professors)
+                        {
+                            <option value="@prof.Id" class="text-black">@prof.Id @prof.Name @prof.Surname</option>
+                        }
+                    </InputSelect>
+                </label>
+            </div>
+           
             <button type="submit">Add</button>
         </EditForm>
     }
 </section>
 
 <section id="update-course" class="mt-5">
-    <h3>Add professor to course</h3>
-    @if (NewCourse == null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else
-    {
-        <EditForm Model="@updateCourseId" OnValidSubmit="@AddProfessorToCourse">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <label>
-                <InputSelect id="select-course" @bind-Value="updateCourseId" class="form-control">
-                    @foreach (var course in Courses)
-                    {
-                        <option value="@course.Id" class="text-black">@course.Id</option>
-                    }
-                </InputSelect>
-            </label>
-            <label>
-                <InputSelect id="select-professor" @bind-Value="updateProfessorId" class="form-control">
+    <h3 class="fw-bold">Edit a course</h3>
+
+    <div class="col-sm-10">
+        Select Courses
+        @if (Courses == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <InputSelect id="update-courses" @bind-Value="updateCourseId" class="form-control">
+                @foreach (var course in Courses)
+                {
+                    <option value="@course.Id" class="text-black">@course.Id @course.Name</option>
+                }
+            </InputSelect>
+
+            <br />
+            <p class="fw-bold">Add professors</p>
+            <p>Select professor</p>
+
+            <div id="select-professors">
+                <InputSelect id="add-professor-to-course" @bind-Value="updateProfessorId" class="form-control">
                     @foreach (var prof in Professors)
                     {
-                        <option value="@prof.Id" class="text-black">@prof.Id</option>
+                        <option value="@prof.Id" class="text-black-50">@prof.Id @prof.Name @prof.Surname</option>
                     }
                 </InputSelect>
-            </label>
-            <button type="submit">Add</button>
-        </EditForm>
-    }
+            </div>
+            <button type="submit" onclick="@AddProfessorToCourse">Update</button>
+            
+            <br />
+            <p class="fw-bold">Add students</p>
+            <p>Select student</p>
+
+            <div id="select-students">
+                <InputSelect id="add-stuents-to-course" @bind-Value="updateStudentId" class="form-control">
+                    @foreach (var student in Students)
+                    {
+                        <option value="@student.StudentId" class="text-black-50">@student.StudentId @student.Name @student.Surname</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <button type="submit" onclick="@AddStudentsToCourse">Update</button>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        }
+    </div>
 </section>

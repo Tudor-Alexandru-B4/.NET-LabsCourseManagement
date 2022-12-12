@@ -53,7 +53,7 @@ namespace LabsCourseManagement.UI.Pages.Services
             await httpClient.PostAsync(url, data);
         }
 
-        public async Task<IEnumerable<StudentModel>?> GetAllStudent()
+        public async Task<IEnumerable<StudentModel>?> GetAllStudents()
         {
             return await System.Text.Json.JsonSerializer
                 .DeserializeAsync<IEnumerable<StudentModel>>

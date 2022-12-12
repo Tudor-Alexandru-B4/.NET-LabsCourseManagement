@@ -11,8 +11,8 @@ namespace LabsCourseManagement.UI.Pages
         [Inject]
         public IStudentDataService StudentDataService { get; set; } = default!;
         public StudentCreateModel NewStudent { get; set; } = new StudentCreateModel();
-        public List<StudentModel> Students { get; set; } = default!;
-        
+        public List<StudentModel> Students { get; set; } = new List<StudentModel>();
+
         private List<Guid> Guids = new List<Guid>();
         private Guid GuidForDelete;
         private Guid GuidForChangeGroup;
@@ -20,7 +20,7 @@ namespace LabsCourseManagement.UI.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Students = (await StudentDataService.GetAllStudent() ?? new List<StudentModel>()).ToList();
+            Students = (await StudentDataService.GetAllStudents() ?? new List<StudentModel>()).ToList();
         }
         private async Task CreateStudent()
         {

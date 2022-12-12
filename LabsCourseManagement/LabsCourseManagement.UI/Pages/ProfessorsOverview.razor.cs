@@ -11,7 +11,7 @@ namespace LabsCourseManagement.UI.Pages
         [Inject]
         public IProfDataService ProfDataService { get; set; } = default!;
         public ProfessorCreateModel NewProfessor { get; set; } = new ProfessorCreateModel();
-        public List<ProfessorModel> Professors { get; set; } = default!;
+        public List<ProfessorModel> Professors { get; set; } = new List<ProfessorModel>();
         public List<ContactModel> Contacts { get; set; } = new List<ContactModel>();
 
         private List<Guid> Guids = new List<Guid>();
@@ -51,7 +51,6 @@ namespace LabsCourseManagement.UI.Pages
         }
         private async Task UpdateProfessor()
         {
-
             await ProfDataService.UpdateProfessorPhoneNumber(GuidProfessorForUpdate, GuidConatctForUpdate, PhoneNumber);
         }
         private async Task AddCourses()
