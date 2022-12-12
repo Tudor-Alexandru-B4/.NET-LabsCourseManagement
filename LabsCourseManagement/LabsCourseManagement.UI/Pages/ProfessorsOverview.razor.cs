@@ -38,6 +38,7 @@ namespace LabsCourseManagement.UI.Pages
         private async Task CreateProfessor()
         {
             await ProfDataService.CreateProfessor(NewProfessor);
+            await OnInitializedAsync();
         }
         private async Task DeleteProfessor()
         {
@@ -47,15 +48,18 @@ namespace LabsCourseManagement.UI.Pages
                 Guids.Add(professor.Id);
             }
             await ProfDataService.DeleteProfessor(GuidForDelete);
+            await OnInitializedAsync();
 
         }
         private async Task UpdateProfessor()
         {
             await ProfDataService.UpdateProfessorPhoneNumber(GuidProfessorForUpdate, GuidConatctForUpdate, PhoneNumber);
+            await OnInitializedAsync();
         }
         private async Task AddCourses()
         {
             await ProfDataService.AddCourse(CourseGuid, GuidProfessorForUpdate);
+            await OnInitializedAsync();
         }
 
     }

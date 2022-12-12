@@ -26,6 +26,7 @@ namespace LabsCourseManagement.UI.Pages
         {
             await StudentDataService.CreateStudent(NewStudent);
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+            await OnInitializedAsync();
         }
         private async Task DeleteStudent()
         {
@@ -34,11 +35,13 @@ namespace LabsCourseManagement.UI.Pages
                 Guids.Add(student.StudentId);
             }
             await StudentDataService.DeleteStudent(GuidForDelete);
+            await OnInitializedAsync();
         }
 
         private async Task UpdateStudent()
         {
             await StudentDataService.UpdateStudentGroup(GuidForChangeGroup, Group);
+            await OnInitializedAsync();
         }
     }
 
