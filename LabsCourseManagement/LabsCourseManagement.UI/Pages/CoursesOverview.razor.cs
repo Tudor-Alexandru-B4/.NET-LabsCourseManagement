@@ -40,20 +40,24 @@ namespace LabsCourseManagement.UI.Pages
         private async Task CreateCourse()
         {
             await CourseDataService.CreateCourse(NewCourse);
+            await OnInitializedAsync();
         }
         private async Task DeleteCourse()
         {
             await CourseDataService.DeleteCourse(id);
+            await OnInitializedAsync();
         }
 
         private async Task AddProfessorToCourse()
         {
             await CourseDataService.AddProfessorsToCourse(updateCourseId, new List<Guid> { updateProfessorId });
+            await OnInitializedAsync();
         }
 
         private async Task AddStudentsToCourse()
         {
             await CourseDataService.AddStudentsToCourse(updateCourseId, new List<Guid> { updateStudentId });
+            await OnInitializedAsync();
         }
     }
 }
