@@ -68,6 +68,36 @@ namespace LabsCourseManagement.UnitTests
             contact.EmailAddresses.Should().BeEmpty();
         }
 
+        [Fact]
+        public void When_UpdateContact_Then_ShouldUpdateContact()
+        {
+            //Arrange
+            var contact = Contact.Create(phoneNumber).Entity;
+            string newPhoneNumber = "0799559762";
+
+            //Act
+            var result = contact.UpdateContact(newPhoneNumber);
+            
+            //Assert
+            contact.PhoneNumber.Should().Be(newPhoneNumber);
+            result.IsSuccess.Should().BeTrue();
+        }
+
+        [Fact]
+        public void When_UpdateContactWithNoNumber_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var contact = Contact.Create(phoneNumber).Entity;
+            string newPhoneNumber = "PhoneNumber";
+
+            //Act
+            var result = contact.UpdateContact(newPhoneNumber);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Invalid Phone Number");
+        }
+
         private static List<InformationString> CreateEmailsSUT()
         {
             var email1 = InformationString.Create("name1@email.com").Entity;
