@@ -27,6 +27,20 @@ namespace LabsCourseManagement.Domain
             studentGrades.ForEach(studentGrades => StudentGrades?.Add(studentGrades));
             return Result.Success();
         }
-    
+
+        public Result RemoveStudentGradesToCatalog(List<StudentGrades> studentGrades)
+        {
+            if (studentGrades.Any(studentGrade => studentGrade == null))
+            {
+                return Result.Failure("StudentGrades cannot be null");
+            }
+
+            studentGrades.ForEach(studentGrades =>
+            {
+                StudentGrades?.Remove(studentGrades);
+            });
+            return Result.Success();
+        }
+
     }
 }

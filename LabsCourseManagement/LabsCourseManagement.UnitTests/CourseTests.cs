@@ -46,6 +46,51 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
+        public void When_UpdateName_Then_ShouldUpdateName()
+        {
+            //Arrange
+            string newName = "NewName";
+
+            //Act
+            var result = Course.Create(CourseName);
+            var updateResult = result.Entity.UpdateName(newName);
+
+            //Assert
+            updateResult.IsSuccess.Should().BeTrue();
+            result.Entity.Name.Should().Be(newName);
+        }
+
+        [Fact]
+        public void When_UpdateNameNull_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            string newName = null;
+
+            //Act
+            var result = Course.Create(CourseName);
+            var updateResult = result.Entity.UpdateName(newName);
+
+            //Assert
+            updateResult.IsFailure.Should().BeTrue();
+            result.Entity.Name.Should().Be(CourseName);
+        }
+
+        [Fact]
+        public void When_UpdateActiveStatus_Then_ShouldUpdateActiveStatus()
+        {
+            //Arrange
+
+
+            //Act
+            var result = Course.Create(CourseName);
+            var updateResult = result.Entity.UpdateActiveStatus(false);
+
+            //Assert
+            updateResult.IsSuccess.Should().BeTrue();
+            result.Entity.IsActive.Should().BeFalse();
+        }
+
+        [Fact]
         public void When_AddHelpfulMaterials_Then_ShouldAddHelpfulMaterialsToList()
         {
             //Arrange
@@ -85,6 +130,43 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
+        public void When_RemoveHelpfulMaterials_Then_ShouldRemoveHelpfulMaterialsToList()
+        {
+            //Arrange
+            List<InformationString> helpfulMeterials = new List<InformationString>()
+            {
+                InformationString.Create("HelpfulMaterial-1").Entity,
+                InformationString.Create("HelpfulMaterial-2").Entity,
+                InformationString.Create("HelpfulMaterial-3").Entity
+            };
+
+            //Act
+            var result = Course.Create(CourseName);
+            var addResult = result.Entity.AddHelpfulMaterials(helpfulMeterials);
+            var removeResult = result.Entity.RemoveHelpfulMaterials(helpfulMeterials);
+
+            //Assert
+            removeResult.IsSuccess.Should().BeTrue();
+            result.Entity.HelpfulMaterials.Count.Should().Be(0);
+        }
+
+        [Fact]
+        public void When_RemoveHelpfulMaterialsEmpty_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            List<InformationString> helpfulMeterials = new List<InformationString>();
+            helpfulMeterials.Add(null);
+
+            //Act
+            var result = Course.Create(CourseName);
+            var removeResult = result.Entity.RemoveHelpfulMaterials(helpfulMeterials);
+
+            //Assert
+            removeResult.IsFailure.Should().BeTrue();
+            removeResult.Error.Should().Be("HelpfulMaterials cannot be null");
+        }
+
+        [Fact]
         public void When_AddCourseAnnouncements_Then_ShouldAddCourseAnnouncements()
         {
             //Arrange
@@ -114,6 +196,38 @@ namespace LabsCourseManagement.UnitTests
             //Assert
             addAnnouncementsResult.IsFailure.Should().BeTrue();
             addAnnouncementsResult.Error.Should().Be("Announcements cannot be null");
+        }
+
+        [Fact]
+        public void When_RemoveCourseAnnouncements_Then_ShouldRemoveCourseAnnouncements()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var announcements = CreateAnnouncementsSUT();
+
+            //Act
+            var addAnnouncementsResult = course.AddCourseAnnouncements(announcements);
+            var removeAnnouncementsResult = course.RemoveCourseAnnouncements(announcements);
+
+            //Assert
+            removeAnnouncementsResult.IsSuccess.Should().BeTrue();
+            course.CourseAnnouncements.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullCourseAnnouncements_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var announcements = CreateAnnouncementsSUT();
+            announcements.Add(null);
+
+            //Act
+            var removeAnnouncementsResult = course.RemoveCourseAnnouncements(announcements);
+
+            //Assert
+            removeAnnouncementsResult.IsFailure.Should().BeTrue();
+            removeAnnouncementsResult.Error.Should().Be("Announcements cannot be null");
         }
 
         [Fact]
@@ -149,6 +263,38 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
+        public void When_RemoveCourseProfessors_Then_ShouldRemoveCourseProfessors()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var professors = CreateProfessorsSUT();
+
+            //Act
+            var addProfessorsResult = course.AddProfessors(professors);
+            var removeProfessorsResult = course.RemoveProfessors(professors);
+
+            //Assert
+            removeProfessorsResult.IsSuccess.Should().BeTrue();
+            course.Professors.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullCourseProfessors_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var professors = CreateProfessorsSUT();
+            professors.Add(null);
+
+            //Act
+            var removeProfessorsResult = course.RemoveProfessors(professors);
+
+            //Assert
+            removeProfessorsResult.IsFailure.Should().BeTrue();
+            removeProfessorsResult.Error.Should().Be("Professors cannot be null");
+        }
+
+        [Fact]
         public void When_AddCourseLaboratories_Then_ShouldAddCourseLaboratories()
         {
             //Arrange
@@ -178,6 +324,38 @@ namespace LabsCourseManagement.UnitTests
             //Assert
             addLaboratoriesResult.IsFailure.Should().BeTrue();
             addLaboratoriesResult.Error.Should().Be("Laboratories cannot be null");
+        }
+
+        [Fact]
+        public void When_RemoveCourseLaboratories_Then_ShouldRemoveCourseLaboratories()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var laboratories = CreateLaboratoriesSUT();
+
+            //Act
+            var addLaboratoriesResult = course.AddLaboratories(laboratories);
+            var removeLaboratoriesResult = course.RemoveLaboratories(laboratories);
+
+            //Assert
+            removeLaboratoriesResult.IsSuccess.Should().BeTrue();
+            course.Laboratories.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullCourseLaboratories_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var laboratories = CreateLaboratoriesSUT();
+            laboratories.Add(null);
+
+            //Act
+            var removeLaboratoriesResult = course.RemoveLaboratories(laboratories);
+
+            //Assert
+            removeLaboratoriesResult.IsFailure.Should().BeTrue();
+            removeLaboratoriesResult.Error.Should().Be("Laboratories cannot be null");
         }
 
         [Fact]
@@ -213,6 +391,38 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
+        public void When_RemoveCourseStudents_Then_ShouldRemoveCourseStudents()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var students = CreateStudentsSUT();
+
+            //Act
+            var addStudentsResult = course.AddCourseStudents(students);
+            var removeStudentsResult = course.RemoveCourseStudents(students);
+
+            //Assert
+            removeStudentsResult.IsSuccess.Should().BeTrue();
+            course.Students.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullStudentsAnnouncements_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var students = CreateStudentsSUT();
+            students.Add(null);
+
+            //Act
+            var removeStudentsResult = course.RemoveCourseStudents(students);
+
+            //Assert
+            removeStudentsResult.IsFailure.Should().BeTrue();
+            removeStudentsResult.Error.Should().Be("Students cannot be null");
+        }
+
+        [Fact]
         public void When_AddCourseTimeAndPlaces_Then_ShouldAddCourseTimeAndPlaces()
         {
             //Arrange
@@ -245,6 +455,38 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
+        public void When_RemoveCourseTimeAndPlaces_Then_ShouldRemoveCourseTimeAndPlaces()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var timeAndPlaces = CreateTimeAndPlacesSUT();
+
+            //Act
+            var addTimeAndPlacesProfessorsResult = course.AddCoursePrograms(timeAndPlaces);
+            var removeTimeAndPlacesProfessorsResult = course.RemoveCoursePrograms(timeAndPlaces);
+
+            //Assert
+            removeTimeAndPlacesProfessorsResult.IsSuccess.Should().BeTrue();
+            course.CourseProgram.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullProfessorsTimeAndPlaces_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var timeAndPlaces = CreateTimeAndPlacesSUT();
+            timeAndPlaces.Add(null);
+
+            //Act
+            var removeTimeAndPlacesProfessorsResult = course.RemoveCoursePrograms(timeAndPlaces);
+
+            //Assert
+            removeTimeAndPlacesProfessorsResult.IsFailure.Should().BeTrue();
+            removeTimeAndPlacesProfessorsResult.Error.Should().Be("TimesAndPlaces cannot be null");
+        }
+
+        [Fact]
         public void When_AddCourseGradingInfos_Then_ShouldAddCourseGradingInfos()
         {
             //Arrange
@@ -274,6 +516,38 @@ namespace LabsCourseManagement.UnitTests
             //Assert
             addGradingInfosResult.IsFailure.Should().BeTrue();
             addGradingInfosResult.Error.Should().Be("GradingInfos cannot be null");
+        }
+
+        [Fact]
+        public void When_RemoveCourseGradingInfos_Then_ShouldRemoveCourseGradingInfos()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var gradingInfos = CreateGradingInfosSUT();
+
+            //Act
+            var addGradingInfosResult = course.AddCourseGradingInfos(gradingInfos);
+            var removeGradingInfosResult = course.RemoveCourseGradingInfos(gradingInfos);
+
+            //Assert
+            removeGradingInfosResult.IsSuccess.Should().BeTrue();
+            course.CourseGradingInfo.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullCourseGradingInfos_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var course = Course.Create(CourseName).Entity;
+            var gradingInfos = CreateGradingInfosSUT();
+            gradingInfos.Add(null);
+
+            //Act
+            var removeGradingInfosResult = course.RemoveCourseGradingInfos(gradingInfos);
+
+            //Assert
+            removeGradingInfosResult.IsFailure.Should().BeTrue();
+            removeGradingInfosResult.Error.Should().Be("GradingInfos cannot be null");
         }
 
         private List<Announcement> CreateAnnouncementsSUT()
