@@ -40,6 +40,36 @@ namespace LabsCourseManagement.Domain
             return Result<Laboratory>.Success(laboratory);
         }
 
+        public Result UpdateName(string name)
+        {
+            if (name == null)
+            {
+                return Result.Failure("Name cannot be null");
+            }
+
+            Name = name;
+            return Result.Success();
+        }
+
+        public Result UpdateActiveStatus(bool isActive)
+        {
+            IsActive = isActive;
+            return Result.Success();
+        }
+
+        public Result UpdateProfessor(Professor professor)
+        {
+            if (professor == null)
+            {
+                return Result.Failure("Professor cannot be null");
+            }
+
+            var oldProfessor = LaboratoryProfessor;
+            LaboratoryProfessor = professor;
+            oldProfessor.Laboratories.Remove(this);
+            return Result.Success();
+        }
+
         public Result AddStudents(List<Student> students)
         {
             if (students.Any(student => student == null))
@@ -48,6 +78,21 @@ namespace LabsCourseManagement.Domain
             }
 
             students.ForEach(student => LaboratoryStudents?.Add(student));
+            return Result.Success();
+        }
+
+        public Result RemoveStudents(List<Student> students)
+        {
+            if (students.Any(student => student == null))
+            {
+                return Result.Failure("Cannot remove null students");
+            }
+
+            students.ForEach(student =>
+            {
+                LaboratoryStudents?.Remove(student);
+                student?.Laboratories?.Remove(this);
+            });
             return Result.Success();
         }
 
@@ -62,6 +107,20 @@ namespace LabsCourseManagement.Domain
             return Result.Success();
         }
 
+        public Result RemoveLaboratoryAnnouncements(List<Announcement> announcements)
+        {
+            if (announcements.Any(announcement => announcement == null))
+            {
+                return Result.Failure("Cannot remove null announcements");
+            }
+
+            announcements.ForEach(announcement =>
+            {
+                LaboratoryAnnouncements?.Remove(announcement);
+            });
+            return Result.Success();
+        }
+
         public Result AddLaboratoryGradingInfos(List<GradingInfo> gradingInfos)
         {
             if (gradingInfos.Any(info => info == null))
@@ -70,6 +129,20 @@ namespace LabsCourseManagement.Domain
             }
 
             gradingInfos.ForEach(gradingInfo => LaboratoryGradingInfo?.Add(gradingInfo));
+            return Result.Success();
+        }
+
+        public Result RemoveLaboratoryGradingInfos(List<GradingInfo> gradingInfos)
+        {
+            if (gradingInfos.Any(info => info == null))
+            {
+                return Result.Failure("Cannot remove null grading infos");
+            }
+
+            gradingInfos.ForEach(gradingInfo =>
+            {
+                LaboratoryGradingInfo?.Remove(gradingInfo);
+            });
             return Result.Success();
         }
     }

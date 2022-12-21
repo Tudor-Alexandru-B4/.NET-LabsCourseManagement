@@ -36,5 +36,29 @@ namespace LabsCourseManagement.Domain
             Grades?.Add(grade);
             return Result.Success();
         }
+
+        public Result RemoveGrade(Grade grade)
+        {
+            if (grade == null)
+            {
+                return Result.Failure("The grade cannot be null");
+            }
+            Grades?.Remove(grade);
+            return Result.Success();
+        }
+
+        public Result ComputeFinalGrade()
+        {
+            if (Grades?.Count == 0 || Grades == null)
+            {
+                return Result.Failure("Cannot compute final grade without any grades");
+            }
+
+            double sum = Grades.Sum(x => x.Mark);
+
+
+            FinalGrade = Grade.Create(DateTime.Now, sum / Grades.Count, ExaminationType.Other, "Final Grade").Entity;
+            return Result.Success();
+        }
     }
 }

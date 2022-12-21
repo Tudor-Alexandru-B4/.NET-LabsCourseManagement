@@ -1,5 +1,6 @@
 ﻿using LabsCourseManagement.Domain;
 using System;
+using System.Diagnostics;
 
 namespace LabsCourseManagement.UnitTests
 {
@@ -71,6 +72,80 @@ namespace LabsCourseManagement.UnitTests
             //Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Should().Be("The grade cannot be null");
+        }
+
+        [Fact]
+        public void When_RemoveGrade_Then_Should_RemoveGrade()
+        {
+            //Arrange
+            var gradingDate = DateTime.Parse("1 January 2022");
+            var mark = 9.5;
+            var examinationType = ExaminationType.Project;
+            var mentions = "Custom mentions";
+            var grade = Grade.Create(gradingDate, mark, examinationType, mentions).Entity;
+            var student = Student.Create("Name", "Surname", "A1", 2, "001R001", "0773098000").Entity;
+            var studentGrades = StudentGrades.Create(student).Entity;
+
+            //Act
+            var result = studentGrades.AddGrade(grade);
+            var removeResult = studentGrades.RemoveGrade(grade);
+
+            //Assert
+            removeResult.IsSuccess.Should().BeTrue();
+            studentGrades.Grades.Count.Should().Be(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullGrade_Then_Should_ReturnFailure()
+        {
+            //Arrange
+            var student = Student.Create("Name", "Surname", "A1", 2, "001R001", "0773098000").Entity;
+            var studentGrades = StudentGrades.Create(student).Entity;
+
+            //Act
+            var removeResult = studentGrades.RemoveGrade(null);
+
+            //Assert
+            removeResult.IsFailure.Should().BeTrue();
+            removeResult.Error.Should().Be("The grade cannot be null");
+        }
+
+        [Fact]
+        public void When_ComputeFinalMark_Then_ShouldSetFinalMark()
+        {
+            //Arrange
+            var gradingDate = DateTime.Parse("1 January 2022");
+            var mark = 9.5;
+            var examinationType = ExaminationType.Project;
+            var mentions = "Custom mentions";
+            var grade = Grade.Create(gradingDate, mark, examinationType, mentions).Entity;
+            var grade1 = Grade.Create(gradingDate, mark, examinationType, mentions).Entity;
+            var student = Student.Create("Name", "Surname", "A1", 2, "001R001", "0773098000").Entity;
+            var studentGrades = StudentGrades.Create(student).Entity;
+
+            //Act
+            var result = studentGrades.AddGrade(grade);
+            result = studentGrades.AddGrade(grade1);
+            var computeResult = studentGrades.ComputeFinalGrade();
+
+            //Assert
+            computeResult.IsSuccess.Should().BeTrue();
+            studentGrades.FinalGrade.Mark.Should().Be(mark);
+        }
+
+        [Fact]
+        public void When_ComputeFinalMarkWithoutGrades_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var student = Student.Create("Name", "Surname", "A1", 2, "001R001", "0773098000").Entity;
+            var studentGrades = StudentGrades.Create(student).Entity;
+
+            //Act
+            var computeresult = studentGrades.ComputeFinalGrade();
+
+            //Assert
+            computeresult.IsFailure.Should().BeTrue();
+            computeresult.Error.Should().Be("Cannot compute final grade without any grades");
         }
     }
 }
