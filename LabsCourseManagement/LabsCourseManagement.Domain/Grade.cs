@@ -28,5 +28,27 @@ namespace LabsCourseManagement.Domain
             };
             return Result<Grade>.Success(grade);
         }
+
+        public Result UpdateMark(double mark)
+        {
+            if (mark <= 0 || mark > 10)
+            {
+                return Result.Failure("The mark has to be a value greater than 0 and lower or equal to 10");
+            }
+
+            Mark = mark;
+            return Result.Success();
+        }
+
+        public Result UpdateMentions(string mentions)
+        {
+            if (mentions == null)
+            {
+                return Result.Failure("Mentions should not be null");
+            }
+
+            Mentions = mentions;
+            return Result.Success();
+        }
     }
 }
