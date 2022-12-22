@@ -2,6 +2,7 @@
 using LabsCourseManagement.Application;
 using LabsCourseManagement.Infrastructure;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 
 namespace LabsCourseManagement.WebUI
@@ -45,6 +46,16 @@ namespace LabsCourseManagement.WebUI
                 {
                     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
+            });
+
+            services.AddApiVersioning(opt =>
+            {
+                opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.ReportApiVersions = true;
+                opt.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
+                    new HeaderApiVersionReader("x-api-version"),
+                    new MediaTypeApiVersionReader("x-api-version"));
             });
 
             return services;
