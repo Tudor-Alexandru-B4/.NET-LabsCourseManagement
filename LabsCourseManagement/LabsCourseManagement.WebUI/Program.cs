@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using LabsCourseManagement.Application;
 using LabsCourseManagement.Application.Repositories;
 using LabsCourseManagement.Infrastructure;
+using LabsCourseManagement.WebUI;
 using LabsCourseManagement.WebUI.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -25,38 +26,12 @@ builder.Services.AddAplicationServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DatabaseContext>(
-    options => options.UseSqlite(
-        builder.Configuration.GetConnectionString("LabsCourseManagementDb"),
-    b => b.MigrationsAssembly(typeof(DatabaseContext).Assembly.FullName)));
+//builder.Services.AddDbContext<DatabaseContext>(
+//    options => options.UseSqlite(
+//        builder.Configuration.GetConnectionString("LabsCourseManagementDb"),
+//    b => b.MigrationsAssembly(typeof(DatabaseContext).Assembly.FullName)));
 
-
-builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
-
-builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
-builder.Services.AddScoped<ICourseRepository, CourseRepository>();
-builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
-builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
-builder.Services.AddScoped<ILaboratoryRepository, LaboratoryRepository>();
-builder.Services.AddScoped<IStudentGradesRepository, StudentGradesRepository>();
-builder.Services.AddScoped<IGradeRepository, GradeRepository>();
-builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-builder.Services.AddScoped<ITimeAndPlaceRepository, TimeAndPlaceRepository>();
-builder.Services.AddScoped<IContactRepository, ContactRepository>();
-
-builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
-builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("labsCourseCors", policy =>
-    {
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-    });
-});
+builder.Services.AddWebUIServices();
 
 var app = builder.Build();
 
