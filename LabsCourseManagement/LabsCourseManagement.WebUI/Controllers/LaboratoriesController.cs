@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LabsCourseManagement.WebUI.Controllers
 {
-    [Route("v1/api/[controller]")]
+    [Route("v{version:apiVersion}/api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class LaboratoriesController : ControllerBase
     {
@@ -26,12 +28,14 @@ namespace LabsCourseManagement.WebUI.Controllers
             this.studentRepository = studentRepository;
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(laboratoryRepository.GetAll().Result);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet("{laboratoryId:guid}")]
         public IActionResult Get(Guid laboratoryId)
         {
@@ -43,6 +47,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return Ok(laboratory);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpPost]
         public IActionResult Create([FromBody] CreateLaboratoryDto laboratoryDto)
         {
@@ -88,6 +93,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return BadRequest(laboratory.Error);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpDelete("{laboratoryId:guid}")]
         public IActionResult Delete(Guid laboratoryId)
         {
@@ -101,6 +107,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return NoContent();
         }
 
+        [MapToApiVersion("1.0")]
         [HttpPost("{laboratoryId:guid}/addStudents")]
         public IActionResult AddStudents(Guid laboratoryId, [FromBody] List<Guid> studentsIds)
         {
@@ -136,6 +143,84 @@ namespace LabsCourseManagement.WebUI.Controllers
                 return NoContent();
             }
             return BadRequest(addStudentsResult.Error);
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{laboratoryId:guid}/students")]
+        public IActionResult RemoveStudents(Guid laboratoryId, [FromBody] List<Guid> studentsIds)
+        {
+            foreach (Guid studentId in studentsIds)
+            {
+                if (studentRepository.Get(studentId) == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            var students = new List<Student>();
+            foreach (var studentId in studentsIds)
+            {
+                var student = studentRepository.Get(studentId).Result;
+                if (student != null)
+                {
+                    students.Add(student);
+                }
+            }
+
+            var laboratory = laboratoryRepository.Get(laboratoryId);
+            if (laboratory == null || laboratory.Result == null)
+            {
+                return NotFound();
+            }
+
+            var removeStudentsResult = laboratory.Result.RemoveStudents(students);
+
+            if (removeStudentsResult.IsSuccess)
+            {
+                laboratoryRepository.Save();
+                return NoContent();
+            }
+            return BadRequest(removeStudentsResult.Error);
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{laboratoryId:guid}/name")]
+        public IActionResult UpdateName(Guid laboratoryId, [FromBody] string name)
+        {
+            var laboratory = laboratoryRepository.Get(laboratoryId);
+            if (laboratory == null || laboratory.Result == null)
+            {
+                return NotFound($"Laboratory with id {laboratoryId} does not exist");
+            }
+
+            var updateResult = laboratory.Result.UpdateName(name);
+            if (updateResult.IsFailure)
+            {
+                return BadRequest();
+            }
+
+            courseRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{laboratoryId:guid}/active")]
+        public IActionResult UpdateActiveStatus(Guid laboratoryId, [FromBody] bool activeStatus)
+        {
+            var laboratory = laboratoryRepository.Get(laboratoryId);
+            if (laboratory == null || laboratory.Result == null)
+            {
+                return NotFound($"Laboratory with id {laboratoryId} does not exist");
+            }
+
+            var updateResult = laboratory.Result.UpdateActiveStatus(activeStatus);
+            if (updateResult.IsFailure)
+            {
+                return BadRequest();
+            }
+
+            courseRepository.Save();
+            return NoContent();
         }
 
     }

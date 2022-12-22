@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Application.Queries;
+using LabsCourseManagement.Application.Repositories;
 using LabsCourseManagement.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +21,22 @@ namespace LabsCourseManagement.WebUI.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpGet]
-        public async Task<List<Catalog>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await mediator.Send(new GetAllCatalogsQuery());
+            var catalogs = await mediator.Send(new GetAllCatalogsQuery());
+            return Ok(catalogs);
         }
 
         [MapToApiVersion("1.0")]
         [HttpGet("{catalogId:guid}")]
-        public Task<Catalog> Get(Guid catalogId) =>
-            mediator.Send(new GetCatalogQuery { Id = catalogId });
+        public async Task<IActionResult> Get(Guid catalogId)
+        {
+            var catalog = await mediator.Send(new GetCatalogQuery { Id = catalogId });
+            if (catalog == null)
+            {
+                return NotFound();
+            }
+            return Ok(catalog);
+        }
     }
 }

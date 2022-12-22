@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LabsCourseManagement.WebUI.Controllers
 {
-    [Route("v1/api/[controller]")]
+    [Route("v{version:apiVersion}/api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class AnnouncementsController : ControllerBase
     {
@@ -17,12 +19,15 @@ namespace LabsCourseManagement.WebUI.Controllers
             this.announcementRepository = announcementRepository;
             this.professorRepository = professorRepository;
         }
+
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(announcementRepository.GetAll().Result);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet("{announcementId:guid}")]
         public IActionResult Get(Guid announcementId)
         {
@@ -33,6 +38,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             }
             return Ok(announcement);
         }
+
+        [MapToApiVersion("1.0")]
         [HttpPost("{professorId:guid}")]
         public IActionResult Create([FromBody] CreateAnnouncementDto announcementDto, Guid professorId)
         {
@@ -54,6 +61,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             }
             return BadRequest(announcement.Error);
         }
+
+        [MapToApiVersion("1.0")]
         [HttpDelete("{announcementId:guid}")]
         public IActionResult Delete(Guid announcementId)
         {

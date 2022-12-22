@@ -14,12 +14,14 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly ICourseRepository courseRepository;
         private readonly IProfessorRepository professorRepository;
         private readonly IStudentRepository studentRepository;
+        private readonly IAnnouncementRepository announcementRepository;
 
-        public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository, IStudentRepository studentRepository)
+        public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository, IStudentRepository studentRepository, IAnnouncementRepository announcementRepository)
         {
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
             this.studentRepository = studentRepository;
+            this.announcementRepository = announcementRepository;
         }
 
         [MapToApiVersion("1.0")]
@@ -149,6 +151,39 @@ namespace LabsCourseManagement.WebUI.Controllers
         }
 
         [MapToApiVersion("2.0")]
+        [HttpPut("{courseId:guid}/professors")]
+        public IActionResult RemoveProfessorsFromCourse(Guid courseId, [FromBody] List<Guid> professorsId)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!professorsId.Any())
+            {
+                return BadRequest("Add at least one professor");
+            }
+
+            var professors = new List<Professor>();
+            foreach (var professorId in professorsId)
+            {
+                var professor = professorRepository.GetById(professorId);
+                if (professor == null || professor.Result == null)
+                {
+                    return NotFound($"Professor with id {professorId} does not exist");
+                }
+                professor.Result.RemoveCourse(course.Result);
+                professors.Add(professor.Result);
+            }
+
+            course.Result.RemoveProfessors(professors);
+            courseRepository.Save();
+            professorRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
         [HttpPut("{courseId:guid}/students")]
         public IActionResult RemoveStudentsFromCourse(Guid courseId, [FromBody] List<Guid> studentsId)
         {
@@ -177,6 +212,46 @@ namespace LabsCourseManagement.WebUI.Controllers
             course.Result.RemoveCourseStudents(students);
             courseRepository.Save();
             studentRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{courseId:guid}/name")]
+        public IActionResult UpdateName(Guid courseId, [FromBody] string name)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            var updateResult = course.Result.UpdateName(name);
+            if (updateResult.IsFailure)
+            {
+                return BadRequest();
+            }
+
+            courseRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{courseId:guid}/active")]
+        public IActionResult UpdateActiveStatus(Guid courseId, [FromBody] bool activeStatus)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            var updateResult = course.Result.UpdateActiveStatus(activeStatus);
+            if (updateResult.IsFailure)
+            {
+                return BadRequest();
+            }
+
+            courseRepository.Save();
             return NoContent();
         }
     }

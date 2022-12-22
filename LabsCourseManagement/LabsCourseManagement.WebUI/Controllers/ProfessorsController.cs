@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LabsCourseManagement.WebUI.Controllers
 {
-    [Route("v1/api/[controller]")]
+    [Route("v{version:apiVersion}/api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class ProfessorsController : ControllerBase
     {
@@ -21,11 +23,15 @@ namespace LabsCourseManagement.WebUI.Controllers
             this.laboratoryRepository = laboratoryRepository;
             this.contactRepository = contactRepository;
         }
+
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(professorRepository.GetAll().Result);
         }
+
+        [MapToApiVersion("1.0")]
         [HttpGet("{professorId:guid}")]
         public IActionResult Get(Guid professorId)
         {
@@ -37,6 +43,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return Ok(professor);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpPost]
         public IActionResult Create([FromBody] CreateProfessorDto professorDto)
         {
@@ -55,6 +62,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return BadRequest(professor.Error);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpDelete("{professorId:guid}")]
         public IActionResult Delete(Guid professorId)
         {
@@ -67,7 +75,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             professorRepository.Save();
             return NoContent();
         }
-        
+
+        [MapToApiVersion("1.0")]
         [HttpPost("{professorId:guid}/courses")]
         public ActionResult UpdateCourses(Guid professorId, [FromBody] List<Guid> coursesId)
         {
@@ -96,6 +105,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             return NoContent();
 
         }
+
+        [MapToApiVersion("1.0")]
         [HttpPost("{professorId:guid}/laboratories")]
         public ActionResult UpdateLaboratories(Guid professorId, [FromBody] List<Guid> laboratoriesId)
         {
@@ -120,6 +131,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             return NoContent();
 
         }
+
+        [MapToApiVersion("1.0")]
         [HttpPost("{professorId:guid}/{contactId:guid}/phoneNumber")]
         public ActionResult UpdatePhoneNumber(Guid professorId, Guid contactId, [FromBody] string phoneNumber)
         {
@@ -146,6 +159,8 @@ namespace LabsCourseManagement.WebUI.Controllers
 
             return NoContent();
         }
+
+        [MapToApiVersion("1.0")]
         [HttpPost("{professorId:guid}/name")]
         public ActionResult UpdateName(Guid professorId, [FromBody] string name)
         {
@@ -162,6 +177,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             professorRepository.Save();
             return NoContent();
         }
+
+        [MapToApiVersion("1.0")]
         [HttpPost("{professorId:guid}/surname")]
         public ActionResult UpdateSurname(Guid professorId, [FromBody] string surname)
         {
@@ -178,6 +195,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             professorRepository.Save();
             return NoContent();
         }
+
+        [MapToApiVersion("1.0")]
         [HttpDelete("{professorId:guid}/{courseId:guid}")]
         public IActionResult RemoveCourse(Guid professorId,Guid courseId)
         {
@@ -200,6 +219,8 @@ namespace LabsCourseManagement.WebUI.Controllers
             professorRepository.Save();
             return NoContent();
         }
+
+        [MapToApiVersion("1.0")]
         [HttpDelete("{professorId:guid}/{laboratoryId:guid}")]
         public IActionResult RemoveLaboratory(Guid professorId, Guid laboratoryId)
         {
@@ -221,6 +242,61 @@ namespace LabsCourseManagement.WebUI.Controllers
             laboratoryRepository.Save();
             professorRepository.Save();
             return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{professorId:guid}/courses")]
+        public ActionResult RemoveCourses(Guid professorId, [FromBody] List<Guid> coursesId)
+        {
+            var courses = new List<Course>();
+            var professor = professorRepository.GetById(professorId);
+            var professors = new List<Professor>();
+
+            if (professor == null || professor.Result == null)
+            {
+                return NotFound();
+            }
+            foreach (var courseId in coursesId)
+            {
+                var course = courseRepository.Get(courseId);
+                if (course == null || course.Result == null)
+                {
+                    return NotFound();
+                }
+                courses.Add(course.Result);
+                course.Result.RemoveProfessors(professors);
+                professor.Result.RemoveCourse(course.Result);
+            }
+            professorRepository.Save();
+            courseRepository.Save();
+            return NoContent();
+
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{professorId:guid}/laboratories")]
+        public ActionResult RemoveLaboratories(Guid professorId, [FromBody] List<Guid> laboratoriesId)
+        {
+            var laboratories = new List<Laboratory>();
+            var professor = professorRepository.GetById(professorId);
+            if (professor == null || professor.Result == null)
+            {
+                return NotFound();
+            }
+            foreach (var laboratoryId in laboratoriesId)
+            {
+                var laboratory = laboratoryRepository.Get(laboratoryId);
+                if (laboratory == null || laboratory.Result == null)
+                {
+                    return NotFound();
+                }
+
+                professor.Result.RemoveLaboratory(laboratory.Result);
+
+            }
+            professorRepository.Save();
+            return NoContent();
+
         }
     }
 }
