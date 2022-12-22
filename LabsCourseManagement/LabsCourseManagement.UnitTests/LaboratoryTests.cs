@@ -51,6 +51,95 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
+        public void When_UpdateName_Then_ShouldUpdateName()
+        {
+            //Arrange
+            string newName = "NewName";
+
+            //Act
+            var course = Course.Create("Test Course").Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname", "0711445039").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse("1 January 2022"), "C408").Entity;
+            var result = Laboratory.Create(LaboratoryName, course, laboratoryProfessor, timeAndPlace);
+            var updateResult = result.Entity.UpdateName(newName);
+
+            //Assert
+            updateResult.IsSuccess.Should().BeTrue();
+            result.Entity.Name.Should().Be(newName);
+        }
+
+        [Fact]
+        public void When_UpdateNameNull_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            string newName = null;
+
+            //Act
+            var course = Course.Create("Test Course").Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname", "0711445039").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse("1 January 2022"), "C408").Entity;
+            var result = Laboratory.Create(LaboratoryName, course, laboratoryProfessor, timeAndPlace);
+            var updateResult = result.Entity.UpdateName(newName);
+
+            //Assert
+            updateResult.IsFailure.Should().BeTrue();
+            result.Entity.Name.Should().Be(LaboratoryName);
+        }
+
+        [Fact]
+        public void When_UpdateActiveStatus_Then_ShouldUpdateActiveStatus()
+        {
+            //Arrange
+
+
+            //Act
+            var course = Course.Create("Test Course").Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname", "0711445039").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse("1 January 2022"), "C408").Entity;
+            var result = Laboratory.Create(LaboratoryName, course, laboratoryProfessor, timeAndPlace);
+            var updateResult = result.Entity.UpdateActiveStatus(false);
+
+            //Assert
+            updateResult.IsSuccess.Should().BeTrue();
+            result.Entity.IsActive.Should().BeFalse();
+        }
+
+        [Fact]
+        public void When_UpdateProfessor_Then_ShouldUpadteProfessor()
+        {
+            //Arrange
+            var course = Course.Create("Test Course").Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname", "0711445039").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse("1 January 2022"), "C408").Entity;
+            var result = Laboratory.Create(LaboratoryName, course, laboratoryProfessor, timeAndPlace);
+
+            //Act
+            var newLaboratoryProfessor = Professor.Create("NewName", "NewSurname", "0711445039").Entity;
+            var updateResult = result.Entity.UpdateProfessor(newLaboratoryProfessor);
+
+            //Assert
+            updateResult.IsSuccess.Should().BeTrue();
+            result.Entity.LaboratoryProfessor.Should().Be(newLaboratoryProfessor);
+        }
+
+        [Fact]
+        public void When_UpdateInvalidProfessor_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var course = Course.Create("Test Course").Entity;
+            var laboratoryProfessor = Professor.Create("Name", "Surname", "0711445039").Entity;
+            var timeAndPlace = TimeAndPlace.Create(DateTime.Parse("1 January 2022"), "C408").Entity;
+            var result = Laboratory.Create(LaboratoryName, course, laboratoryProfessor, timeAndPlace);
+
+            //Act
+            var updateResult = result.Entity.UpdateProfessor(null);
+
+            //Assert
+            updateResult.IsFailure.Should().BeTrue();
+            updateResult.Error.Should().Be("Professor cannot be null");
+        }
+
+        [Fact]
         public void When_AddStudents_Then_ShouldAddStudents()
         {
             //Arrange
@@ -80,6 +169,38 @@ namespace LabsCourseManagement.UnitTests
             //Assert
             addStudentsResult.IsFailure.Should().BeTrue();
             addStudentsResult.Error.Should().Be("Cannot add null students");
+        }
+
+        [Fact]
+        public void When_RemoveStudents_Then_ShouldRemoveStudents()
+        {
+            //Arrange
+            var laboratory = CreateLaboratorySUT();
+            var students = CreateStudentsSUT();
+
+            //Act
+            var addStudentsResult = laboratory.AddStudents(students);
+            var removeStudentsResult = laboratory.RemoveStudents(students);
+
+            //Assert
+            removeStudentsResult.IsSuccess.Should().BeTrue();
+            laboratory.LaboratoryStudents.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullStudents_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var laboratory = CreateLaboratorySUT();
+            var students = CreateStudentsSUT();
+            students.Add(null);
+
+            //Act
+            var removeStudentsResult = laboratory.RemoveStudents(students);
+
+            //Assert
+            removeStudentsResult.IsFailure.Should().BeTrue();
+            removeStudentsResult.Error.Should().Be("Cannot remove null students");
         }
 
         [Fact]
@@ -115,6 +236,38 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
+        public void When_RemoveLaboratoryAnnouncements_Then_ShouldRemoveLaboratoryAnnouncements()
+        {
+            //Arrange
+            var laboratory = CreateLaboratorySUT();
+            var announcements = CreateAnnouncementsSUT(laboratory.LaboratoryProfessor);
+
+            //Act
+            var addAnnouncementsResult = laboratory.AddLaboratoryAnnouncements(announcements);
+            var removeAnnouncementsResult = laboratory.RemoveLaboratoryAnnouncements(announcements);
+
+            //Assert
+            removeAnnouncementsResult.IsSuccess.Should().BeTrue();
+            laboratory.LaboratoryAnnouncements.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullLaboratoryAnnouncements_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var laboratory = CreateLaboratorySUT();
+            var announcements = CreateAnnouncementsSUT(laboratory.LaboratoryProfessor);
+            announcements.Add(null);
+
+            //Act
+            var removeAnnouncementsResult = laboratory.RemoveLaboratoryAnnouncements(announcements);
+
+            //Assert
+            removeAnnouncementsResult.IsFailure.Should().BeTrue();
+            removeAnnouncementsResult.Error.Should().Be("Cannot remove null announcements");
+        }
+
+        [Fact]
         public void When_AddLaboratoryGradingInfos_Then_ShouldAddLaboratoryGradingInfos()
         {
             //Arrange
@@ -145,6 +298,39 @@ namespace LabsCourseManagement.UnitTests
             //Assert
             addGradingInfosResult.IsFailure.Should().BeTrue();
             addGradingInfosResult.Error.Should().Be("Cannot add null grading infos");
+        }
+
+        [Fact]
+        public void When_RemoveLaboratoryGradingInfos_Then_ShouldRemoveLaboratoryGradingInfos()
+        {
+            //Arrange
+            var laboratory = CreateLaboratorySUT();
+            var gradingInfos = CreateGradingInfosSUT();
+
+
+            //Act
+            var addGradingInfosResult = laboratory.AddLaboratoryGradingInfos(gradingInfos);
+            var removeGradingInfosResult = laboratory.RemoveLaboratoryGradingInfos(gradingInfos);
+
+            //Assert
+            removeGradingInfosResult.IsSuccess.Should().BeTrue();
+            laboratory.LaboratoryGradingInfo.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullLaboratoryGradingInfos_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var laboratory = CreateLaboratorySUT();
+            var gradingInfos = CreateGradingInfosSUT();
+            gradingInfos.Add(null);
+
+            //Act
+            var removeGradingInfosResult = laboratory.RemoveLaboratoryGradingInfos(gradingInfos);
+
+            //Assert
+            removeGradingInfosResult.IsFailure.Should().BeTrue();
+            removeGradingInfosResult.Error.Should().Be("Cannot remove null grading infos");
         }
 
         private Laboratory CreateLaboratorySUT()

@@ -146,6 +146,81 @@ namespace LabsCourseManagement.WebUI.Controllers
 
             return NoContent();
         }
-
+        [HttpPost("{professorId:guid}/name")]
+        public ActionResult UpdateName(Guid professorId, [FromBody] string name)
+        {
+            if (name == null)
+            {
+                return BadRequest();
+            }
+            var professor = professorRepository.GetById(professorId);
+            if (professor == null || professor.Result == null)
+            {
+                return NotFound();
+            }
+            professor.Result.UpdateName(name);
+            professorRepository.Save();
+            return NoContent();
+        }
+        [HttpPost("{professorId:guid}/surname")]
+        public ActionResult UpdateSurname(Guid professorId, [FromBody] string surname)
+        {
+            if (surname == null)
+            {
+                return BadRequest();
+            }
+            var professor = professorRepository.GetById(professorId);
+            if (professor == null || professor.Result == null)
+            {
+                return NotFound();
+            }
+            professor.Result.UpdateSurname(surname);
+            professorRepository.Save();
+            return NoContent();
+        }
+        [HttpDelete("{professorId:guid}/{courseId:guid}")]
+        public IActionResult RemoveCourse(Guid professorId,Guid courseId)
+        {
+            var professor = professorRepository.GetById(professorId);
+            if (professor == null || professor.Result == null)
+            {
+                return NotFound();
+            }
+            var course = courseRepository.Get(courseId);
+            if (course.Result == null)
+            {
+                return NotFound();
+            }
+            var result=professor.Result.RemoveCourse(course.Result);
+            if(result == null)
+            {
+                return BadRequest();
+            }
+            courseRepository.Save();
+            professorRepository.Save();
+            return NoContent();
+        }
+        [HttpDelete("{professorId:guid}/{laboratoryId:guid}")]
+        public IActionResult RemoveLaboratory(Guid professorId, Guid laboratoryId)
+        {
+            var professor = professorRepository.GetById(professorId);
+            if (professor == null || professor.Result == null)
+            {
+                return NotFound();
+            }
+            var laboratory = laboratoryRepository.Get(laboratoryId);
+            if (laboratory.Result == null)
+            {
+                return NotFound();
+            }
+            var result = professor.Result.RemoveLaboratory(laboratory.Result);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            laboratoryRepository.Save();
+            professorRepository.Save();
+            return NoContent();
+        }
     }
 }

@@ -1,34 +1,33 @@
-﻿using LabsCourseManagement.Application.Repositories;
+﻿using LabsCourseManagement.Application.Queries;
+using LabsCourseManagement.Domain;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabsCourseManagement.WebUI.Controllers
 {
-    [Route("v1/api/[controller]")]
+    [Route("v{version:apiVersion}/api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class CatalogsController : ControllerBase
     {
-        private readonly ICatalogRepository catalogRepository;
+        private readonly IMediator mediator;
 
-        public CatalogsController(ICatalogRepository catalogRepository)
+        public CatalogsController(IMediator mediator)
         {
-            this.catalogRepository = catalogRepository;
+            this.mediator = mediator;
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet]
-        public IActionResult Get()
+        public async Task<List<Catalog>> Get()
         {
-            return Ok(catalogRepository.GetAll().Result);
+            return await mediator.Send(new GetAllCatalogsQuery());
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet("{catalogId:guid}")]
-        public IActionResult Get(Guid catalogId)
-        {
-            var catalog = catalogRepository.Get(catalogId).Result;
-            if(catalog == null)
-            {
-                return NotFound();
-            }
-            return Ok(catalog);
-        }
+        public Task<Catalog> Get(Guid catalogId) =>
+            mediator.Send(new GetCatalogQuery { Id = catalogId });
     }
 }

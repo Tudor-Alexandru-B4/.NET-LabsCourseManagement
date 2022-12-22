@@ -150,6 +150,131 @@ namespace LabsCourseManagement.UnitTests
             result.IsFailure.Should().BeTrue();
             result.Error.Should().Be("Invalid phone number format");
         }
+        [Fact]
+        public void When_UpdateName_Then_ShouldUpdateName()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            string name = "Matei";
 
+            //Act
+            var result = professor.UpdateName(name);
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            professor.Name.Should().Be(name);
+        }
+        [Fact]
+        public void When_UpdateNameWithNull_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            string name = null;
+
+            //Act
+            var result = professor.UpdateName(name);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Name cannot be null");
+        }
+        [Fact]
+        public void When_UpdateSurname_Then_ShouldUpdateSurname()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            string surname = "Ioan";
+
+            //Act
+            var result = professor.UpdateSurname(surname);
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            professor.Surname.Should().Be(surname);
+        }
+        [Fact]
+        public void When_UpdateSurnameWithNull_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            string surname = null;
+
+            //Act
+            var result = professor.UpdateSurname(surname);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Surname cannot be null");
+        }
+        [Fact]
+        public void When_RemoveCourse_Then_ShouldRemoveCourse()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            var courses = new List<Course>();
+            var course = Course.Create(".net").Entity;
+            courses.Add(course);
+            professor.AddCourses(courses);
+
+            //Act
+            var result = professor.RemoveCourse(course);
+
+            //Arrange
+            result.IsSuccess.Should().BeTrue();
+            professor.Courses.Should().HaveCount(0);
+        }
+        [Fact]
+        public void When_RemoveInvalidCourse_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            var courses = new List<Course>();
+            var course = Course.Create(".net").Entity;
+            courses.Add(course);
+
+            //Act
+            var result = professor.RemoveCourse(course);
+
+            //Arrange
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("This course does not belong to this professor");
+        }
+        [Fact]
+        public void When_RemoveLaboratory_Then_ShouldRemoveLaboratory()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            var laboratories = new List<Laboratory>();
+            var course = Course.Create(".net").Entity;
+            var data = TimeAndPlace.Create(System.DateTime.Parse("1 January 2022"), "C1").Entity;
+            var laboratory = Laboratory.Create(".net", course, professor, data).Entity;
+            laboratories.Add(laboratory);
+            professor.AddLaboratories(laboratories);
+
+            //Act
+            var result = professor.RemoveLaboratory(laboratory);
+
+            //Arrange
+            result.IsSuccess.Should().BeTrue();
+            professor.Laboratories.Should().HaveCount(0);
+        }
+        [Fact]
+        public void When_RemoveInvalidLaboratory_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var professor = Professor.Create("Florin", "Olariu", "0712345678").Entity;
+            var laboratories = new List<Laboratory>();
+            var course = Course.Create(".net").Entity;
+            var data = TimeAndPlace.Create(System.DateTime.Parse("1 January 2022"), "C1").Entity;
+            var laboratory = Laboratory.Create(".net", course, professor, data).Entity;
+            laboratories.Add(laboratory);
+
+            //Act
+            var result = professor.RemoveLaboratory(laboratory);
+
+            //Arrange
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("This laboratory does not belong to this professor");
+        }
     }
 }

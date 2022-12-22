@@ -3,8 +3,10 @@ using FluentValidation.AspNetCore;
 using LabsCourseManagement.Application;
 using LabsCourseManagement.Application.Repositories;
 using LabsCourseManagement.Infrastructure;
+using LabsCourseManagement.WebUI;
 using LabsCourseManagement.WebUI.Dtos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -18,7 +20,6 @@ builder.Services.AddAplicationServices();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DatabaseContext>(
     options => options.UseSqlite(
@@ -53,6 +54,13 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
+
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "My API" });
+    c.SwaggerDoc("v2", new OpenApiInfo { Version = "v2", Title = "My API" });
+});
+
+builder.Services.AddWebUIServices();
 
 var app = builder.Build();
 

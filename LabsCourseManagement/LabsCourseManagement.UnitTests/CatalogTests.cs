@@ -51,6 +51,38 @@ namespace LabsCourseManagement.UnitTests
             addStudentGradesResult.Error.Should().Be("StudentGrades cannot be null");
         }
 
+        [Fact]
+        public void When_RemoveCatalogStudentGrades_Then_ShouldRemoveCatalogStudentGrades()
+        {
+            //Arrange
+            var catalog = Catalog.Create().Entity;
+            var studentGrades = CreateStudentGradesSUT();
+
+            //Act
+            var addStudentGradesResult = catalog.AddStudentGradesToCatalog(studentGrades);
+            var removeStudentGradesResult = catalog.RemoveStudentGradesToCatalog(studentGrades);
+
+            //Assert
+            removeStudentGradesResult.IsSuccess.Should().BeTrue();
+            catalog.StudentGrades.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void When_RemoveNullCatalogStudentGrades_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var catalog = Catalog.Create().Entity;
+            var studentGrades = CreateStudentGradesSUT();
+            studentGrades.Add(null);
+
+            //Act
+            var removeStudentGradesResult = catalog.RemoveStudentGradesToCatalog(studentGrades);
+
+            //Assert
+            removeStudentGradesResult.IsFailure.Should().BeTrue();
+            removeStudentGradesResult.Error.Should().Be("StudentGrades cannot be null");
+        }
+
         private List<StudentGrades> CreateStudentGradesSUT()
         {
             var student1 = Student.Create("John", "Matt", "A1", 2, "001R002", "0773098001").Entity;
