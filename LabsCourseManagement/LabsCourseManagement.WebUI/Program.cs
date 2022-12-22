@@ -12,12 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssembly(typeof(AnnouncementValidator).Assembly);
-builder.Services.AddValidatorsFromAssembly(typeof(CourseValidator).Assembly);
-builder.Services.AddValidatorsFromAssembly(typeof(LaboratoryValidator).Assembly);
-builder.Services.AddValidatorsFromAssembly(typeof(ProfessorValidator).Assembly);
-builder.Services.AddValidatorsFromAssembly(typeof(StudentValidator).Assembly);
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.AddAplicationServices();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,6 +38,7 @@ builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ITimeAndPlaceRepository, TimeAndPlaceRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
+
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
