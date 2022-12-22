@@ -277,7 +277,6 @@ namespace LabsCourseManagement.WebUI.Controllers
         [HttpPut("{professorId:guid}/laboratories")]
         public ActionResult RemoveLaboratories(Guid professorId, [FromBody] List<Guid> laboratoriesId)
         {
-            var laboratories = new List<Laboratory>();
             var professor = professorRepository.GetById(professorId);
             if (professor == null || professor.Result == null)
             {

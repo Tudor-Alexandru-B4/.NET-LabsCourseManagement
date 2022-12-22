@@ -6,7 +6,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class LaboratoryDataService : ILaboratoryDataService
     {
-        private readonly string apiUrl = new Uri("https://localhost:7200/v1/api/laboratories").ToString();
+        private readonly string apiUrl = UrlString.laboratoryUrl;
         private readonly HttpClient httpClient;
 
         public LaboratoryDataService(HttpClient httpClient)

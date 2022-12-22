@@ -8,7 +8,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class StudentDataService : IStudentDataService
     {
-        private readonly string apiURL = new Uri("https://localhost:7200/v1/api/students").ToString();
+        private readonly string apiURL = UrlString.studentsUrl;
         private readonly HttpClient httpClient;
 
         public StudentDataService(HttpClient httpClient)
@@ -40,16 +40,16 @@ namespace LabsCourseManagement.UI.Pages.Services
             JsonObject obj = new JsonObject();
             obj.Add("studentId", studentId.ToString());
             var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
-            var url = new Uri(apiURL + "/" + studentId).ToString();
+            var url = $"{apiURL}/{studentId}";
             await httpClient.PostAsync(url, content);
-            await httpClient.DeleteAsync(new Uri(apiURL + "/" + studentId.ToString()).ToString());
+            await httpClient.DeleteAsync(url);
         }
 
         public async Task UpdateStudentGroup(Guid studentId, string groupName)
         {
             var json = JsonConvert.SerializeObject(groupName);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = new Uri(apiURL + "/" + studentId.ToString() + "/" + "changeGroup").ToString();
+            var url = $"{apiURL}/{studentId}/changeGroup";
             await httpClient.PostAsync(url, data);
         }
 
