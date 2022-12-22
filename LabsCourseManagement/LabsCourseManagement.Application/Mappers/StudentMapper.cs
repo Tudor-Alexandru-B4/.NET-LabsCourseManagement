@@ -1,20 +1,22 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LabsCourseManagement.Application.Mappers
 {
-    public class StudentMapper
+    public static class StudentMapper
     {
         private static Lazy<IMapper> Lazy = new Lazy<IMapper>(() =>
         {
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.ShouldMapProperty = p =>
-                p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
+                {
+                    if(p.GetMethod != null)
+                    {
+                        return p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
+                    }
+                    return false;
+                };
+                
                 cfg.AddProfile<StudentMappingProfile>();
             });
             var mapper = config.CreateMapper();

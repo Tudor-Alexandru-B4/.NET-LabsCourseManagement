@@ -80,7 +80,7 @@ namespace LabsCourseManagement.Domain
         }
         public Result RemoveCourse(Course course)
         {
-            if (Courses.Contains(course))
+            if(Courses != null && Courses.Contains(course))
             {
                 Courses.Remove(course);
                 return Result.Success();
@@ -92,7 +92,7 @@ namespace LabsCourseManagement.Domain
         }
         public Result RemoveLaboratory(Laboratory laboratory)
         {
-            if (Laboratories.Contains(laboratory))
+            if(Laboratories != null && Laboratories.Contains(laboratory))
             {
                 Laboratories.Remove(laboratory);
                 return Result.Success();
