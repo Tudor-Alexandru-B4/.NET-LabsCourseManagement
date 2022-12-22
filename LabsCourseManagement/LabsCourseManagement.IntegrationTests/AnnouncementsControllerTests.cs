@@ -12,7 +12,7 @@
             //Arrange
             var announcementDto = SUT();
             var professorDto = ProfessorSUT();
-            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
             var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
             var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
 
@@ -39,12 +39,12 @@
             //Arrange
             var announcementDto = SUT();
             var professorDto = ProfessorSUT();
-            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
             var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
             var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
 
             //Act
-            var createAnnouncementResponse = await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{professors[0].Id}", announcementDto);
+            await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{professors[0].Id}", announcementDto);
             var getAnnouncementResponse = await HttpClientAnnouncements.GetAsync(ApiUrl);
             var announcements = await getAnnouncementResponse.Content.ReadFromJsonAsync<List<AnnouncementDto>>();
             var deleteAnnouncementResponse = await HttpClientAnnouncements.DeleteAsync($"{ApiUrl}/{announcements[announcements.Count - 1].Id}");
@@ -64,12 +64,12 @@
             //Arrange
             var announcementDto = SUT();
             CreateProfessorDto professorDto = ProfessorSUT();
-            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
             var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
             var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
 
             //Act
-            var createAnnouncementResponse = await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{professors[0].Id}", announcementDto);
+            await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{professors[0].Id}", announcementDto);
             var getAnnouncementResponse = await HttpClientAnnouncements.GetAsync(ApiUrl);
             var announcements = await getAnnouncementResponse.Content.ReadFromJsonAsync<List<AnnouncementDto>>();
             var getAnnouncementByIdResponse = await HttpClientAnnouncements.GetAsync($"{ApiUrl}/{announcements[announcements.Count - 1].Id}");

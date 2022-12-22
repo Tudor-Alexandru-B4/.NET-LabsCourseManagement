@@ -142,7 +142,7 @@ namespace LabsCourseManagement.UnitTests
 
             //Act
             var result = Course.Create(CourseName);
-            var addResult = result.Entity.AddHelpfulMaterials(helpfulMeterials);
+            result.Entity.AddHelpfulMaterials(helpfulMeterials);
             var removeResult = result.Entity.RemoveHelpfulMaterials(helpfulMeterials);
 
             //Assert
@@ -334,7 +334,7 @@ namespace LabsCourseManagement.UnitTests
             var laboratories = CreateLaboratoriesSUT();
 
             //Act
-            var addLaboratoriesResult = course.AddLaboratories(laboratories);
+            course.AddLaboratories(laboratories);
             var removeLaboratoriesResult = course.RemoveLaboratories(laboratories);
 
             //Assert

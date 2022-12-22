@@ -16,7 +16,7 @@ namespace LabsCourseManagement.IntegrationTests
             var courseDto = await SUT();
 
             //Act
-            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
+            await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
             var getCatalogResult = await HttpClientCatalogs.GetAsync(ApiUrl);
 
             //Assert

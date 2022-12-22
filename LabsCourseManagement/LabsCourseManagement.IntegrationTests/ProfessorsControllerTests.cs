@@ -1,9 +1,3 @@
-using LabsCourseManagement.WebUI.Dtos;
-using System.Net.Http.Json;
-using Xunit;
-using FluentAssertions;
-using System.Collections.Generic;
-using System.Linq;
 using System;
 
 namespace LabsCourseManagement.IntegrationTests
@@ -136,7 +130,7 @@ namespace LabsCourseManagement.IntegrationTests
                 ProfessorId = professors[professors.Count - 1].Id
             };
 
-            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
+            await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
             var getCourseResponse = await HttpClientCourses.GetAsync("v1/api/courses");
             var courses = await getCourseResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
 
@@ -220,7 +214,7 @@ namespace LabsCourseManagement.IntegrationTests
             //Arrange
             CreateProfessorDto professorDto = CreateSUT();
 
-            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+            await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
             var getProfessorResponse = await HttpClientProfessor.GetAsync(ApiUrl);
             var professors = await getProfessorResponse.Content.ReadFromJsonAsync<List<ProfessorDto>>();
 
@@ -230,7 +224,7 @@ namespace LabsCourseManagement.IntegrationTests
                 ProfessorId = professors[professors.Count - 1].Id
             };
 
-            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
+            await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
             var getCourseResponse = await HttpClientCourses.GetAsync("v1/api/courses");
             var courses = await getCourseResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
 
@@ -243,7 +237,7 @@ namespace LabsCourseManagement.IntegrationTests
                 Place = "C409"
             };
 
-            var createLaboratoryResponse = await HttpClientLaboratories.PostAsJsonAsync("v1/api/laboratories", laboratoryDto);
+            await HttpClientLaboratories.PostAsJsonAsync("v1/api/laboratories", laboratoryDto);
             var getLaboratoryResponse = await HttpClientLaboratories.GetAsync("v1/api/laboratories");
             var laboratories = await getLaboratoryResponse.Content.ReadFromJsonAsync<List<LaboratoryDto>>();
 
@@ -272,7 +266,7 @@ namespace LabsCourseManagement.IntegrationTests
             //Arrange
             CreateProfessorDto professorDto = CreateSUT();
 
-            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+            await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
             var getProfessorResponse = await HttpClientProfessor.GetAsync(ApiUrl);
             var professors = await getProfessorResponse.Content.ReadFromJsonAsync<List<ProfessorDto>>();
 
@@ -282,7 +276,7 @@ namespace LabsCourseManagement.IntegrationTests
                 ProfessorId = professors[professors.Count - 1].Id
             };
 
-            var createCourseResponse = await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
+            await HttpClientCourses.PostAsJsonAsync("v1/api/courses", courseDto);
             var getCourseResponse = await HttpClientCourses.GetAsync("v1/api/courses");
             var courses = await getCourseResponse.Content.ReadFromJsonAsync<List<CourseDto>>();
 
@@ -295,7 +289,7 @@ namespace LabsCourseManagement.IntegrationTests
                 Place = "C409"
             };
 
-            var createLaboratoryResponse = await HttpClientLaboratories.PostAsJsonAsync("v1/api/laboratories", laboratoryDto);
+            await HttpClientLaboratories.PostAsJsonAsync("v1/api/laboratories", laboratoryDto);
             var getLaboratoryResponse = await HttpClientLaboratories.GetAsync("v1/api/laboratories");
             var laboratories = await getLaboratoryResponse.Content.ReadFromJsonAsync<List<LaboratoryDto>>();
 
@@ -316,7 +310,7 @@ namespace LabsCourseManagement.IntegrationTests
             //Arrange
             CreateProfessorDto professorDto = CreateSUT();
 
-            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+            await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
             var getProfessorResponse = await HttpClientProfessor.GetAsync(ApiUrl);
             var professors = await getProfessorResponse.Content.ReadFromJsonAsync<List<ProfessorDto>>();
 
@@ -338,7 +332,7 @@ namespace LabsCourseManagement.IntegrationTests
             CreateProfessorDto professorDto = CreateSUT();
 
             //Act
-            var createProfessorResponse = await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
+            await HttpClientProfessor.PostAsJsonAsync(ApiUrl, professorDto);
             var getProfessorResponse = await HttpClientProfessor.GetAsync(ApiUrl);
             var professors = await getProfessorResponse.Content.ReadFromJsonAsync<List<ProfessorDto>>();
             var getProfessorByIdResponse = await HttpClientProfessor.GetAsync($"{ApiUrl}/{professors[professors.Count - 1].Id}");

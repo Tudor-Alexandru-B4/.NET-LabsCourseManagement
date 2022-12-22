@@ -14,7 +14,7 @@ namespace LabsCourseManagement.Application.Handlers
             this.catalogRepository = catalogRepository;
         }
 
-        public async Task<Catalog> Handle(GetCatalogQuery request, CancellationToken cancellationToken = default)
+        public async Task<Catalog> Handle(GetCatalogQuery request, CancellationToken cancellationToken)
         {
             return await catalogRepository.Get(request.Id);
         }

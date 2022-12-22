@@ -66,7 +66,7 @@ namespace LabsCourseManagement.Domain
 
             var oldProfessor = LaboratoryProfessor;
             LaboratoryProfessor = professor;
-            oldProfessor.Laboratories.Remove(this);
+            oldProfessor?.Laboratories?.Remove(this);
             return Result.Success();
         }
 
