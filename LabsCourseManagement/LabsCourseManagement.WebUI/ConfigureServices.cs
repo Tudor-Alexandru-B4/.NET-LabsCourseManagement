@@ -4,6 +4,10 @@ using LabsCourseManagement.Infrastructure;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.OpenApi.Models;
 
 namespace LabsCourseManagement.WebUI
 {
@@ -11,6 +15,12 @@ namespace LabsCourseManagement.WebUI
     {
         public static IServiceCollection AddWebUIServices(this IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddAplicationServices();
+            services.AddEndpointsApiExplorer();
+
             IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
@@ -56,6 +66,11 @@ namespace LabsCourseManagement.WebUI
                 opt.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
                     new HeaderApiVersionReader("x-api-version"),
                     new MediaTypeApiVersionReader("x-api-version"));
+            });
+
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "My API" });
+                c.SwaggerDoc("v2", new OpenApiInfo { Version = "v2", Title = "My API" });
             });
 
             return services;
