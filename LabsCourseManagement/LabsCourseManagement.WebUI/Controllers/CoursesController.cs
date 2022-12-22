@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LabsCourseManagement.WebUI.Controllers
 {
-    [Route("v1/api/[controller]")]
+    [Route("v{version:apiVersion}/api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class CoursesController : ControllerBase
     {
@@ -20,12 +22,14 @@ namespace LabsCourseManagement.WebUI.Controllers
             this.studentRepository = studentRepository;
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(courseRepository.GetAll().Result);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet("{courseId:guid}")]
         public IActionResult Get(Guid courseId)
         {
@@ -37,6 +41,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return Ok(course);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpPost]
         public IActionResult Create([FromBody] CreateCourseDto courseDto)
         {
@@ -63,6 +68,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return BadRequest(course.Error);
         }
 
+        [MapToApiVersion("1.0")]
         [HttpPost("{courseId:guid}/professors")]
         public IActionResult AddProfessorsToCourse(Guid courseId, [FromBody] List<Guid> professorsId)
         {
@@ -95,6 +101,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return NoContent();
         }
 
+        [MapToApiVersion("1.0")]
         [HttpPost("{courseId:guid}/students")]
         public IActionResult AddStudentsToCourse(Guid courseId, [FromBody] List<Guid> studentsId)
         {
@@ -127,6 +134,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             return NoContent();
         }
 
+        [MapToApiVersion("1.0")]
         [HttpDelete("{courseId:guid}")]
         public IActionResult Delete(Guid courseId)
         {
@@ -137,6 +145,38 @@ namespace LabsCourseManagement.WebUI.Controllers
             }
             courseRepository.Delete(course.Result);
             courseRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{courseId:guid}/students")]
+        public IActionResult RemoveStudentsFromCourse(Guid courseId, [FromBody] List<Guid> studentsId)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!studentsId.Any())
+            {
+                return BadRequest("Add at least one student");
+            }
+
+            var students = new List<Student>();
+            foreach (var studentId in studentsId)
+            {
+                var student = studentRepository.Get(studentId);
+                if (student == null || student.Result == null)
+                {
+                    return NotFound($"Student with {studentId} does not exist");
+                }
+                students.Add(student.Result);
+            }
+
+            course.Result.RemoveCourseStudents(students);
+            courseRepository.Save();
+            studentRepository.Save();
             return NoContent();
         }
     }
