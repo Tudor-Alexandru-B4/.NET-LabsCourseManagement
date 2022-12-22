@@ -14,14 +14,12 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly ICourseRepository courseRepository;
         private readonly IProfessorRepository professorRepository;
         private readonly IStudentRepository studentRepository;
-        private readonly IAnnouncementRepository announcementRepository;
 
-        public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository, IStudentRepository studentRepository, IAnnouncementRepository announcementRepository)
+        public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository, IStudentRepository studentRepository)
         {
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
             this.studentRepository = studentRepository;
-            this.announcementRepository = announcementRepository;
         }
 
         [MapToApiVersion("1.0")]

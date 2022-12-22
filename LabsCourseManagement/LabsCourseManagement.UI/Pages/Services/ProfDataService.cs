@@ -9,7 +9,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class ProfDataService : IProfDataService
     {
-        private readonly string apiUrl = new Uri("https://localhost:7200/v1/api/professors").ToString();
+        private readonly string apiUrl = UrlString.professorUrl;
         private readonly HttpClient httpClient;
 
         public ProfDataService(HttpClient httpClient)
@@ -34,7 +34,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 
         public async Task DeleteProfessor(Guid professorId)
         {
-            await httpClient.DeleteAsync(new Uri(apiUrl + "/" + professorId.ToString()).ToString());
+            await httpClient.DeleteAsync($"{apiUrl}/{professorId}");
         }
 
         public async Task<IEnumerable<ProfessorModel>?> GetAllProfessors()
@@ -60,7 +60,7 @@ namespace LabsCourseManagement.UI.Pages.Services
         {
             var json = JsonConvert.SerializeObject(phoneNumber);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = new Uri(apiUrl + "/" + professorId.ToString() + "/" + contactId.ToString() + "/" + "phoneNumber").ToString();
+            var url = $"{apiUrl}/{professorId}/{contactId}/phoneNumber";
             await httpClient.PostAsync(url, data);
         }
     }

@@ -8,7 +8,7 @@ namespace LabsCourseManagement.UI.Pages.Services
         Task CreateCourse(CourseInput course);
         Task DeleteCourse(Guid courseId);
         Task<IEnumerable<CourseModel>?> GetAllCourses();
-        Task AddProfessorsToCourse(Guid courseId, List<Guid> professorId);
+        Task AddProfessorsToCourse(Guid courseId, List<Guid> professorsIds);
         Task AddStudentsToCourse(Guid courseId, List<Guid> studentsIds);
 
     }

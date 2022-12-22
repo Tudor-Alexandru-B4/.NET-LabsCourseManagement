@@ -9,7 +9,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class CourseDataService : ICourseDataService
     {
-        private readonly string apiUrl = new Uri("https://localhost:7200/v1/api/courses").ToString();
+        private readonly string apiUrl = UrlString.coursesUrl;
         private readonly HttpClient httpClient;
 
         public CourseDataService(HttpClient httpClient)
@@ -39,7 +39,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 
         public async Task DeleteCourse(Guid courseId)
         {
-            await httpClient.DeleteAsync(new Uri(apiUrl + "/" + courseId.ToString()).ToString());
+            await httpClient.DeleteAsync($"{apiUrl}/{courseId}");
         }
 
         public async Task AddProfessorsToCourse(Guid courseId, List<Guid> professorsIds)
