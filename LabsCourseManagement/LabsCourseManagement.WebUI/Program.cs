@@ -18,6 +18,8 @@ builder.Services.AddValidatorsFromAssembly(typeof(CourseValidator).Assembly);
 builder.Services.AddValidatorsFromAssembly(typeof(LaboratoryValidator).Assembly);
 builder.Services.AddValidatorsFromAssembly(typeof(ProfessorValidator).Assembly);
 builder.Services.AddValidatorsFromAssembly(typeof(StudentValidator).Assembly);
+builder.Services.AddAplicationServices();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

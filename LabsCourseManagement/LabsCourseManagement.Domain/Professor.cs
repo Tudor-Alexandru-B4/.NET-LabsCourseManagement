@@ -53,14 +53,54 @@ namespace LabsCourseManagement.Domain
         {
             var result = ContactInfo?.UpdateContact(phoneNumber);
 
-            if(result == null || result.IsFailure)
+            if (result == null || result.IsFailure)
             {
                 return Result.Failure("Invalid phone number format");
             }
 
             return Result.Success();
         }
-
-
+        public Result UpdateName(string name)
+        {
+            if (name == null)
+            {
+                return Result.Failure("Name cannot be null");
+            }
+            Name = name;
+            return Result.Success();
+        }
+        public Result UpdateSurname(string surname)
+        {
+            if (surname == null)
+            {
+                return Result.Failure("Surname cannot be null");
+            }
+            Surname = surname;
+            return Result.Success();
+        }
+        public Result RemoveCourse(Course course)
+        {
+            if (Courses.Contains(course))
+            {
+                Courses.Remove(course);
+                return Result.Success();
+            }
+            else
+            {
+                return Result.Failure("This course does not belong to this professor");
+            }
+        }
+        public Result RemoveLaboratory(Laboratory laboratory)
+        {
+            if (Laboratories.Contains(laboratory))
+            {
+                Laboratories.Remove(laboratory);
+                return Result.Success();
+            }
+            else
+            {
+                return Result.Failure("This laboratory does not belong to this professor");
+            }
+        }
     }
 }
