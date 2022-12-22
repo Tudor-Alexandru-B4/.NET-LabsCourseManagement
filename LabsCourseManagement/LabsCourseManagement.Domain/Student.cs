@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain.Helpers;
+using MediatR;
 
 namespace LabsCourseManagement.Domain
 

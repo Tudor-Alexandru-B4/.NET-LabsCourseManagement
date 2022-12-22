@@ -11,11 +11,14 @@ namespace LabsCourseManagement.Application.Repositories
         {
             this.context = context;
         }
-        public async void Add(Student student)
+
+        public async Task<Student> Add(Student student)
         {
             await context.Students.AddAsync(student);
+            context.Save();
+            return student;
         }
-
+        
         public void Delete(Student student)
         {
             context.Students.Remove(student);
@@ -49,5 +52,7 @@ namespace LabsCourseManagement.Application.Repositories
         {
             context.Save();
         }
+
+      
     }
 }
