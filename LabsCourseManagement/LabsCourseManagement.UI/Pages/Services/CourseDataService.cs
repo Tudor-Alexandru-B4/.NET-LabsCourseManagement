@@ -9,7 +9,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class CourseDataService : ICourseDataService
     {
-        private readonly string apiUrl = UrlString.coursesUrl;
+        private readonly string apiUrl = UrlString.CoursesUrl;
         private readonly HttpClient httpClient;
 
         public CourseDataService(HttpClient httpClient)
