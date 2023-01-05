@@ -9,7 +9,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class ProfDataService : IProfDataService
     {
-        private readonly string apiUrl = UrlString.professorUrl;
+        private readonly string apiUrl = UrlString.ProfessorUrl;
         private readonly HttpClient httpClient;
 
         public ProfDataService(HttpClient httpClient)

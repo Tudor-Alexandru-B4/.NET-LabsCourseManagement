@@ -8,7 +8,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 {
     public class StudentDataService : IStudentDataService
     {
-        private readonly string apiURL = UrlString.studentsUrl;
+        private readonly string apiURL = UrlString.StudentsUrl;
         private readonly HttpClient httpClient;
 
         public StudentDataService(HttpClient httpClient)
