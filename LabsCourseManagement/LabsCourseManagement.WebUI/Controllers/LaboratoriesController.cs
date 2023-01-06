@@ -88,6 +88,13 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 laboratoryRepository.Add(laboratory.Entity);
                 laboratoryRepository.Save();
+
+                course.Result.AddLaboratories(new List<Laboratory> { laboratory.Entity });
+                courseRepository.Save();
+
+                laboratoryProfessor.Result.AddLaboratories(new List<Laboratory> { laboratory.Entity });
+                professorRepository.Save();
+
                 return Created(nameof(Get), laboratory);
             }
             return BadRequest(laboratory.Error);
@@ -140,6 +147,13 @@ namespace LabsCourseManagement.WebUI.Controllers
             if (addStudentsResult.IsSuccess)
             {
                 laboratoryRepository.Save();
+
+                foreach (var student in students)
+                {
+                    student.AddLaboratories(new List<Laboratory> { laboratory.Result });
+                }
+                studentRepository.Save();
+
                 return NoContent();
             }
             return BadRequest(addStudentsResult.Error);
