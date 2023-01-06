@@ -124,7 +124,6 @@ namespace LabsCourseManagement.WebUI.Controllers
                     return NotFound();
                 }
                 laboratories.Add(laboratory.Result);
-
             }
             professor.Result.AddLaboratories(laboratories);
             professorRepository.Save();

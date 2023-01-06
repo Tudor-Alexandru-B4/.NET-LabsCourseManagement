@@ -63,6 +63,7 @@ namespace LabsCourseManagement.WebUI.Controllers
                 courseRepository.Add(course.Entity);
                 courseRepository.Save();
                 professor.Result.AddCourses(new List<Course> { course.Entity });
+                professorRepository.Save();
                 return Created(nameof(Get), course);
             }
             return BadRequest(course.Error);
