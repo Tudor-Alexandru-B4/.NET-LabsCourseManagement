@@ -49,7 +49,7 @@ namespace LabsCourseManagement.UI.Pages.Services
         {
             var json = JsonConvert.SerializeObject(groupName);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"{apiURL}/{studentId}/changeGroup";
+            var url = $"{apiURL}/{studentId}/group";
             await httpClient.PostAsync(url, data);
         }
 

@@ -1,3 +1,4 @@
+using Blazored.Modal;
 using LabsCourseManagement.UI;
 using LabsCourseManagement.UI.Pages.Services;
 using Microsoft.AspNetCore.Components.Web;
@@ -11,4 +12,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddUIServices(builder.HostEnvironment);
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+builder.Services.AddBlazoredModal();
+
 await builder.Build().RunAsync();

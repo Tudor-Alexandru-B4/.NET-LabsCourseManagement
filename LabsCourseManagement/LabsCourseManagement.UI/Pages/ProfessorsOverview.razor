@@ -1,4 +1,5 @@
 ﻿@page "/professors-overview"
+@inject IModalService modal
 
 <h3>ProfessorsOverview</h3>
 <h3 class="fw-bold">Professors</h3>
@@ -109,3 +110,10 @@ else
 
     </div>
 </section>
+
+<section id="try-pop-up" class="mt-5">
+    <h5>Click this button Show Modal Popup</h5>
+    <button @onclick="@(()=>modal.Show<ProfessorData>("Modal Popup Example"))" class="btn btn-primary">View</button>
+</section>
+
+            
