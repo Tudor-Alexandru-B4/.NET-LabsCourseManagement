@@ -21,6 +21,8 @@ namespace LabsCourseManagement.UI.Pages
         private string PhoneNumber = default!;
         private Guid CourseGuid;
         private List<CourseModel> Courses = new List<CourseModel>();
+        private string Name;
+        private string Surname;
 
         protected override async Task OnInitializedAsync()
         {
@@ -31,9 +33,12 @@ namespace LabsCourseManagement.UI.Pages
                 if (contactInfo != null)
                 {
                     var contact = new ContactModel(contactInfo.Id);
-                    Contacts.Add(contact);
+                    if (Contacts.Contains(contact)==false){
+                        Contacts.Add(contact);
+                    }
                 }
             }
+
         }
         private async Task CreateProfessor()
         {
@@ -59,6 +64,16 @@ namespace LabsCourseManagement.UI.Pages
         private async Task AddCourses()
         {
             await ProfDataService.AddCourse(CourseGuid, GuidProfessorForUpdate);
+            await OnInitializedAsync();
+        }
+        private async Task UpdateProfessorName()
+        {
+            await ProfDataService.UpdateName(Name, GuidProfessorForUpdate);
+            await OnInitializedAsync();
+        }
+        private async Task UpdateProfessorSurname()
+        {
+            await ProfDataService.UpdateSurname(Surname, GuidProfessorForUpdate);
             await OnInitializedAsync();
         }
 
