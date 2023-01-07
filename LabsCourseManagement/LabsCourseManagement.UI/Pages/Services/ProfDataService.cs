@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
+using System.Xml.Linq;
 
 namespace LabsCourseManagement.UI.Pages.Services
 {
@@ -62,6 +63,16 @@ namespace LabsCourseManagement.UI.Pages.Services
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             var url = $"{apiUrl}/{professorId}/{contactId}/phoneNumber";
             await httpClient.PostAsync(url, data);
+        }
+
+        public async Task UpdateName(string name, Guid professorId)
+        {
+            await httpClient.PostAsJsonAsync($"{apiUrl}/{professorId}/name", name);
+        }
+
+        public async Task UpdateSurname(string surname,Guid professorId)
+        {
+            await httpClient.PostAsJsonAsync($"{apiUrl}/{professorId}/surname", surname);
         }
     }
 }

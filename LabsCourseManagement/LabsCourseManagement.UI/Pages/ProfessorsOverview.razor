@@ -1,5 +1,4 @@
 ﻿@page "/professors-overview"
-
 <h3>ProfessorsOverview</h3>
 <h3 class="fw-bold">Professors</h3>
 @if (Professors == null)
@@ -76,7 +75,7 @@ else
         }
         else
         {
-            <InputSelect id="update-professor" @bind-Value="GuidProfessorForUpdate" class="form-control">
+            <InputSelect id="update-professor" @bind-Value="GuidProfessorForUpdate" class="form-control" >
                 @foreach (var prof in Professors)
                 {
                     <option value="@prof.Id" class="text-black">@prof.Id @prof.Name @prof.Surname</option>
@@ -96,6 +95,20 @@ else
                 <br />
             </label>
             <button type="submit" onclick="@UpdateProfessor">Update</button>
+
+
+            <p class="fw-bold">Update Name</p>
+            <InputText id="new-name" @bind-Value=Name DisplayName="Name" />
+            <button type="submit" onclick="@UpdateProfessorName">Update</button>
+
+
+
+            <p class="fw-bold">Update Surname</p>
+            <InputText id="new-surname" @bind-Value=Surname DisplayName="Surname" />
+            <button type="submit" onclick="@UpdateProfessorSurname">Update</button>
+
+
+
             <p class="fw-bold">Add Courses</p>
             <p>Select Courses</p>
             <InputSelect @bind-Value="CourseGuid">

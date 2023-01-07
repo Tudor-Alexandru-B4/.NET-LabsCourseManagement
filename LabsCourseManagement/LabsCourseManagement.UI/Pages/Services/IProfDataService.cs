@@ -9,5 +9,7 @@ namespace LabsCourseManagement.UI.Pages.Services
         Task UpdateProfessorPhoneNumber(Guid professorId, Guid contactId, string phoneNumber);
         Task<IEnumerable<ProfessorModel>?> GetAllProfessors();
         Task AddCourse(Guid courseId, Guid professorId);
+        Task UpdateName(string name, Guid professorId);
+        Task UpdateSurname(string surname, Guid professorId);
     }
 }
