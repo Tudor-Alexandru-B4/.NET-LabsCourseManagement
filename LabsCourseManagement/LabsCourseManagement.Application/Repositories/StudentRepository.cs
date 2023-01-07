@@ -37,17 +37,6 @@ namespace LabsCourseManagement.Application.Repositories
                 .FirstOrDefaultAsync(s => s.StudentId == id);
         }
 
-        public void ChangeGroup(Student student, string newGroup)
-        {
-            var id = student.StudentId;
-            var searchedStudent = context.Students.FirstOrDefault(s => s.StudentId == id);
-            if (searchedStudent != null)
-            {
-                searchedStudent.Group = newGroup;
-            }
-            
-        }
-
         public void Save()
         {
             context.Save();

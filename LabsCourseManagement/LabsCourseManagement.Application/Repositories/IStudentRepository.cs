@@ -9,6 +9,5 @@ namespace LabsCourseManagement.Application.Repositories
         Task<List<Student>> GetAll();
         Task<Student?> Get(Guid id);
         void Save();
-        void ChangeGroup(Student student, string newGroup);
     }
 }
