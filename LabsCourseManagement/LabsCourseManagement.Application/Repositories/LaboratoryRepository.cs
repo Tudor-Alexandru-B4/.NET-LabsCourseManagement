@@ -21,14 +21,18 @@ namespace LabsCourseManagement.Application.Repositories
         {
             return await context.Laboratories.Include(s => s.LaboratoryStudents)
                 .Include(a => a.LaboratoryAnnouncements)
-                .Include(g => g.LaboratoryGradingInfo).ToListAsync();
+                .Include(g => g.LaboratoryGradingInfo)
+                .Include(t => t.LaboratoryTimeAndPlace)
+                .Include(c => c.LaboratoryCatalog).ToListAsync();
         }
 
         public async Task<Laboratory?> Get(Guid id)
         {
             return await context.Laboratories.Include(s => s.LaboratoryStudents)
                 .Include(a => a.LaboratoryAnnouncements)
-                .Include(g => g.LaboratoryGradingInfo).FirstOrDefaultAsync(c => c.Id == id);
+                .Include(g => g.LaboratoryGradingInfo)
+                .Include(t => t.LaboratoryTimeAndPlace)
+                .Include(c => c.LaboratoryCatalog).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(Laboratory laboratory)

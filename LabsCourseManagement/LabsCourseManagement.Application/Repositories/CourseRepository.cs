@@ -26,7 +26,8 @@ namespace LabsCourseManagement.Application.Repositories
                 .Include(t => t.CourseProgram)
                 .Include(a => a.CourseAnnouncements)
                 .Include(g => g.CourseGradingInfo)
-                .Include(h => h.HelpfulMaterials).ToListAsync();
+                .Include(h => h.HelpfulMaterials)
+                .Include(c => c.CourseCatalog).ToListAsync();
         }
 
         public async Task<Course?> Get(Guid id)
@@ -37,7 +38,8 @@ namespace LabsCourseManagement.Application.Repositories
                 .Include(t => t.CourseProgram)
                 .Include(a => a.CourseAnnouncements)
                 .Include(g => g.CourseGradingInfo)
-                .Include(h => h.HelpfulMaterials).FirstOrDefaultAsync(c => c.Id == id);
+                .Include(h => h.HelpfulMaterials)
+                .Include(c => c.CourseCatalog).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(Course course)

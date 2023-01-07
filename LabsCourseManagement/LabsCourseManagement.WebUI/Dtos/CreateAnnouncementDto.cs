@@ -7,6 +7,8 @@ namespace LabsCourseManagement.WebUI.Dtos
     {
         public string? Header { get;  set; }
         public string? Text { get;  set; }
+
+        public Guid ProfessorId { get; set; }
     }
 
     public class AnnouncementValidator : AbstractValidator<CreateAnnouncementDto>

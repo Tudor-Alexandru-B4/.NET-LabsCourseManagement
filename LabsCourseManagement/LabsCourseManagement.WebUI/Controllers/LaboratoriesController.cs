@@ -16,16 +16,21 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly IProfessorRepository professorRepository;
         private readonly ITimeAndPlaceRepository timeAndPlaceRepository;
         private readonly IStudentRepository studentRepository;
+        private readonly IAnnouncementRepository announcementRepository;
+        private readonly ICatalogRepository catalogRepository;
 
         public LaboratoriesController(ILaboratoryRepository laboratoryRepository, 
             ICourseRepository courseRepository, IProfessorRepository professorRepository,
-            ITimeAndPlaceRepository timeAndPlaceRepository, IStudentRepository studentRepository)
+            ITimeAndPlaceRepository timeAndPlaceRepository, IStudentRepository studentRepository,
+            IAnnouncementRepository announcementRepository, ICatalogRepository catalogRepository)
         {
             this.laboratoryRepository = laboratoryRepository;
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
             this.timeAndPlaceRepository = timeAndPlaceRepository;
             this.studentRepository = studentRepository;
+            this.announcementRepository = announcementRepository;
+            this.catalogRepository = catalogRepository;
         }
 
         [MapToApiVersion("1.0")]
@@ -109,8 +114,20 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
+
+            foreach (var announcement in laboratory.Result.LaboratoryAnnouncements)
+            {
+                announcementRepository.Delete(announcement);
+            }
+
+            timeAndPlaceRepository.Delete(laboratory.Result.LaboratoryTimeAndPlace);
+            catalogRepository.Delete(laboratory.Result.LaboratoryCatalog);
+
             laboratoryRepository.Delete(laboratory.Result);
             laboratoryRepository.Save();
+            catalogRepository.Save();
+            timeAndPlaceRepository.Save();
+            announcementRepository.Save();
             return NoContent();
         }
 
