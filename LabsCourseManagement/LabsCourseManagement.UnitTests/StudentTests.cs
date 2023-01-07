@@ -114,6 +114,21 @@ namespace LabsCourseManagement.UnitTests
             student.Laboratories.Should().BeEmpty();
         }
 
+        [Fact]
+        public void When_ChangeGroup_Then_ShouldChangeGroup()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            string newGroup = "C1";
+
+            //Act
+            var result = student.ChangeGroup(newGroup);
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            student.Group.Should().Be(newGroup);
+        }
+
         private List<Course> CreateCoursesSUT()
         {
             var course1 = Course.Create("Course1").Entity;

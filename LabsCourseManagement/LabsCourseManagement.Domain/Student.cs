@@ -63,6 +63,16 @@ namespace LabsCourseManagement.Domain
             return Result.Success();
         }
 
+        public Result ChangeGroup( string newGroup)
+        {
+            if(newGroup == null)
+            {
+                return Result.Failure("Group cannot be null");
+            }
+            Group= newGroup;
+            return Result.Success();
+
+        }
 
     }
 
