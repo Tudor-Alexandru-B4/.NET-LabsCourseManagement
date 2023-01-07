@@ -14,12 +14,23 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly ICourseRepository courseRepository;
         private readonly IProfessorRepository professorRepository;
         private readonly IStudentRepository studentRepository;
+        private readonly IAnnouncementRepository announcementRepository;
+        private readonly ICatalogRepository catalogRepository;
+        private readonly ITimeAndPlaceRepository timeAndPlaceRepository;
+        private readonly ILaboratoryRepository laboratoryRepository;
 
-        public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository, IStudentRepository studentRepository)
+        public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository,
+            IStudentRepository studentRepository, IAnnouncementRepository announcementRepository,
+            ICatalogRepository catalogRepository, ITimeAndPlaceRepository timeAndPlaceRepository,
+            ILaboratoryRepository laboratoryRepository)
         {
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
             this.studentRepository = studentRepository;
+            this.announcementRepository = announcementRepository;
+            this.catalogRepository = catalogRepository;
+            this.timeAndPlaceRepository = timeAndPlaceRepository;
+            this.laboratoryRepository = laboratoryRepository;
         }
 
         [MapToApiVersion("1.0")]
@@ -144,8 +155,52 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
+
+            //DELETING LABORATORIES
+            var courseLaboratories = course.Result.Laboratories;
+            foreach (var laboratoryForId in courseLaboratories)
+            {
+                var laboratoryResult = laboratoryRepository.Get(laboratoryForId.Id);
+                var laboratory = laboratoryResult.Result;
+
+                if (laboratory == null || laboratory == null)
+                {
+                    return NotFound();
+                }
+
+                foreach (var announcement in laboratory.LaboratoryAnnouncements)
+                {
+                    announcementRepository.Delete(announcement);
+                }
+
+                timeAndPlaceRepository.Delete(laboratory.LaboratoryTimeAndPlace);
+                catalogRepository.Delete(laboratory.LaboratoryCatalog);
+
+                laboratoryRepository.Delete(laboratory);
+                laboratoryRepository.Save();
+                catalogRepository.Save();
+                timeAndPlaceRepository.Save();
+                announcementRepository.Save();
+            }
+
+            //CONTINUING WITH COURSE
+            foreach (var announcement in course.Result.CourseAnnouncements)
+            {
+                announcementRepository.Delete(announcement);
+            }
+
+            foreach (var timeAndPlace in course.Result.CourseProgram)
+            {
+                timeAndPlaceRepository.Delete(timeAndPlace);
+            }
+
+            catalogRepository.Delete(course.Result.CourseCatalog);
+
             courseRepository.Delete(course.Result);
             courseRepository.Save();
+            catalogRepository.Save();
+            announcementRepository.Save();
+            timeAndPlaceRepository.Save();
             return NoContent();
         }
 
@@ -251,6 +306,46 @@ namespace LabsCourseManagement.WebUI.Controllers
             }
 
             courseRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPost("{courseId:guid}/announcements")]
+        public IActionResult AddAnnouncementsToCourse(Guid courseId, [FromBody] List<CreateAnnouncementDto> announcementsDto)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!announcementsDto.Any())
+            {
+                return BadRequest("Add at least one professor");
+            }
+
+            var announcements = new List<Announcement>();
+            foreach (var announcement in announcementsDto)
+            {
+                var professor = professorRepository.GetById(announcement.ProfessorId);
+                if (professor == null || professor.Result == null)
+                {
+                    return NotFound($"Professor with id {announcement.ProfessorId} does not exist");
+                }
+
+                var announcementResult =
+                    Announcement.Create(announcement.Header, announcement.Text, professor.Result);
+                if (announcementResult == null || announcementResult.Entity == null)
+                {
+                    return BadRequest();
+                }
+                announcements.Add(announcementResult.Entity);
+                announcementRepository.Add(announcementResult.Entity);
+            }
+
+            course.Result.AddCourseAnnouncements(announcements);
+            courseRepository.Save();
+            announcementRepository.Save();
             return NoContent();
         }
     }

@@ -15,13 +15,22 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly ICourseRepository courseRepository;
         private readonly ILaboratoryRepository laboratoryRepository;
         private readonly IContactRepository contactRepository;
+        private readonly IAnnouncementRepository announcementRepository;
+        private readonly ITimeAndPlaceRepository timeAndPlaceRepository;
+        private readonly ICatalogRepository catalogRepository;
 
-        public ProfessorsController(IProfessorRepository professorRepository, ICourseRepository courseRepository, ILaboratoryRepository laboratoryRepository, IContactRepository contactRepository)
+        public ProfessorsController(IProfessorRepository professorRepository,
+            ICourseRepository courseRepository, ILaboratoryRepository laboratoryRepository,
+            IContactRepository contactRepository, IAnnouncementRepository announcementRepository,
+            ITimeAndPlaceRepository timeAndPlaceRepository, ICatalogRepository catalogRepository)
         {
             this.professorRepository = professorRepository;
             this.courseRepository = courseRepository;
             this.laboratoryRepository = laboratoryRepository;
             this.contactRepository = contactRepository;
+            this.announcementRepository = announcementRepository;
+            this.timeAndPlaceRepository = timeAndPlaceRepository;
+            this.catalogRepository = catalogRepository;
         }
 
         [MapToApiVersion("1.0")]
@@ -71,6 +80,42 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
+
+            //DELETE LABORATORIES
+            var professorLaboratories = professor.Result.Laboratories;
+            foreach (var laboratoryForId in professorLaboratories)
+            {
+                var laboratoryResult = laboratoryRepository.Get(laboratoryForId.Id);
+                var laboratory = laboratoryResult.Result;
+
+                if (laboratory == null || laboratory == null)
+                {
+                    return NotFound();
+                }
+
+                foreach (var announcement in laboratory.LaboratoryAnnouncements)
+                {
+                    announcementRepository.Delete(announcement);
+                }
+
+                timeAndPlaceRepository.Delete(laboratory.LaboratoryTimeAndPlace);
+                catalogRepository.Delete(laboratory.LaboratoryCatalog);
+
+                laboratoryRepository.Delete(laboratory);
+                laboratoryRepository.Save();
+                catalogRepository.Save();
+                timeAndPlaceRepository.Save();
+                announcementRepository.Save();
+            }
+
+            //CONTINUE WITH PROFESSOR
+
+            if (professor.Result.ContactInfo != null)
+            {
+                contactRepository.Delete(professor.Result.ContactInfo);
+                contactRepository.Save();
+            }
+
             professorRepository.Delete(professor.Result);
             professorRepository.Save();
             return NoContent();
