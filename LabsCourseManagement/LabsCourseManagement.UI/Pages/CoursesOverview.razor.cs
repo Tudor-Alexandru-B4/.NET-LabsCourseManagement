@@ -19,6 +19,7 @@ namespace LabsCourseManagement.UI.Pages
         public List<CourseModel> Courses { get; set; } = new List<CourseModel>();
         public List<ProfessorModel> Professors { get; set; } = new List<ProfessorModel>();
         public List<StudentModel> Students { get; set; } = new List<StudentModel>();
+        public CourseModel CourseToView { get; set; }
 
         public string MaterialLink { get; set; } = default!;
         public string AnnouncementHeader { get; set; } = default!;
@@ -30,6 +31,7 @@ namespace LabsCourseManagement.UI.Pages
         public Guid updateStudentId { get; set; }
         public Guid updateMaterialId { get; set; }
         public Guid updateAnnouncementId { get; set; }
+        public bool viewCourseSectionIsActive { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -46,6 +48,18 @@ namespace LabsCourseManagement.UI.Pages
         {
             await CourseDataService.DeleteCourse(id);
             await OnInitializedAsync();
+        }
+
+        private void ViewCourse()
+        {
+            viewCourseSectionIsActive = true;
+            updateCourseId = id;
+            CourseToView = Courses.FirstOrDefault(c => c.Id == id);
+        }
+
+        private void CloseView()
+        {
+            viewCourseSectionIsActive = false;
         }
 
         private async Task AddProfessorToCourse()
