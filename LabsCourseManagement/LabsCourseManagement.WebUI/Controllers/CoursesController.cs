@@ -19,11 +19,13 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly ITimeAndPlaceRepository timeAndPlaceRepository;
         private readonly ILaboratoryRepository laboratoryRepository;
         private readonly IContactRepository contactRepository;
+        private readonly IInformationStringRepository informationStringRepository;
 
         public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository,
             IStudentRepository studentRepository, IAnnouncementRepository announcementRepository,
             ICatalogRepository catalogRepository, ITimeAndPlaceRepository timeAndPlaceRepository,
-            ILaboratoryRepository laboratoryRepository, IContactRepository contactRepository)
+            ILaboratoryRepository laboratoryRepository, IContactRepository contactRepository,
+            IInformationStringRepository informationStringRepository)
         {
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
@@ -33,6 +35,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             this.timeAndPlaceRepository = timeAndPlaceRepository;
             this.laboratoryRepository = laboratoryRepository;
             this.contactRepository = contactRepository;
+            this.informationStringRepository = informationStringRepository;
         }
 
         [MapToApiVersion("1.0")]
@@ -504,6 +507,79 @@ namespace LabsCourseManagement.WebUI.Controllers
             }
 
             timeAndPlaceRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPost("{courseId:guid}/materials")]
+        public IActionResult AddMaterialsToCourse(Guid courseId, [FromBody] List<string> materials)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!materials.Any())
+            {
+                return BadRequest("Add at least one material");
+            }
+
+            var helpfulMaterials = new List<InformationString>();
+            foreach (var material in materials)
+            {
+                var helpfulMaterial = InformationString.Create(material);
+                if (helpfulMaterial == null || helpfulMaterial.IsFailure)
+                {
+                    return BadRequest();
+                }
+
+                helpfulMaterials.Add(helpfulMaterial.Entity);
+                informationStringRepository.Add(helpfulMaterial.Entity);
+            }
+
+            course.Result.AddHelpfulMaterials(helpfulMaterials);
+            courseRepository.Save();
+            informationStringRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{courseId:guid}/materials")]
+        public IActionResult RemoveMaterialsToCourse(Guid courseId, [FromBody] List<Guid> materialsId)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!materialsId.Any())
+            {
+                return BadRequest("Add at least one material");
+            }
+
+            var materials = new List<InformationString>();
+            foreach (var materialId in materialsId)
+            {
+                var material = informationStringRepository.GetById(materialId);
+
+                if (material == null || material.Result == null)
+                {
+                    return NotFound($"Program with {materialId} does not exist");
+                }
+                materials.Add(material.Result);
+            }
+
+            course.Result.RemoveHelpfulMaterials(materials);
+            courseRepository.Save();
+
+            foreach (var material in materials)
+            {
+                informationStringRepository.Delete(material);
+            }
+
+            informationStringRepository.Save();
             return NoContent();
         }
     }
