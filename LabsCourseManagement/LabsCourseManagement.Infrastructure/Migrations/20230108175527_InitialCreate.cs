@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -26,7 +27,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,8 +39,8 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    CourseCatalogId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    CourseCatalogId = table.Column<Guid>(type: "TEXT", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -49,8 +50,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         name: "FK_Courses_Catalogs_CourseCatalogId",
                         column: x => x.CourseCatalogId,
                         principalTable: "Catalogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -78,13 +78,13 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     StudentId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Surname = table.Column<string>(type: "TEXT", nullable: false),
-                    ContactInfoId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Surname = table.Column<string>(type: "TEXT", nullable: true),
+                    ContactInfoId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Year = table.Column<int>(type: "INTEGER", nullable: false),
-                    Group = table.Column<string>(type: "TEXT", nullable: false),
+                    Group = table.Column<string>(type: "TEXT", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    RegistrationNumber = table.Column<string>(type: "TEXT", nullable: false)
+                    RegistrationNumber = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -93,8 +93,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         name: "FK_Students_Contacts_ContactInfoId",
                         column: x => x.ContactInfoId,
                         principalTable: "Contacts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -102,7 +101,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    String = table.Column<string>(type: "TEXT", nullable: false),
+                    String = table.Column<string>(type: "TEXT", nullable: true),
                     ContactId = table.Column<Guid>(type: "TEXT", nullable: true),
                     CourseId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
@@ -127,7 +126,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     DateAndTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Classroom = table.Column<string>(type: "TEXT", nullable: false),
+                    Classroom = table.Column<string>(type: "TEXT", nullable: true),
                     CourseId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -193,12 +192,12 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    CourseId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    CourseId = table.Column<Guid>(type: "TEXT", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LaboratoryCatalogId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LaboratoryProfessorId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LaboratoryTimeAndPlaceId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    LaboratoryCatalogId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    LaboratoryProfessorId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    LaboratoryTimeAndPlaceId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,26 +206,22 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         name: "FK_Laboratories_Catalogs_LaboratoryCatalogId",
                         column: x => x.LaboratoryCatalogId,
                         principalTable: "Catalogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Laboratories_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Laboratories_Professors_LaboratoryProfessorId",
                         column: x => x.LaboratoryProfessorId,
                         principalTable: "Professors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Laboratories_TimesAndPlaces_LaboratoryTimeAndPlaceId",
                         column: x => x.LaboratoryTimeAndPlaceId,
                         principalTable: "TimesAndPlaces",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -234,10 +229,10 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Header = table.Column<string>(type: "TEXT", nullable: false),
-                    Text = table.Column<string>(type: "TEXT", nullable: false),
+                    Header = table.Column<string>(type: "TEXT", nullable: true),
+                    Text = table.Column<string>(type: "TEXT", nullable: true),
                     PostingDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    WriterId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    WriterId = table.Column<Guid>(type: "TEXT", nullable: true),
                     CourseId = table.Column<Guid>(type: "TEXT", nullable: true),
                     LaboratoryId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
@@ -258,8 +253,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         name: "FK_Announcements_Professors_WriterId",
                         column: x => x.WriterId,
                         principalTable: "Professors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -271,8 +265,8 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                     IsMandatory = table.Column<bool>(type: "INTEGER", nullable: false),
                     MinGrade = table.Column<double>(type: "REAL", nullable: false),
                     MaxGrade = table.Column<double>(type: "REAL", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    TimeAndPlaceId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    TimeAndPlaceId = table.Column<Guid>(type: "TEXT", nullable: true),
                     CourseId = table.Column<Guid>(type: "TEXT", nullable: true),
                     LaboratoryId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
@@ -293,8 +287,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         name: "FK_GradingInfos_TimesAndPlaces_TimeAndPlaceId",
                         column: x => x.TimeAndPlaceId,
                         principalTable: "TimesAndPlaces",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -329,7 +322,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                     GradingDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Mark = table.Column<double>(type: "REAL", nullable: false),
                     GradeType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Mentions = table.Column<string>(type: "TEXT", nullable: false),
+                    Mentions = table.Column<string>(type: "TEXT", nullable: true),
                     StudentGradesId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -342,7 +335,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StudentId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StudentId = table.Column<Guid>(type: "TEXT", nullable: true),
                     FinalGradeId = table.Column<Guid>(type: "TEXT", nullable: true),
                     CatalogId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
@@ -363,8 +356,7 @@ namespace LabsCourseManagement.Infrastructure.Migrations
                         name: "FK_StudentGrades_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "StudentId");
                 });
 
             migrationBuilder.CreateIndex(

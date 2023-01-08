@@ -18,13 +18,19 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly IStudentRepository studentRepository;
         private readonly ICourseRepository courseRepository;
         private readonly ILaboratoryRepository laboratoryRepository;
+        private readonly IContactRepository contactRepository;
+        private readonly IInformationStringRepository informationStringRepository;
 
-        public StudentsController(IMediator mediator, IStudentRepository studentRepository, ICourseRepository courseRepository, ILaboratoryRepository laboratoryRepository)
+        public StudentsController(IMediator mediator, IStudentRepository studentRepository,
+            ICourseRepository courseRepository, ILaboratoryRepository laboratoryRepository,
+            IContactRepository contactRepository, IInformationStringRepository informationStringRepository)
         {
             this.mediator = mediator;
             this.studentRepository = studentRepository;
             this.courseRepository = courseRepository;
             this.laboratoryRepository = laboratoryRepository;
+            this.contactRepository = contactRepository;
+            this.informationStringRepository = informationStringRepository;
         }
 
         [MapToApiVersion("1.0")]
@@ -221,6 +227,51 @@ namespace LabsCourseManagement.WebUI.Controllers
                 return NotFound();
             }
             student.Result.UpdateRegistrationNumber(registrationNumber);
+            studentRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPost("{studentId:guid}/email")]
+        public IActionResult AddEmailToStudent(Guid studentId, [FromBody] string email)
+        {
+            var student = studentRepository.Get(studentId);
+            if (student == null || student.Result == null)
+            {
+                return NotFound($"Student with id {studentId} does not exist");
+            }
+
+            if (email == null)
+            {
+                return BadRequest("Email cannot be null");
+            }
+
+            var emailResult = InformationString.Create(email);
+            if (emailResult == null || emailResult.IsFailure)
+            {
+                return BadRequest();
+            }
+
+            var contactStudent = contactRepository.Get(student.Result.ContactInfo.Id);
+            if (contactStudent == null || contactStudent.Result == null)
+            {
+                return BadRequest();
+            }
+
+            informationStringRepository.Add(emailResult.Entity);
+            informationStringRepository.Save();
+
+            var emailAddResult = contactStudent.Result.AddEmailAddressToList(new List<InformationString>()
+            {
+                emailResult.Entity
+            });
+
+            if (emailAddResult == null || emailAddResult.IsFailure)
+            {
+                return BadRequest();
+            }
+            
+            contactRepository.Save();
             studentRepository.Save();
             return NoContent();
         }

@@ -5,6 +5,6 @@ namespace LabsCourseManagement.WebUI.Dtos
     public class CreateTimeAndPlaceDto
     {
         public string? Classroom { get; set; }
-        public DateTime DateTime { get; set; }
+        public string DateTime { get; set; }
     }
 }
