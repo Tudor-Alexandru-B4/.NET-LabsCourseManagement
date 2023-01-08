@@ -27,13 +27,15 @@ namespace LabsCourseManagement.Application.Repositories
         public async Task<List<Student>> GetAll()
         {
             return await context.Students.Include(c => c.Courses)
-                .Include(l => l.Laboratories).ToListAsync();
+                .Include(l => l.Laboratories)
+                .Include(c => c.ContactInfo).ToListAsync();
         }
 
         public async Task<Student?> Get(Guid id)
         {
             return await context.Students.Include(c => c.Courses)
                 .Include(l => l.Laboratories)
+                .Include(c => c.ContactInfo)
                 .FirstOrDefaultAsync(s => s.StudentId == id);
         }
 

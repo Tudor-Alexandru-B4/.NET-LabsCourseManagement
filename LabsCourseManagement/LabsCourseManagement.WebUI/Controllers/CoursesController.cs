@@ -18,11 +18,12 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly ICatalogRepository catalogRepository;
         private readonly ITimeAndPlaceRepository timeAndPlaceRepository;
         private readonly ILaboratoryRepository laboratoryRepository;
+        private readonly IContactRepository contactRepository;
 
         public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository,
             IStudentRepository studentRepository, IAnnouncementRepository announcementRepository,
             ICatalogRepository catalogRepository, ITimeAndPlaceRepository timeAndPlaceRepository,
-            ILaboratoryRepository laboratoryRepository)
+            ILaboratoryRepository laboratoryRepository, IContactRepository contactRepository)
         {
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
@@ -31,6 +32,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             this.catalogRepository = catalogRepository;
             this.timeAndPlaceRepository = timeAndPlaceRepository;
             this.laboratoryRepository = laboratoryRepository;
+            this.contactRepository = contactRepository;
         }
 
         [MapToApiVersion("1.0")]
@@ -311,7 +313,7 @@ namespace LabsCourseManagement.WebUI.Controllers
 
         [MapToApiVersion("2.0")]
         [HttpPost("{courseId:guid}/announcements")]
-        public IActionResult AddAnnouncementsToCourse(Guid courseId, [FromBody] List<CreateAnnouncementDto> announcementsDto)
+        public async Task<IActionResult> AddAnnouncementsToCourse(Guid courseId, [FromBody] List<CreateAnnouncementDto> announcementsDto)
         {
             var course = courseRepository.Get(courseId);
             if (course == null || course.Result == null)
@@ -345,6 +347,80 @@ namespace LabsCourseManagement.WebUI.Controllers
 
             course.Result.AddCourseAnnouncements(announcements);
             courseRepository.Save();
+            announcementRepository.Save();
+
+            //Sending emails to students
+            foreach (var studentForId in course.Result.Students)
+            {
+                var student = studentRepository.Get(studentForId.StudentId);
+
+                if (student == null || student.Result == null)
+                {
+                    return BadRequest();
+                }
+
+                var studentContactInfo = contactRepository.Get(student.Result.ContactInfo.Id);
+
+                if (studentContactInfo == null || studentContactInfo.Result == null || studentContactInfo.Result.EmailAddresses == null)
+                {
+                    return BadRequest();
+                }
+
+                foreach (var emailAdress in studentContactInfo.Result.EmailAddresses)
+                {
+                    if (emailAdress != null)
+                    {
+                        foreach (var announcement in announcements)
+                        {
+                            var email = new EmailSendDto()
+                            {
+                                Recipient = emailAdress.String,
+                                Subject = announcement.Header,
+                                Body = announcement.Text
+                            };
+                            email.SendEmail();
+                        }
+                    }
+                }
+            }
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{courseId:guid}/announcements")]
+        public IActionResult RemoveAnnouncementsToCourse(Guid courseId, [FromBody] List<Guid> announcementsId)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!announcementsId.Any())
+            {
+                return BadRequest("Add at least one announcement");
+            }
+
+            var announcements = new List<Announcement>();
+            foreach (var announcementId in announcementsId)
+            {
+                var announcement = announcementRepository.GetById(announcementId);
+
+                if (announcement == null || announcement.Result == null)
+                {
+                    return NotFound($"Announcement with {announcementId} does not exist");
+                }
+                announcements.Add(announcement.Result);
+            }
+
+            course.Result.RemoveCourseAnnouncements(announcements);
+            courseRepository.Save();
+
+            foreach (var announcement in announcements)
+            {
+                announcementRepository.Delete(announcement);
+            }
+
             announcementRepository.Save();
             return NoContent();
         }

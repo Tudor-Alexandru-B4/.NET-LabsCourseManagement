@@ -33,6 +33,7 @@ namespace LabsCourseManagement.Domain
             emailAddresses.ForEach(emailAddresses => EmailAddresses?.Add(emailAddresses));
             return Result.Success();
         }
+
         public Result UpdateContact(string phoneNumber)
         {
             foreach (char c in phoneNumber)

@@ -74,6 +74,26 @@ namespace LabsCourseManagement.Domain
 
         }
 
+        public Result AddEmail(InformationString email)
+        {
+            if (email == null)
+            {
+                return Result.Failure("Email cannot be null");
+            }
+
+            var result = ContactInfo.AddEmailAddressToList(new List<InformationString>()
+            {
+                email
+            });;
+
+            if (result.IsFailure)
+            {
+                return Result.Failure(result.Error);
+            }
+
+            return Result.Success();
+        }
+
     }
 
 
