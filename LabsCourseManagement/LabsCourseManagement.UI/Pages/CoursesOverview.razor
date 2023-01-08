@@ -20,13 +20,13 @@ else
         <tbody>
             @foreach (var course in Courses)
             {
-                id = course.Id;
                 <tr>
-                    <td>@Courses.IndexOf(course)+1</td>
+                    <td>@(@Courses.IndexOf(course)+1)</td>
                     <td>@course.Id</td>
                     <td>@course.Name</td>
                     <td>@course.IsActive</td>
-                    <td><button class="btn-outline-secondary" onclick="@DeleteCourse">Delete</button></td>
+                    <td><button class="btn-outline-secondary" @onclick ="(() => ViewCourse(course.Id))">View</button></td>
+                    <td><button class="btn-outline-secondary" @onclick="(() => DeleteCourse(course.Id))">Delete</button></td>
                 </tr>
             }
         </tbody>
@@ -55,9 +55,9 @@ else
                 <p>Select a professor</p>
                 <label>
                     <InputSelect id="select-professor" @bind-Value="NewCourse.ProfessorId" class="form-control">
-                        @foreach (var prof in Professors)
+                        @foreach (var professor in Professors)
                         {
-                            <option value="@prof.Id" class="text-black">@prof.Id @prof.Name @prof.Surname</option>
+                            <option value="@professor.Id" class="text-black">@professor.Name @professor.Surname</option>
                         }
                     </InputSelect>
                 </label>
@@ -68,58 +68,214 @@ else
     }
 </section>
 
-<section id="update-course" class="mt-5">
-    <h3 class="fw-bold">Edit a course</h3>
+@if(viewCourseSectionIsActive)
+{
+    <section id="update-course" class="mt-5">
+        <h3 class="fw-bold">View and edit the selected course</h3>
+        
+        <button type="submit" @onclick="CloseView">Close view</button>
 
-    <div class="col-sm-10">
-        Select Courses
-        @if (Courses == null)
-        {
-            <p><em>Loading...</em></p>
-        }
-        else
-        {
-            <InputSelect id="update-courses" @bind-Value="updateCourseId" class="form-control">
-                @foreach (var course in Courses)
-                {
-                    <option value="@course.Id" class="text-black">@course.Id @course.Name</option>
-                }
-            </InputSelect>
+        <div style="border:black 3px">
+            <h4>Name: @CourseToView.Name</h4>
+            <h4>Id: @CourseToView.Id</h4>
+            <h4>Active: @CourseToView.IsActive</h4>
 
             <br />
-            <p class="fw-bold">Add professors</p>
-            <p>Select professor</p>
-
-            <div id="select-professors">
-                <InputSelect id="add-professor-to-course" @bind-Value="updateProfessorId" class="form-control">
-                    @foreach (var prof in Professors)
+            <h4>Professors</h4>
+            <tabel class="table table-light">
+                <thead class="table-primary">
+                <th>No.</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Id</th>
+                </thead>
+                <tbody>
+                    @foreach (var professor in CourseToView?.Professors)
                     {
-                        <option value="@prof.Id" class="text-black-50">@prof.Id @prof.Name @prof.Surname</option>
+                        <tr>
+                            <td>@(@CourseToView.Professors.IndexOf(professor)+1)</td>
+                            <td>@professor.Id</td>
+                            <td>@professor.Name</td>
+                            <td>@professor.Surname</td>
+                        </tr>
                     }
-                </InputSelect>
+                </tbody>
+            </tabel>
+
+            <br />
+            <h4>Students</h4>
+            <tabel class="table table-light">
+                <thead class="table-primary">
+                <th>No.</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Year</th>
+                <th>Group</th>
+                <th>Active</th>
+                <th>Registration number</th>
+                </thead>
+                <tbody>
+                    @foreach (var student in CourseToView?.Students)
+                    {
+                        <tr>
+                            <td>@(@CourseToView.Students.IndexOf(student) + 1)</td>
+                            <td>@student.StudentId</td>
+                            <td>@student.Name</td>
+                            <td>@student.Surname</td>
+                            <td>@student.Year</td>
+                            <td>@student.Group</td>
+                            <td>@student.IsActive</td>
+                            <td>@student.RegistrationNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </tabel>
+        </div>
+
+        <div class="col-sm-10">
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Update name</p>
+                Name 
+                <br />
+                <InputText id="name" @bind-Value=UpdateCourseName DisplayName="Name" />
+                <button type="submit" @onclick="UpdateName">Update</button>
             </div>
-            <button type="submit" onclick="@AddProfessorToCourse">Update</button>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Update active status</p>
+                <br />
+                <button type="submit" onclick="@(() => UpdateActiveStatus(true))">Set active</button>
+                <button type="submit" onclick="@(() => UpdateActiveStatus(false))">Set inactive</button>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Add professors</p>
+                <p>Select professor</p>
+                <div id="select-professors">
+                    <InputSelect id="add-professor-to-course" @bind-Value="updateProfessorId" class="form-control">
+                        @foreach (var professor in Professors)
+                        {
+                            <option value="@professor.Id" class="text-black-50">@professor.Name @professor.Surname</option>
+                        }
+                    </InputSelect>
+                </div>
+                <button type="submit" @onclick="AddProfessorToCourse">Update</button>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Remove professors</p>
+                <p>Select professor</p>
+                <div id="select-professors-to-remove">
+                    <InputSelect id="remove-professor-from-course" @bind-Value="removeProfessorId" class="form-control">
+                        @foreach (var professor in Professors)
+                        {
+                            <option value="@professor.Id" class="text-black-50">@professor.Name @professor.Surname</option>
+                        }
+                    </InputSelect>
+                </div>
+                <button type="submit" @onclick="RemoveProfessorFromCourse">Update</button>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Add students</p>
+                <p>Select student</p>
+                <div id="select-students">
+                    <InputSelect id="add-stuents-to-course" @bind-Value="updateStudentId" class="form-control">
+                        @foreach (var student in Students)
+                        {
+                            <option value="@student.StudentId" class="text-black-50">@student.Name @student.Surname</option>
+                        }
+                    </InputSelect>
+                </div>
+
+                <button type="submit" @onclick="AddStudentsToCourse">Update</button>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Remove students</p>
+                <p>Select student</p>
+                <div id="select-students-to-remove">
+                    <InputSelect id="remove-student-from-course" @bind-Value="removeStudentId" class="form-control">
+                        @foreach (var student in Students)
+                        {
+                            <option value="@student.StudentId" class="text-black-50">@student.Name @student.Surname</option>
+                        }
+                    </InputSelect>
+                </div>
+                <button type="submit" @onclick="RemoveStudentsFromCourse">Update</button>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Add materials</p>
+                <label>
+                    Material link <br />
+                    <InputText id="material" @bind-Value=MaterialLink DisplayName="Material" />
+                    <br />
+                </label>
+			
+                <button type="submit" @onclick="AddMaterialsToCourse">Update</button>
+
+                <br />
+                <p class="fw-bold">Add announcements</p>
+
+                <div>
+                    <label>
+                        Header <br />
+                        <InputText id="header" @bind-Value=announcementHeader DisplayName="Header" />
+                        <br />
+                    </label>
+                </div>
+
+                <div>
+                    <label>
+                        Text <br />
+                        <InputText id="text" @bind-Value=announcementText DisplayName="Text" />
+                        <br />
+                    </label>
+                </div>
+
+                <div>
+                     <InputSelect id="select-professor-for-announcement" @bind-Value="announcementProfessorId" class="form-control">
+                        @foreach (var professor in Professors)
+                        {
+                            <option value="@professor.Id" class="text-black-50">@professor.Name @professor.Surname</option>
+                        }
+                    </InputSelect>
+                </div>
+
+                <button type="submit" @onclick="AddAnnouncementToCourse">Update</button>
+            </div>
             
             <br />
-            <p class="fw-bold">Add students</p>
-            <p>Select student</p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </section>
+}
 
-            <div id="select-students">
-                <InputSelect id="add-stuents-to-course" @bind-Value="updateStudentId" class="form-control">
-                    @foreach (var student in Students)
-                    {
-                        <option value="@student.StudentId" class="text-black-50">@student.StudentId @student.Name @student.Surname</option>
-                    }
-                </InputSelect>
-            </div>
 
-            <button type="submit" onclick="@AddStudentsToCourse">Update</button>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-        }
-    </div>
-</section>
