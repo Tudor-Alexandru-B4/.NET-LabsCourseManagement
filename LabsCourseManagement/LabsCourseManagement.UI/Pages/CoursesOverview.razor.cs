@@ -107,6 +107,7 @@ namespace LabsCourseManagement.UI.Pages
         private async Task AddMaterialsToCourse()
         {
             await CourseDataService.AddMaterialsToCourse(updateCourseId, new List<Guid> { updateMaterialId });
+            await OnInitializedAsync();
         }
 
         private async Task AddAnnouncementToCourse()
@@ -117,6 +118,7 @@ namespace LabsCourseManagement.UI.Pages
                 Text = announcementText
             };
             await CourseDataService.AddAnnouncementsToCourse(updateCourseId, new List<AnnouncementInput> { announcementInput });
+            await OnInitializedAsync();
         }
     }
 }
