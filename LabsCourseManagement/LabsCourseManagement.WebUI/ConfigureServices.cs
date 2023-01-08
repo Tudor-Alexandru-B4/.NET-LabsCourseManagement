@@ -44,6 +44,7 @@ namespace LabsCourseManagement.WebUI
             services.AddScoped<ITimeAndPlaceRepository, TimeAndPlaceRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IInformationStringRepository, InformationStringRepository>();
+            services.AddScoped<IGradingInfoRepository, GradingInfoRepository>();
 
             services.AddControllers().AddJsonOptions(x =>
                             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

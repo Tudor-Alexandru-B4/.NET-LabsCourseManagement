@@ -20,12 +20,13 @@ namespace LabsCourseManagement.WebUI.Controllers
         private readonly ILaboratoryRepository laboratoryRepository;
         private readonly IContactRepository contactRepository;
         private readonly IInformationStringRepository informationStringRepository;
+        private readonly IGradingInfoRepository gradingInfoRepository;
 
         public CoursesController(ICourseRepository courseRepository, IProfessorRepository professorRepository,
             IStudentRepository studentRepository, IAnnouncementRepository announcementRepository,
             ICatalogRepository catalogRepository, ITimeAndPlaceRepository timeAndPlaceRepository,
             ILaboratoryRepository laboratoryRepository, IContactRepository contactRepository,
-            IInformationStringRepository informationStringRepository)
+            IInformationStringRepository informationStringRepository, IGradingInfoRepository gradingInfoRepository)
         {
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
@@ -36,6 +37,7 @@ namespace LabsCourseManagement.WebUI.Controllers
             this.laboratoryRepository = laboratoryRepository;
             this.contactRepository = contactRepository;
             this.informationStringRepository = informationStringRepository;
+            this.gradingInfoRepository = gradingInfoRepository;
         }
 
         [MapToApiVersion("1.0")]
@@ -580,6 +582,91 @@ namespace LabsCourseManagement.WebUI.Controllers
             }
 
             informationStringRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPost("{courseId:guid}/gradings")]
+        public IActionResult AddGradingsToCourse(Guid courseId, [FromBody] List<CreateGradingsDto> gradingsDto)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!gradingsDto.Any())
+            {
+                return BadRequest("Add at least one grading");
+            }
+
+            var gradings = new List<GradingInfo>();
+            foreach (var gradingDto in gradingsDto)
+            {
+                ExaminationType examinationType;
+                if (!ExaminationType.TryParse(gradingDto.ExaminationType, true, out examinationType))
+                {
+                    return BadRequest();
+                }
+
+                if (timeAndPlaceRepository.Exists(DateTime.Parse(gradingDto.DateTime), gradingDto.Classroom))
+                {
+                    return BadRequest();
+                }
+
+                var grading = GradingInfo.Create(examinationType, gradingDto.MinGrade, gradingDto.MaxGrade,
+                    gradingDto.IsMandatory, gradingDto.Description, TimeAndPlace.Create(DateTime.Parse(gradingDto.DateTime), gradingDto.Classroom).Entity);
+                if (grading == null || grading.IsFailure)
+                {
+                    return BadRequest();
+                }
+
+                gradings.Add(grading.Entity);
+                gradingInfoRepository.Add(grading.Entity);
+            }
+
+            course.Result.AddCourseGradingInfos(gradings);
+            courseRepository.Save();
+            gradingInfoRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{courseId:guid}/gradings")]
+        public IActionResult RemoveGradingsToCourse(Guid courseId, [FromBody] List<Guid> gradingsId)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!gradingsId.Any())
+            {
+                return BadRequest("Add at least one grading");
+            }
+
+            var gradings = new List<GradingInfo>();
+            foreach (var gradingId in gradingsId)
+            {
+                var grading = gradingInfoRepository.Get(gradingId);
+
+                if (grading == null || grading.Result == null)
+                {
+                    return NotFound($"Grading with {gradingId} does not exist");
+                }
+                gradings.Add(grading.Result);
+            }
+
+            course.Result.RemoveCourseGradingInfos(gradings);
+            courseRepository.Save();
+
+            foreach (var grading in gradings)
+            {
+                gradingInfoRepository.Delete(grading);
+            }
+
+            gradingInfoRepository.Save();
             return NoContent();
         }
     }
