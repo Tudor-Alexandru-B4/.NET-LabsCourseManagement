@@ -41,7 +41,7 @@ namespace LabsCourseManagement.UnitTests
             // Arrange
             // Act
             var result = Student.Create(null, studentSurname, group, year, registrationNumber, phoneNumber);
-            
+
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Should().Be("The field cannot be null / year cannot be less than 1");
@@ -69,7 +69,7 @@ namespace LabsCourseManagement.UnitTests
             // Arrange
             var laboratories = ReturnLaboratoriesSUT();
             var student = CreateStudentSUT();
-            
+
             // Act
             var addLaboratoriesResult = student.AddLaboratories(laboratories);
 
@@ -115,19 +115,150 @@ namespace LabsCourseManagement.UnitTests
         }
 
         [Fact]
-        public void When_ChangeGroup_Then_ShouldChangeGroup()
+        public void When_UpdateName_Then_ShouldUpdateName()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            string name = "Ioan";
+
+            //Act
+            var result = student.UpdateName(name);
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            student.Name.Should().Be(name);
+        }
+        [Fact]
+        public void When_UpdateNameWithNull_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            string name = null;
+
+            //Act
+            var result = student.UpdateName(name);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Name cannot be null");
+        }
+        [Fact]
+        public void When_UpdateSurname_Then_ShouldUpdateSurname()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            string surname = "Popescu";
+
+            //Act
+            var result = student.UpdateSurname(surname);
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            student.Surname.Should().Be(surname);
+        }
+        [Fact]
+        public void When_UpdateSurnameWithNull_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            string surname = null;
+
+            //Act
+            var result = student.UpdateSurname(surname);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Surname cannot be null");
+        }
+        [Fact]
+        public void When_UpdateGroup_Then_ShouldChangeGroup()
         {
             //Arrange
             var student = CreateStudentSUT();
             string newGroup = "C1";
 
             //Act
-            var result = student.ChangeGroup(newGroup);
+            var result = student.UpdateGroup(newGroup);
 
             //Assert
             result.IsSuccess.Should().BeTrue();
             student.Group.Should().Be(newGroup);
         }
+
+        [Fact]
+        public void When_UpdateGroupWithNull_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            string group = null;
+
+            //Act
+            var result = student.UpdateGroup(group);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Group cannot be null");
+
+        }
+
+        [Fact]
+        public void When_UpdateYear_Then_ShouldUpdateYear()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            int year = 6;
+
+            //Act
+            var result = student.UpdateYear(year);
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            student.Year.Should().Be(year);
+        }
+        [Fact]
+        public void When_UpdateYearWithValueLessThen1_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            int year = 0;
+
+            //Act
+            var result = student.UpdateYear(year);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Year cannot be less then 1");
+        }
+        [Fact]
+        public void When_UpdateRegistrationNumber_Then_ShouldUpdateRegistrationNumber()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            string registrationNumber = "310910401RSL7217392";
+
+            //Act
+            var result = student.UpdateRegistrationNumber(registrationNumber);
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            student.RegistrationNumber.Should().Be(registrationNumber);
+        }
+
+        [Fact]
+        public void When_UpdateRegistrationNumberWithNull_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            string registrationNumber = null;
+
+            //Act
+            var result = student.UpdateRegistrationNumber(registrationNumber);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Registration number cannot be null");
+        }
+
 
         private List<Course> CreateCoursesSUT()
         {
@@ -149,7 +280,7 @@ namespace LabsCourseManagement.UnitTests
             return laboratories;
         }
 
-        private Laboratory CreateLaboratoriesSut(string laboratoryName, string courseName, string professorName, 
+        private Laboratory CreateLaboratoriesSut(string laboratoryName, string courseName, string professorName,
             string professorSurname, string classroom, string dateTime)
         {
             var course = Course.Create(courseName).Entity;
