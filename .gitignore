@@ -401,3 +401,4 @@ FodyWeavers.xsd
 *.sln.iml
 /LabsCourseManagement/LabsCourseManagement.WebUI/LabsCourseManagement.db-shm
 /LabsCourseManagement/LabsCourseManagement.WebUI/LabsCourseManagement.db-wal
+/LabsCourseManagement/LabsCourseManagement.WebUI/LabsCourseManagement.db

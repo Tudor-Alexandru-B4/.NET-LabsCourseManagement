@@ -131,6 +131,30 @@ else
                     }
                 </tbody>
             </tabel>
+
+            <br />
+            <h4>Announcements</h4>
+            <tabel class="table table-light">
+                <thead class="table-primary">
+                <th>No.</th>
+                <th>Header</th>
+                <th>Text</th>
+                <th>Date</th>
+                <th>Professor</th>
+                </thead>
+                <tbody>
+                    @foreach (var announcement in CourseToView?.CourseAnnouncements)
+                    {
+                        <tr>
+                            <td>@(@CourseToView.CourseAnnouncements.IndexOf(announcement) + 1)</td>
+                            <td>@announcement.Header</td>
+                            <td>@announcement.Text</td>
+                            <td>@announcement.PostingDate</td>
+                            <td>@announcement.Writer.Name @announcement.Writer.Surname</td>
+                        </tr>
+                    }
+                </tbody>
+            </tabel>
         </div>
 
         <div class="col-sm-10">
@@ -237,6 +261,11 @@ else
 			
                 <button type="submit" @onclick="AddMaterialsToCourse">Update</button>
 
+            </div>
+
+            <div>
+                <br />
+                <br />
                 <br />
                 <p class="fw-bold">Add announcements</p>
 
@@ -256,6 +285,7 @@ else
                     </label>
                 </div>
 
+                <p>Select professor</p>
                 <div>
                      <InputSelect id="select-professor-for-announcement" @bind-Value="announcementProfessorId" class="form-control">
                         @foreach (var professor in Professors)
