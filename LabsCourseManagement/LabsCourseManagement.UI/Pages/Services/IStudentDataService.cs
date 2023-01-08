@@ -7,6 +7,10 @@ namespace LabsCourseManagement.UI.Pages.Services
         Task CreateStudent(StudentCreateModel student);
         Task DeleteStudent(Guid studentId);
         Task<IEnumerable<StudentModel>?> GetAllStudents();
-        Task UpdateStudentGroup(Guid studentId, string groupName);
+        Task UpdateName(Guid studentId, string name);
+        Task UpdateSurname(Guid studentId, string name);
+        Task UpdateGroup(Guid studentId, string groupName);
+        Task UpdateYear(Guid studentId, int year);
+        Task UpdateRegistrationNumber(Guid studentId, string registrationNumber);
     }
 }

@@ -63,16 +63,52 @@ namespace LabsCourseManagement.Domain
             return Result.Success();
         }
 
-        public Result ChangeGroup( string newGroup)
+        public Result UpdateName(string name)
         {
-            if(newGroup == null)
+            if (name == null)
+            {
+                return Result.Failure("Name cannot be null");
+            }
+            Name = name;
+            return Result.Success();
+        }
+        public Result UpdateSurname(string surname)
+        {
+            if (surname == null)
+            {
+                return Result.Failure("Surname cannot be null");
+            }
+            Surname = surname;
+            return Result.Success();
+        }
+        public Result UpdateGroup(string newGroup)
+        {
+            if (newGroup == null)
             {
                 return Result.Failure("Group cannot be null");
             }
-            Group= newGroup;
+            Group = newGroup;
             return Result.Success();
-
         }
+        public Result UpdateYear(int year)
+        {
+            if (year <= 0)
+            {
+                return Result.Failure("Year cannot be less then 1");
+            }
+            Year = year;
+            return Result.Success();
+        }
+        public Result UpdateRegistrationNumber(string registrationNumber)
+        {
+            if (registrationNumber == null)
+            {
+                return Result.Failure("Registration number cannot be null");
+            }
+            RegistrationNumber = registrationNumber;
+            return Result.Success();
+        }
+
 
     }
 
