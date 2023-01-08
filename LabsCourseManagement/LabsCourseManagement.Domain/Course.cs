@@ -48,6 +48,8 @@ namespace LabsCourseManagement.Domain
             }
 
             Name = name;
+            Console.WriteLine("the name will now change to:");
+            Console.WriteLine(name);
             return Result.Success();
         }
 
