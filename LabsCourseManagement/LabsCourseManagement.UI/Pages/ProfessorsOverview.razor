@@ -19,13 +19,11 @@ else
         <tbody>
             @foreach (var professor in Professors)
             {
-                GuidForDelete = professor.Id;
                 <tr>
                     <td>@professor.Id</td>
                     <td>@professor.Name</td>
                     <td>@professor.Surname</td>
-                    <td><button class="btn-outline-secondary" onclick="@DeleteProfessor">Delete</button></td>
-
+                    <td><button class="btn-outline-secondary" @onclick="(()=>DeleteProfessor(professor.Id))">Delete</button></td>
                 </tr>
             }
         </tbody>
@@ -76,9 +74,10 @@ else
         else
         {
             <InputSelect id="update-professor" @bind-Value="GuidProfessorForUpdate" class="form-control" >
+                <option value="">Select professor</option>
                 @foreach (var prof in Professors)
                 {
-                    <option value="@prof.Id" class="text-black">@prof.Id @prof.Name @prof.Surname</option>
+                    <option value="@prof.Id" class="text-black">@prof.Name @prof.Surname</option>
                 }
             </InputSelect>
             <p class="fw-bold">Update Professor Phone Number</p>
@@ -119,6 +118,5 @@ else
             </InputSelect>
             <button type="submit" onclick="@AddCourses">Add</button>
         }
-
     </div>
 </section>

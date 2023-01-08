@@ -1,5 +1,52 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>info</PageTitle>
 
-<h1>Welcome!</h1>
+<style>
+    .image {
+        width: 230px;
+        height: 200px;
+    }
+
+    .welcome {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 630px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .title{
+        margin-top: 20px;
+        font-family: 'Copperplate Gothic';
+        font-size: 25px;
+        font-weight: bold;
+    }
+    .footer{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: transparent;
+        color: rebeccapurple;
+        text-align: center;
+        font-size: 14px;
+        
+    }
+    .footer-text{
+        margin-left: 180px;
+    }
+</style>
+
+<div class="welcome">
+	<img src="./main-image.svg" class="image"/>
+	<h class="title">Faculty of Computer Science</h>
+    <p>This application offers teachers a way to keep track of the students' situation during the courses. It can also be used to manage the courses and laboratories of a faculty. Thus, student evaluation will be easier when the teacher has a well-organized catalog.</p>
+    <p>Happy grades, happy students!🙂</p>
+</div>
+<div class="footer">
+    <p class="footer-text">Project made with 💜 by Tudor Gherghe, Ionela Cotiuga, Delia Oloeriu, Paula Pastragus.</p>
+</div>
+
+

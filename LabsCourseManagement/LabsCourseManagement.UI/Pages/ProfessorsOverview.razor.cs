@@ -13,9 +13,6 @@ namespace LabsCourseManagement.UI.Pages
         public ProfessorCreateModel NewProfessor { get; set; } = new ProfessorCreateModel();
         public List<ProfessorModel> Professors { get; set; } = new List<ProfessorModel>();
         public List<ContactModel> Contacts { get; set; } = new List<ContactModel>();
-
-        private List<Guid> Guids = new List<Guid>();
-        private Guid GuidForDelete;
         private Guid GuidProfessorForUpdate;
         private Guid GuidConatctForUpdate;
         private string PhoneNumber = default!;
@@ -45,14 +42,9 @@ namespace LabsCourseManagement.UI.Pages
             await ProfDataService.CreateProfessor(NewProfessor);
             await OnInitializedAsync();
         }
-        private async Task DeleteProfessor()
+        private async Task DeleteProfessor(Guid profId)
         {
-
-            foreach (var professor in Professors)
-            {
-                Guids.Add(professor.Id);
-            }
-            await ProfDataService.DeleteProfessor(GuidForDelete);
+            await ProfDataService.DeleteProfessor(profId);
             await OnInitializedAsync();
 
         }
@@ -76,7 +68,6 @@ namespace LabsCourseManagement.UI.Pages
             await ProfDataService.UpdateSurname(Surname, GuidProfessorForUpdate);
             await OnInitializedAsync();
         }
-
     }
     public class ProfessorCreateModel
     {
