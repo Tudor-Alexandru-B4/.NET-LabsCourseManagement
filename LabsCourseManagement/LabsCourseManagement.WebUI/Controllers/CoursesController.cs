@@ -346,13 +346,13 @@ namespace LabsCourseManagement.WebUI.Controllers
                 {
                     return BadRequest();
                 }
-                announcements.Add(announcementResult.Entity);
                 announcementRepository.Add(announcementResult.Entity);
+                announcements.Add(announcementResult.Entity);
             }
 
             course.Result.AddCourseAnnouncements(announcements);
-            courseRepository.Save();
             announcementRepository.Save();
+            courseRepository.Save();
 
             //Sending emails to students
             foreach (var studentForId in course.Result.Students)
