@@ -45,13 +45,43 @@ namespace LabsCourseManagement.UI.Pages.Services
             await httpClient.DeleteAsync(url);
         }
 
-        public async Task UpdateStudentGroup(Guid studentId, string groupName)
+        public async Task UpdateName(Guid studentId, string name)
+        {
+            var json = JsonConvert.SerializeObject(name);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"{apiURL}/{studentId}/name";
+            await httpClient.PostAsync(url, data);
+        }
+        public async Task UpdateSurname(Guid studentId, string surname)
+        {
+            var json = JsonConvert.SerializeObject(surname);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"{apiURL}/{studentId}/surname";
+            await httpClient.PostAsync(url, data);
+        }
+
+        public async Task UpdateGroup(Guid studentId, string groupName)
         {
             var json = JsonConvert.SerializeObject(groupName);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"{apiURL}/{studentId}/changeGroup";
+            var url = $"{apiURL}/{studentId}/group";
             await httpClient.PostAsync(url, data);
         }
+        public async Task UpdateYear(Guid studentId, int year)
+        {
+            var json = JsonConvert.SerializeObject(year);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"{apiURL}/{studentId}/year";
+            await httpClient.PostAsync(url, data);
+        }
+        public async Task UpdateRegistrationNumber(Guid studentId, string registrationNumber)
+        {
+            var json = JsonConvert.SerializeObject(registrationNumber);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"{apiURL}/{studentId}/registrationNumber";
+            await httpClient.PostAsync(url, data);
+        }
+
 
         public async Task<IEnumerable<StudentModel>?> GetAllStudents()
         {
@@ -63,5 +93,7 @@ namespace LabsCourseManagement.UI.Pages.Services
                     PropertyNameCaseInsensitive = true,
                 });
         }
+
+       
     }
 }

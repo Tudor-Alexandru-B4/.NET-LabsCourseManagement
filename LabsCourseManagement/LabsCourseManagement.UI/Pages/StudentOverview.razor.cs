@@ -1,5 +1,6 @@
 ﻿using LabsCourseManagement.Shared.Domain;
 using LabsCourseManagement.UI.Pages.Services;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNetCore.Components;
 
 namespace LabsCourseManagement.UI.Pages
@@ -15,8 +16,12 @@ namespace LabsCourseManagement.UI.Pages
 
         private List<Guid> Guids = new List<Guid>();
         private Guid GuidForDelete;
-        private Guid GuidForChangeGroup;
+        private Guid GuidStudentForUpdate { get; set; }
         private string Group = default!;
+        private string Year = default!;
+        private string Name = default!;
+        private string Surname = default!;
+        private string RegistrationNumber = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -25,24 +30,46 @@ namespace LabsCourseManagement.UI.Pages
         private async Task CreateStudent()
         {
             await StudentDataService.CreateStudent(NewStudent);
-            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+            //uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
             await OnInitializedAsync();
         }
-        private async Task DeleteStudent()
+        private async Task DeleteStudent(Guid id)
         {
             foreach(var student in Students)
             {
                 Guids.Add(student.StudentId);
             }
-            await StudentDataService.DeleteStudent(GuidForDelete);
+            await StudentDataService.DeleteStudent(id);
+            await OnInitializedAsync();
+        }
+        private async Task UpdateStudentName()
+        {
+            await StudentDataService.UpdateName(GuidStudentForUpdate, Name);
+            await OnInitializedAsync();
+        }
+        private async Task UpdateStudentSurname()
+        {
+            await StudentDataService.UpdateSurname(GuidStudentForUpdate, Surname);
+            await OnInitializedAsync();
+        }
+        private async Task UpdateStudentGroup()
+        {
+            await StudentDataService.UpdateGroup(GuidStudentForUpdate, Group);
+            await OnInitializedAsync();
+        }
+        private async Task UpdateStudentYear()
+        {
+            int Year = Int32.Parse(this.Year);
+            await StudentDataService.UpdateYear(GuidStudentForUpdate, Year);
+            await OnInitializedAsync();
+        }
+        private async Task UpdateStudentRegistrationNumber()
+        {
+            await StudentDataService.UpdateRegistrationNumber(GuidStudentForUpdate, RegistrationNumber);
             await OnInitializedAsync();
         }
 
-        private async Task UpdateStudent()
-        {
-            await StudentDataService.UpdateStudentGroup(GuidForChangeGroup, Group);
-            await OnInitializedAsync();
-        }
+
     }
 
     public class StudentCreateModel

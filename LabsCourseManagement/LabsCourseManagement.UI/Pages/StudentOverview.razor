@@ -1,8 +1,6 @@
 ﻿@page "/students-overview"
-
 <h3>StudentsOverview</h3>
-
-
+<h3 class="fw-bold">Students</h3>
 @if(Students == null)
 {
     <p><em>Loading...</em></p>
@@ -17,10 +15,13 @@ else
         <th>Year</th>
         <th>Group</th>
         <th>Registration Number</th>
+        <th></th>
+
         </thead>
         <tbody>
             @foreach (var student in Students)
             {
+                GuidForDelete = student.StudentId;
                 <tr>
                     <td>@student.StudentId</td>
                     <td>@student.Name</td>
@@ -28,14 +29,16 @@ else
                     <td>@student.Year</td>
                     <td>@student.Group</td>
                     <td>@student.RegistrationNumber</td>
+                    <td><button class="btn-outline-secondary" @onclick="(() => DeleteStudent(student.StudentId))">Delete</button></td>
                 </tr>
             }
         </tbody>
     </tabel>
 }
 
+
 <section id="create-student" class="mt-5">
-    <h3>Add new Student</h3>
+    <h3 class="fw-bold">Add new Student</h3>
     @if(NewStudent == null)
     {
         <p><em>Loading...</em></p>
@@ -81,50 +84,49 @@ else
     }
 </section>
 
-@if (Students == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <section id="delete-student" class="mt-5">
-        <h3>Delete Student by Id</h3>
-        <div class="col-sm-10">
-            <InputSelect id="delete-student" @bind-Value="GuidForDelete" class="form-control">
-                @foreach (var student in Students)
-                {
-                    <option value="@student.StudentId" class="text-black">@student.StudentId</option>
-                }
-            </InputSelect>
-        </div>
-        <button type="submit" onclick="@DeleteStudent">Delete</button>
-    </section>
-}
 
-<section id="change-group">
-    <h3>Change the group by student Id</h3>
+<section id="update-student" class="mt-5">
+    <h3 class="fw-bold">Edit a student</h3>
+
     <div class="col-sm-10">
-        Select Student Id
-        @if (Students == null)
+        Select Student
+        @if( Students == null)
         {
             <p><em>Loading...</em></p>
         }
         else
         {
-            <InputSelect id="change-group" @bind-Value="GuidForChangeGroup" class="form-control">
-                @foreach (var student in Students)
+            <InputSelect id="update-student" @bind-Value="GuidStudentForUpdate" class="form-control">
+                <option value="">Select...</option>
+                @foreach(var student in Students)
                 {
-                    <option value="@student.StudentId" class="text-black">@student.StudentId</option>
+                    <option value="@student.StudentId" class="text-black">@student.Name @student.Surname</option>
                 }
+                
             </InputSelect>
+
+            <p class="fw-bold">Update Name</p>
+            <InputText id="new-name" @bind-Value=Name DisplayName="Name" />
+            <button type="submit" onclick="@UpdateStudentName">Update</button>
+
+            <p class="fw-bold">Update Surname</p>
+            <InputText id="new-surname" @bind-Value=Surname DisplayName="Surname" />
+            <button type="submit" onclick="@UpdateStudentSurname">Update</button>
+
+            <p class="fw-bold">Update Group</p>
+            <InputText id="new-group" @bind-Value=Group DisplayName="Group" />
+            <button type="submit" onclick="@UpdateStudentGroup">Update</button>
+
+            <p class="fw-bold">Update Year</p>
+            <InputText id="new-year" @bind-Value=Year DisplayName="Year" />
+            <button type="submit" onclick="@UpdateStudentYear">Update</button>
+
+            <p class="fw-bold">Update Registration number</p>
+            <InputText id="new-registration-number" @bind-Value=RegistrationNumber DisplayName="RegistrationNumber" />
+            <button type="submit" onclick="@UpdateStudentRegistrationNumber">Update</button>
+
         }
-        <label>
-            Group <br />
-            <InputText id="group" @bind-Value=Group DisplayName="Group" />
-            <br />
-        </label>
-        
+
     </div>
-    <button type="submit" onclick="@UpdateStudent">Update</button>
 </section>
 

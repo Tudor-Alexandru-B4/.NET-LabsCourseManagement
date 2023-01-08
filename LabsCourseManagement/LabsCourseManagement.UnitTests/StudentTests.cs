@@ -122,7 +122,7 @@ namespace LabsCourseManagement.UnitTests
             string newGroup = "C1";
 
             //Act
-            var result = student.ChangeGroup(newGroup);
+            var result = student.UpdateGroup(newGroup);
 
             //Assert
             result.IsSuccess.Should().BeTrue();

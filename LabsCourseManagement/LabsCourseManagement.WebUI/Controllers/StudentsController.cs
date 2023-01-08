@@ -132,7 +132,7 @@ namespace LabsCourseManagement.WebUI.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpPost("{studentId:guid}/group")]
-        public IActionResult ChangeStudentGroup(Guid studentId, [FromBody] string newGroup)
+        public IActionResult UpdateStudentGroup(Guid studentId, [FromBody] string newGroup)
         {
             if(newGroup == null)
             {
@@ -144,7 +144,83 @@ namespace LabsCourseManagement.WebUI.Controllers
             {
                 return NotFound();
             }
-            student.Result.ChangeGroup(newGroup);
+            student.Result.UpdateGroup(newGroup);
+            studentRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpPost("{studentId:guid}/name")]
+        public IActionResult ChangeStudentName(Guid studentId, [FromBody] string name)
+        {
+            if(name== null)
+            {
+                return BadRequest();
+            }
+
+            var student = studentRepository.Get(studentId);
+            if (student == null || student.Result == null)
+            {
+                return NotFound();
+            }
+            student.Result.UpdateName(name);
+            studentRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpPost("{studentId:guid}/surname")]
+        public IActionResult ChangeStudentSurname(Guid studentId, [FromBody] string surname)
+        {
+            if (surname == null)
+            {
+                return BadRequest();
+            }
+
+            var student = studentRepository.Get(studentId);
+            if (student == null || student.Result == null)
+            {
+                return NotFound();
+            }
+            student.Result.UpdateSurname(surname);
+            studentRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpPost("{studentId:guid}/year")]
+        public IActionResult UpdateStudentYear(Guid studentId, [FromBody] int year)
+        {
+            if (year <= 0)
+            {
+                return BadRequest();
+            }
+
+            var student = studentRepository.Get(studentId);
+            if (student == null || student.Result == null)
+            {
+                return NotFound();
+            }
+            student.Result.UpdateYear(year);
+            studentRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpPost("{studentId:guid}/registrationNumber")]
+        public IActionResult ChangeStudentRegistrationNumber(Guid studentId, [FromBody] string registrationNumber)
+        {
+            if (registrationNumber == null)
+            {
+                return BadRequest();
+            }
+
+            var student = studentRepository.Get(studentId);
+            if (student == null || student.Result == null)
+            {
+                return NotFound();
+            }
+            student.Result.UpdateRegistrationNumber(registrationNumber);
             studentRepository.Save();
             return NoContent();
         }
