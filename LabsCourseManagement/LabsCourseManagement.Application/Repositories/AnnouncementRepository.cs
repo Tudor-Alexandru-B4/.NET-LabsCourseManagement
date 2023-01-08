@@ -21,7 +21,7 @@ namespace LabsCourseManagement.Application.Repositories
         }
         public async Task<Announcement?> GetById(Guid id)
         {
-            return await databaseContext.Announcements.FindAsync(id);
+            return await databaseContext.Announcements.Include(a => a.Writer).FirstOrDefaultAsync(a => a.Id == id); ;
         }
         public async Task<List<Announcement>> GetAll()
         {

@@ -23,7 +23,9 @@ namespace LabsCourseManagement.Application.Repositories
                 .Include(a => a.LaboratoryAnnouncements)
                 .Include(g => g.LaboratoryGradingInfo)
                 .Include(t => t.LaboratoryTimeAndPlace)
-                .Include(c => c.LaboratoryCatalog).ToListAsync();
+                .Include(c => c.LaboratoryCatalog)
+                .Include(c => c.Course)
+                .Include(p => p.LaboratoryProfessor).ToListAsync();
         }
 
         public async Task<Laboratory?> Get(Guid id)
@@ -32,7 +34,9 @@ namespace LabsCourseManagement.Application.Repositories
                 .Include(a => a.LaboratoryAnnouncements)
                 .Include(g => g.LaboratoryGradingInfo)
                 .Include(t => t.LaboratoryTimeAndPlace)
-                .Include(c => c.LaboratoryCatalog).FirstOrDefaultAsync(c => c.Id == id);
+                .Include(c => c.LaboratoryCatalog)
+                .Include(c => c.Course)
+                .Include(p => p.LaboratoryProfessor).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Delete(Laboratory laboratory)
