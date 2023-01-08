@@ -424,5 +424,87 @@ namespace LabsCourseManagement.WebUI.Controllers
             announcementRepository.Save();
             return NoContent();
         }
+
+        [MapToApiVersion("2.0")]
+        [HttpPost("{courseId:guid}/programs")]
+        public IActionResult AddProgramsToCourse(Guid courseId, [FromBody] List<CreateTimeAndPlaceDto> timeAndPlaceDtos)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!timeAndPlaceDtos.Any())
+            {
+                return BadRequest("Add at least one program");
+            }
+
+            var programs = new List<TimeAndPlace>();
+            foreach (var timeAndPlace in timeAndPlaceDtos)
+            {
+                if (timeAndPlace == null || timeAndPlace.DateTime == null || timeAndPlace.Classroom == null)
+                {
+                    return BadRequest();
+                }
+
+                if (timeAndPlaceRepository.Exists(DateTime.Parse(timeAndPlace.DateTime), timeAndPlace.Classroom))
+                {
+                    return BadRequest($"Room {timeAndPlace.Classroom} is occupied at {timeAndPlace.DateTime}");
+                }
+
+                var program = TimeAndPlace.Create(DateTime.Parse(timeAndPlace.DateTime), timeAndPlace.Classroom).Entity;
+                if (timeAndPlace == null)
+                {
+                    return BadRequest("Invalid time or place format");
+                }
+                timeAndPlaceRepository.Add(program);
+                programs.Add(program);
+            }
+
+            course.Result.AddCoursePrograms(programs);
+            courseRepository.Save();
+            timeAndPlaceRepository.Save();
+            return NoContent();
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpPut("{courseId:guid}/programs")]
+        public IActionResult RemoveProgramsToCourse(Guid courseId, [FromBody] List<Guid> programsId)
+        {
+            var course = courseRepository.Get(courseId);
+            if (course == null || course.Result == null)
+            {
+                return NotFound($"Course with id {courseId} does not exist");
+            }
+
+            if (!programsId.Any())
+            {
+                return BadRequest("Add at least one program");
+            }
+
+            var programs = new List<TimeAndPlace>();
+            foreach (var programId in programsId)
+            {
+                var program = timeAndPlaceRepository.Get(programId);
+
+                if (program == null || program.Result == null)
+                {
+                    return NotFound($"Program with {programId} does not exist");
+                }
+                programs.Add(program.Result);
+            }
+
+            course.Result.RemoveCoursePrograms(programs);
+            courseRepository.Save();
+
+            foreach (var program in programs)
+            {
+                timeAndPlaceRepository.Delete(program);
+            }
+
+            timeAndPlaceRepository.Save();
+            return NoContent();
+        }
     }
 }
