@@ -23,7 +23,6 @@ namespace LabsCourseManagement.UI.Pages
         public string MaterialLink { get; set; } = default!;
         public string UpdateCourseName { get; set; } = default!;
 
-        public Guid id { get; set; }
         public Guid updateCourseId { get; set; }
         public Guid updateProfessorId { get; set; }
         public Guid updateStudentId { get; set; }
@@ -50,13 +49,13 @@ namespace LabsCourseManagement.UI.Pages
 
         private async Task UpdateName()
         {
-            await CourseDataService.UpdateName(id, UpdateCourseName);
+            await CourseDataService.UpdateName(updateCourseId, UpdateCourseName);
             await OnInitializedAsync();
         }
 
         private async Task UpdateActiveStatus(bool newStatus)
         {
-            await CourseDataService.UpdateActiveStatus(id, newStatus);
+            await CourseDataService.UpdateActiveStatus(updateCourseId, newStatus);
             await OnInitializedAsync();
         }
 
@@ -65,7 +64,7 @@ namespace LabsCourseManagement.UI.Pages
             Courses = (await CourseDataService.GetAllCourses() ?? new List<CourseModel>()).ToList();
             Professors = (await ProfDataService.GetAllProfessors() ?? new List<ProfessorModel>()).ToList();
             Students = (await StudentDataService.GetAllStudents() ?? new List<StudentModel>()).ToList();
-            CourseToView = Courses.FirstOrDefault(c => c.Id == id);
+            CourseToView = Courses.FirstOrDefault(c => c.Id == updateCourseId);
         }
 
         private async Task CreateCourse()
@@ -76,8 +75,8 @@ namespace LabsCourseManagement.UI.Pages
 
         private async Task DeleteCourse(Guid courseId)
         {
-            id = courseId;
-            await CourseDataService.DeleteCourse(id);
+            updateCourseId = courseId;
+            await CourseDataService.DeleteCourse(updateCourseId);
             await OnInitializedAsync();
         }
 
