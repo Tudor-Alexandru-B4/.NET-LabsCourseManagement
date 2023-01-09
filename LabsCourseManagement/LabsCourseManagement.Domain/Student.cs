@@ -117,15 +117,10 @@ namespace LabsCourseManagement.Domain
                 return Result.Failure("Email cannot be null");
             }
 
-            var result = ContactInfo.AddEmailAddressToList(new List<InformationString>()
+            ContactInfo.AddEmailAddressToList(new List<InformationString>()
             {
                 email
             });;
-
-            if (result.IsFailure)
-            {
-                return Result.Failure(result.Error);
-            }
 
             return Result.Success();
         }

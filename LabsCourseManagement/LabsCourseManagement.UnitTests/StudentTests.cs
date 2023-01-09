@@ -259,6 +259,35 @@ namespace LabsCourseManagement.UnitTests
             result.Error.Should().Be("Registration number cannot be null");
         }
 
+        [Fact]
+        public void When_AddEmail_Then_ShouldAddEmail()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+            var email = InformationString.Create("email@gmail.com");
+
+            //Act
+            var result = student.AddEmail(email.Entity);
+
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            student.ContactInfo.EmailAddresses.Should().Contain(email.Entity);
+        }
+
+        [Fact]
+        public void When_AddNullEmail_Then_ShouldReturnFailure()
+        {
+            //Arrange
+            var student = CreateStudentSUT();
+
+            //Act
+            var result = student.AddEmail(null);
+
+            //Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Email cannot be null");
+        }
+
 
         private List<Course> CreateCoursesSUT()
         {
