@@ -115,7 +115,7 @@ else
             <InputSelect @bind-Value="CourseGuid">
                 @foreach (var course in Courses)
                 {
-                    <option value="@course.Id" class="text-black-50">@course.Id @course.Name</option>
+                    <option value="@course.Id" class="text-black-50">@course.Name</option>
                 }
             </InputSelect>
             <button type="submit" onclick="@AddCourses">Add</button>

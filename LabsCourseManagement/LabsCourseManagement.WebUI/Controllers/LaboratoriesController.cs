@@ -294,7 +294,7 @@ namespace LabsCourseManagement.WebUI.Controllers
 
         [MapToApiVersion("2.0")]
         [HttpPost("{laboratoryId:guid}/announcements")]
-        public async Task<IActionResult> AddAnnouncementsToLab(Guid laboratoryId, [FromBody] List<CreateAnnouncementDto> announcementsDto)
+        public IActionResult AddAnnouncementsToLab(Guid laboratoryId, [FromBody] List<CreateAnnouncementDto> announcementsDto)
         {
             var laboratory = laboratoryRepository.Get(laboratoryId);
             if (laboratory == null || laboratory.Result == null)

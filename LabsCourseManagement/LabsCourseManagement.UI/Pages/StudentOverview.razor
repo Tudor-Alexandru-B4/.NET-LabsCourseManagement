@@ -38,7 +38,7 @@ else
 }
 
 
-<section id="create-student" class="mt-5">
+<section id="create-student" class="mt-5" >
     <h3 class="fw-bold">Add new Student</h3>
     @if (NewStudent == null)
     {
@@ -84,7 +84,6 @@ else
                 <ValidationMessage For="@(() => NewStudent.RegistrationNumber)"></ValidationMessage>
                 <br />
             </label>
-
             <button type="submit">Add</button>
         </EditForm>
     }
