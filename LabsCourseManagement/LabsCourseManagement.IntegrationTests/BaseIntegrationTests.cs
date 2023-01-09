@@ -20,6 +20,8 @@ namespace LabsCourseManagement.IntegrationTests
         protected HttpClient HttpClientCatalogs { get; private set; }
         protected HttpClient HttpClientStudents { get; private set; }
         protected HttpClient HttpClientLaboratories { get; private set; }
+        protected HttpClient HttpClientContacts { get; private set; }
+        protected HttpClient HttpClientInformationStrings { get; private set; }
 
         protected BaseIntegrationTests()
         {
@@ -35,6 +37,10 @@ namespace LabsCourseManagement.IntegrationTests
             HttpClientStudents = applicationStudents.CreateClient();
             var applicationLaboratories = new WebApplicationFactory<LaboratoriesController>().WithWebHostBuilder(builder => { });
             HttpClientLaboratories = applicationLaboratories.CreateClient();
+            var applicationContacts = new WebApplicationFactory<ContactsController>().WithWebHostBuilder(builder => { });
+            HttpClientContacts = applicationContacts.CreateClient();
+            var applicationInformationStrings = new WebApplicationFactory<InformationStringsController>().WithWebHostBuilder(builder => { });
+            HttpClientInformationStrings = applicationInformationStrings.CreateClient();
 
             databaseContext = new DatabaseContext(options);
         }

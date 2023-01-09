@@ -1,4 +1,6 @@
-﻿namespace LabsCourseManagement.IntegrationTests
+﻿using System;
+
+namespace LabsCourseManagement.IntegrationTests
 {
     [Collection("Sequential")]
     public class AnnouncementsControllerTests : BaseIntegrationTests
@@ -31,6 +33,58 @@
             announcements.Should().NotBeEmpty();
             announcements.Count.Should().Be(1);
         }
+        
+        [Fact]
+        public async void When_CreateAnnouncementWithNullHeader_Then_ShouldReturnBadRequest()
+        {
+            CleanDatabases();
+            //Arrange
+            var announcementDto = SUT();
+            announcementDto.Header = null;
+            var professorDto = ProfessorSUT();
+            await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
+            var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            //Act
+            var createAnnouncementResponse = await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{professors[0].Id}", announcementDto);
+
+            //Assert
+            createAnnouncementResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async void When_CreateAnnouncementWithNullText_Then_ShouldReturnBadRequest()
+        {
+            CleanDatabases();
+            //Arrange
+            var announcementDto = SUT();
+            announcementDto.Text = null;
+            var professorDto = ProfessorSUT();
+            await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
+            var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            //Act
+            var createAnnouncementResponse = await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{professors[0].Id}", announcementDto);
+
+            //Assert
+            createAnnouncementResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async void When_CreateAnnouncementWithNonexistentProf_Then_ShouldReturnNotFound()
+        {
+            CleanDatabases();
+            //Arrange
+            var announcementDto = SUT();
+
+            //Act
+            var createAnnouncementResponse = await HttpClientAnnouncements.PostAsJsonAsync($"{ApiUrl}/{Guid.NewGuid()}", announcementDto);
+
+            //Assert
+            createAnnouncementResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
 
         [Fact]
         public async void When_DeleteAnnouncement_Then_ShouldNotReturnAnnouncementInGetRequest()
@@ -55,6 +109,19 @@
             deleteAnnouncementResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
 
             getAnnouncementAfterDeleteResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async void When_DeleteNonexistentAnnouncement_Then_ShouldReturnNotFound()
+        {
+            CleanDatabases();
+            //Arrange
+
+            //Act
+            var deleteAnnouncementResponse = await HttpClientAnnouncements.DeleteAsync($"{ApiUrl}/{Guid.NewGuid()}");
+
+            //Assert
+            deleteAnnouncementResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
         [Fact]
