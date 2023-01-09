@@ -1062,25 +1062,6 @@ namespace LabsCourseManagement.IntegrationTests
             removeAnnouncementsResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
 
-        private async Task<CreateCourseDto> SUT()
-        {
-            var professorDto = new CreateProfessorDto()
-            {
-                Name = "ProfessorName",
-                Surname = "ProfessorSurname",
-                PhoneNumber = "0799779036"
-            };
-            await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
-            var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
-            var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
-
-            return new CreateCourseDto()
-            {
-                Name = "CourseName",
-                ProfessorId = professors[0].Id
-            };
-        }
-
         [Fact]
         public async void When_AddProgramsToCourse_Then_ShouldAddPrograms()
         {
@@ -1931,6 +1912,25 @@ namespace LabsCourseManagement.IntegrationTests
 
             //Assert
             removeMaterialsResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        private async Task<CreateCourseDto> SUT()
+        {
+            var professorDto = new CreateProfessorDto()
+            {
+                Name = "ProfessorName",
+                Surname = "ProfessorSurname",
+                PhoneNumber = "0799779036"
+            };
+            await HttpClientProfessor.PostAsJsonAsync("v1/api/professors", professorDto);
+            var getProfessorResult = await HttpClientProfessor.GetAsync("v1/api/professors");
+            var professors = await getProfessorResult.Content.ReadFromJsonAsync<List<ProfessorDto>>();
+
+            return new CreateCourseDto()
+            {
+                Name = "CourseName",
+                ProfessorId = professors[0].Id
+            };
         }
 
         private async Task<CreateLaboratoryDto> LabSUT(Guid courseId)
