@@ -2,6 +2,7 @@
 {
     public class GradingInfoModel
     {
+        public Guid Id { get; set; }
         public ExaminationTypeModel ExaminationType { get; set; }
         public bool IsMandatory { get; set; }
         public double MinGrade { get; set; }

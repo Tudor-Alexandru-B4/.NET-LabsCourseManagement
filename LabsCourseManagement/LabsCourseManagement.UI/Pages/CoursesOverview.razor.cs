@@ -30,9 +30,25 @@ namespace LabsCourseManagement.UI.Pages
         public Guid announcementProfessorId { get; set; }
         public Guid removeProfessorId { get; set; }
         public Guid removeStudentId { get; set; }
+        public Guid removeProgramId { get; set; }
+        public Guid removeAnnouncementId { get; set; }
+        public Guid removeGradingId { get; set; }
+        public Guid removeMaterialId { get; set; }
+
         public string? announcementHeader { get; set; }
         public string? announcementText { get; set; }
+        public string? updateMaterialString { get; set; }
         public bool viewCourseSectionIsActive { get; set; }
+
+        public string? programClassroom { get; set; }
+        public string? programDateTime { get; set; }
+        public string? gradingExaminationType { get; set; }
+        public string? gradingIsMandatory { get; set; }
+        public double gradingMinGrade { get; set; }
+        public double gradingMaxGrade { get; set; }
+        public string? gradingDescription { get; set; }
+        public string? gradingClassroom { get; set; }
+        public string? gradingDateTime { get; set; }
 
 
         private async Task RemoveStudentsFromCourse()
@@ -106,7 +122,13 @@ namespace LabsCourseManagement.UI.Pages
 
         private async Task AddMaterialsToCourse()
         {
-            await CourseDataService.AddMaterialsToCourse(updateCourseId, new List<Guid> { updateMaterialId });
+            await CourseDataService.AddMaterialsToCourse(updateCourseId, new List<string> { updateMaterialString });
+            await OnInitializedAsync();
+        }
+
+        private async Task RemoveMaterialFromCourse()
+        {
+            await CourseDataService.RemoveMaterialsFromCourse(updateCourseId, new List<Guid> { removeMaterialId });
             await OnInitializedAsync();
         }
 
@@ -118,6 +140,57 @@ namespace LabsCourseManagement.UI.Pages
                 Text = announcementText
             };
             await CourseDataService.AddAnnouncementsToCourse(updateCourseId, new List<AnnouncementInput> { announcementInput });
+            await OnInitializedAsync();
+        }
+
+        private async Task AddProgramToCourse()
+        {
+            var programInput = new TimeAndPlaceInput
+            {
+                Classroom = programClassroom,
+                DateTime = programDateTime
+            };
+            await CourseDataService.AddProgramsToCourse(updateCourseId, new List<TimeAndPlaceInput> { programInput });
+            await OnInitializedAsync();
+        }
+
+        private async Task RemoveProgramFromCourse()
+        {
+            await CourseDataService.RemoveProgramsFromCourse(updateCourseId, new List<Guid> { removeProgramId });
+            await OnInitializedAsync();
+        }
+
+        private async Task RemoveAnnouncementFromCourse()
+        {
+            await CourseDataService.RemoveAnnouncementsFromCourse(updateCourseId, new List<Guid> { removeAnnouncementId });
+            await OnInitializedAsync();
+        }
+
+        private async Task AddGradingToCourse()
+        {
+            var mandatory = true;
+            if (gradingIsMandatory != "y")
+            {
+                mandatory = false;
+            }
+
+            var gradingInput = new GradingInput
+            {
+                Classroom = gradingClassroom,
+                DateTime = gradingDateTime,
+                MinGrade = gradingMinGrade,
+                MaxGrade = gradingMaxGrade,
+                Description = gradingDescription,
+                ExaminationType = gradingExaminationType,
+                IsMandatory = mandatory
+            };
+            await CourseDataService.AddGradingsToCourse(updateCourseId, new List<GradingInput> { gradingInput });
+            await OnInitializedAsync();
+        }
+
+        private async Task RemoveGradingFromCourse()
+        {
+            await CourseDataService.RemoveGradingsFromCourse(updateCourseId, new List<Guid> { removeGradingId });
             await OnInitializedAsync();
         }
     }

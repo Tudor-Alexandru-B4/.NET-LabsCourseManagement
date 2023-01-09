@@ -74,14 +74,44 @@ namespace LabsCourseManagement.UI.Pages.Services
             await httpClient.PutAsJsonAsync($"{apiUrlV2}/{courseId}/students", studentsIds);
         }
 
-        public async Task AddMaterialsToCourse(Guid courseId, List<Guid> materialsIds)
-        {
-            await httpClient.PostAsJsonAsync($"{apiUrlV2}/{courseId}/materials", materialsIds);
-        }
-
         public async Task AddAnnouncementsToCourse(Guid courseId, List<AnnouncementInput> announcementsInputs)
         {
             await httpClient.PostAsJsonAsync($"{apiUrlV2}/{courseId}/announcements", announcementsInputs);
+        }
+
+        public async Task AddMaterialsToCourse(Guid courseId, List<string> materials)
+        {
+            await httpClient.PostAsJsonAsync($"{apiUrlV2}/{courseId}/materials", materials);
+        }
+
+        public async Task RemoveMaterialsFromCourse(Guid courseId, List<Guid> materialsIds)
+        {
+            await httpClient.PutAsJsonAsync($"{apiUrlV2}/{courseId}/materials", materialsIds);
+        }
+
+        public async Task RemoveAnnouncementsFromCourse(Guid courseId, List<Guid> announcementsIds)
+        {
+            await httpClient.PutAsJsonAsync($"{apiUrlV2}/{courseId}/announcements", announcementsIds);
+        }
+
+        public async Task AddProgramsToCourse(Guid courseId, List<TimeAndPlaceInput> timeAndPlaceInputs)
+        {
+            await httpClient.PostAsJsonAsync($"{apiUrlV2}/{courseId}/programs", timeAndPlaceInputs);
+        }
+
+        public async Task RemoveProgramsFromCourse(Guid courseId, List<Guid> programsIds)
+        {
+            await httpClient.PutAsJsonAsync($"{apiUrlV2}/{courseId}/programs", programsIds);
+        }
+
+        public async Task AddGradingsToCourse(Guid courseId, List<GradingInput> gradingsInputs)
+        {
+            await httpClient.PostAsJsonAsync($"{apiUrlV2}/{courseId}/gradings", gradingsInputs);
+        }
+
+        public async Task RemoveGradingsFromCourse(Guid courseId, List<Guid> gradingsIds)
+        {
+            await httpClient.PutAsJsonAsync($"{apiUrlV2}/{courseId}/gradings", gradingsIds);
         }
     }
 }

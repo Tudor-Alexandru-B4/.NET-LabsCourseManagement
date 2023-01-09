@@ -154,6 +154,124 @@ else
                     }
                 </tbody>
             </tabel>
+
+            <br />
+            <h4>Helpful materials</h4>
+            <tabel class="table table-light">
+                <thead class="table-primary">
+                <th>No.</th>
+                <th>Material</th>
+                </thead>
+                <tbody>
+                    @foreach (var material in CourseToView?.HelpfulMaterials)
+                    {
+                        <tr>
+                            <td>@(@CourseToView.HelpfulMaterials.IndexOf(material) + 1)</td>
+                            <td>@material.String</td>
+                        </tr>
+                    }
+                </tbody>
+            </tabel>
+
+            <br />
+            <h4>Grading information</h4>
+            <tabel class="table table-light">
+                <thead class="table-primary">
+                <th>No.</th>
+                <th>Type</th>
+                <th>Minimun Grade</th>
+                <th>Maximum Grade</th>
+                <th>Mandatory</th>
+                <th>Description</th>
+                </thead>
+                <tbody>
+                    @foreach (var grading in CourseToView?.CourseGradingInfo)
+                    {
+                        <tr>
+                            <td>@(@CourseToView.CourseGradingInfo.IndexOf(grading) + 1)</td>
+                            <td>@grading.ExaminationType</td>
+                            <td>@grading.MinGrade</td>
+                            <td>@grading.MaxGrade</td>
+                            <td>@grading.IsMandatory</td>
+                            <td>@grading.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </tabel>
+
+            <br />
+            <h4>Program</h4>
+            <tabel class="table table-light">
+                <thead class="table-primary">
+                <th>No.</th>
+                <th>Classroom</th>
+                <th>Date and time</th>
+                </thead>
+                <tbody>
+                    @foreach (var program in CourseToView?.CourseProgram)
+                    {
+                        <tr>
+                            <td>@(@CourseToView.CourseProgram.IndexOf(program) + 1)</td>
+                            <td>@program.Classroom</td>
+                            <td>@program.DateAndTime</td>
+                        </tr>
+                    }
+                </tbody>
+            </tabel>
+
+            <br />
+            <h4>Catalog</h4>
+            <tabel class="table table-light">
+                <thead class="table-primary">
+                <th>No.</th>
+                <th>Student</th>
+                <th>Final grade</th>
+                </thead>
+                <tbody>
+                    @if (CourseToView?.CourseCatalog?.StudentGrades != null)
+                    {
+                        @foreach (var studentGrades in CourseToView?.CourseCatalog?.StudentGrades)
+                        {
+                            <tr>
+                                <td>@(@CourseToView.CourseCatalog.StudentGrades.IndexOf(studentGrades) + 1)</td>
+                                <td>@studentGrades.Student</td>
+
+                                @foreach (var grade in studentGrades?.Grades)
+                                {
+                                    <td>@grade.Mark</td>
+                                }
+
+                                <td>@studentGrades.FinalGrade</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <p>There are no grades yet,</p>
+                    }
+
+                </tbody>
+            </tabel>
+
+            <br />
+            <h4>Laboratory</h4>
+            <tabel class="table table-light">
+                <thead class="table-primary">
+                <th>No.</th>
+                <th>Name</th>
+                <th>Professor</th>
+                </thead>
+                <tbody>
+                    @foreach (var laboratory in CourseToView?.Laboratories)
+                    {
+                        <tr>
+                            <td>@(@CourseToView.Laboratories.IndexOf(laboratory) + 1)</td>
+                            <td>@laboratory.Name</td>
+                            <td>@laboratory.LaboratoryProfessor.Name @laboratory.LaboratoryProfessor.Surname</td>
+                        </tr>
+                    }
+                </tbody>
+            </tabel>
         </div>
 
         <div class="col-sm-10">
@@ -254,12 +372,29 @@ else
                 <p class="fw-bold">Add materials</p>
                 <label>
                     Material link <br />
-                    <InputText id="material" @bind-Value=MaterialLink DisplayName="Material" />
+                    <InputText id="material" @bind-Value=updateMaterialString DisplayName="Material" />
                     <br />
                 </label>
 			
                 <button type="submit" @onclick="AddMaterialsToCourse">Update</button>
 
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Remove materials</p>
+                <p>Select material</p>
+                <div id="select-materials-to-remove">
+                    <InputSelect id="remove-materials-from-course" @bind-Value="removeMaterialId" class="form-control">
+                        @foreach (var material in CourseToView.HelpfulMaterials)
+                        {
+                            <option value="@material.Id" class="text-black-50">@material.String</option>
+                        }
+                    </InputSelect>
+                </div>
+                <button type="submit" @onclick="RemoveMaterialFromCourse">Update</button>
             </div>
 
             <div>
@@ -295,6 +430,122 @@ else
                 </div>
 
                 <button type="submit" @onclick="AddAnnouncementToCourse">Update</button>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Remove announcements</p>
+                <p>Select announcement</p>
+                <div id="select-announcement-to-remove">
+                    <InputSelect id="remove-announcement-from-course" @bind-Value="removeAnnouncementId" class="form-control">
+                        @foreach (var announcement in CourseToView.CourseAnnouncements)
+                        {
+                            <option value="@announcement.Id" class="text-black-50">@announcement.Header</option>
+                        }
+                    </InputSelect>
+                </div>
+                <button type="submit" @onclick="RemoveAnnouncementFromCourse">Update</button>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Add programs</p>
+                <label>
+                    Classroom <br />
+                    <InputText id="program-classroom" @bind-Value=programClassroom DisplayName="Classroom" />
+                    <br />
+                </label>
+                <label>
+                    Date and time <br />
+                    <InputText id="program-date-time" @bind-Value=programDateTime DisplayName="DateTime" />
+                    <br />
+                </label>
+
+                <button type="submit" @onclick="AddProgramToCourse">Update</button>
+
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Remove programs</p>
+                <p>Select program</p>
+                <div id="select-program-to-remove">
+                    <InputSelect id="remove-program-from-course" @bind-Value="removeProgramId" class="form-control">
+                        @foreach (var program in CourseToView.CourseProgram)
+                        {
+                            <option value="@program.Id" class="text-black-50">@program.Classroom @program.DateAndTime</option>
+                        }
+                    </InputSelect>
+                </div>
+                <button type="submit" @onclick="RemoveProgramFromCourse">Update</button>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Add grading information</p>
+                <label>
+                    Examination type <br />
+                    <InputText id="examination-type" @bind-Value=gradingExaminationType DisplayName="Examination type" />
+                    <br />
+                </label>
+                <label>
+                    Mandatory (y/n)<br />
+                    <InputText id="is-mandatory" @bind-Value=gradingIsMandatory DisplayName="Mandatory" />
+                    <br />
+                </label>
+                <label>
+                    Minimum grade <br />
+                    <InputNumber id="minimum-grade" @bind-Value=gradingMinGrade DisplayName="Minimum grade" />
+                    <br />
+                </label>
+                <label>
+                    Maximum grade <br />
+                    <InputNumber id="maximum-grade" @bind-Value=gradingMaxGrade DisplayName="Maximum grade" />
+                    <br />
+                </label>
+                <label>
+                    Description <br />
+                    <InputText id="description" @bind-Value=gradingDescription DisplayName="Description" />
+                    <br />
+                </label>
+                <label>
+                    Classroom <br />
+                    <InputText id="classroom" @bind-Value=gradingClassroom DisplayName="Classroom" />
+                    <br />
+                </label>
+                <label>
+                    Date and time <br />
+                    <InputText id="grading-date-time" @bind-Value=gradingDateTime DisplayName="Date and time" />
+                    <br />
+                </label>
+
+                <button type="submit" @onclick="AddGradingToCourse">Update</button>
+
+            </div>
+
+            <div>
+                <br />
+                <br />
+                <br />
+                <p class="fw-bold">Remove grading information</p>
+                <p>Select grading information</p>
+                <div id="select-grading-to-remove">
+                    <InputSelect id="remove-grading-from-course" @bind-Value="removeGradingId" class="form-control">
+                        @foreach (var grading in CourseToView.CourseGradingInfo)
+                        {
+                            <option value="@grading.Id" class="text-black-50">@grading.ExaminationType</option>
+                        }
+                    </InputSelect>
+                </div>
+                <button type="submit" @onclick="RemoveGradingFromCourse">Update</button>
             </div>
             
             <br />
