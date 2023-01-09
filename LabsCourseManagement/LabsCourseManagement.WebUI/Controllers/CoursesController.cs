@@ -318,7 +318,7 @@ namespace LabsCourseManagement.WebUI.Controllers
 
         [MapToApiVersion("2.0")]
         [HttpPost("{courseId:guid}/announcements")]
-        public async Task<IActionResult> AddAnnouncementsToCourse(Guid courseId, [FromBody] List<CreateAnnouncementDto> announcementsDto)
+        public IActionResult AddAnnouncementsToCourse(Guid courseId, [FromBody] List<CreateAnnouncementDto> announcementsDto)
         {
             var course = courseRepository.Get(courseId);
             if (course == null || course.Result == null)

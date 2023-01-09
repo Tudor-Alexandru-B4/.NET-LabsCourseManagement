@@ -16,13 +16,13 @@ namespace LabsCourseManagement.UI.Pages
         public List<StudentModel> Students { get; set; } = new List<StudentModel>();
 
         private List<Guid> Guids = new List<Guid>();
-        private Guid GuidForDelete;
         private Guid GuidStudentForUpdate { get; set; }
         private string Group = default!;
         private string Year = default!;
         private string Name = default!;
         private string Surname = default!;
         private string RegistrationNumber = default!;
+        private string Email = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -31,8 +31,22 @@ namespace LabsCourseManagement.UI.Pages
         private async Task CreateStudent()
         {
             await StudentDataService.CreateStudent(NewStudent);
-            //uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+
+            //Guid studentId = Guid.Empty;
+            //Console.WriteLine(Students.ToList());
+            //Console.WriteLine($"Nr matricol : {RegistrationNumber}");
+            //foreach (var student in Students)
+            //{
+            //    if (student.RegistrationNumber == RegistrationNumber && student.Name==Name && student.Surname==Surname)
+            //    {
+            //        studentId = student.StudentId;
+            //    }
+            //}
+
+            //await StudentDataService.AddEmail(studentId, Email);
             await OnInitializedAsync();
+
+
         }
         private async Task DeleteStudent(Guid id)
         {
@@ -41,6 +55,11 @@ namespace LabsCourseManagement.UI.Pages
                 Guids.Add(student.StudentId);
             }
             await StudentDataService.DeleteStudent(id);
+            await OnInitializedAsync();
+        }
+        private async Task AddEmail()
+        {
+            await StudentDataService.AddEmail(GuidStudentForUpdate, Email);
             await OnInitializedAsync();
         }
         private async Task UpdateStudentName()

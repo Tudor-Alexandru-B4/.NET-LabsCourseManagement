@@ -3,12 +3,14 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Xml.Linq;
 
 namespace LabsCourseManagement.UI.Pages.Services
 {
     public class StudentDataService : IStudentDataService
     {
         private readonly string apiURL = UrlString.StudentsUrl;
+        private readonly string apiUrlV2 = UrlString.StudentUrlV2;
         private readonly HttpClient httpClient;
 
         public StudentDataService(HttpClient httpClient)
@@ -33,7 +35,17 @@ namespace LabsCourseManagement.UI.Pages.Services
 
             var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
             await httpClient.PostAsync(apiURL, content);
+
         }
+
+        public async Task AddEmail(Guid studentId, string email)
+        {
+            var json = JsonConvert.SerializeObject(email);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"{apiUrlV2}/{studentId}/email";
+            await httpClient.PostAsync(url, data);
+        }
+
 
         public async Task DeleteStudent(Guid studentId)
         {
