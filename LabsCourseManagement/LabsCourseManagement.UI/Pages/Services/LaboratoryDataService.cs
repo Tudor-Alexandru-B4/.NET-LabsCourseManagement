@@ -41,7 +41,7 @@ namespace LabsCourseManagement.UI.Pages.Services
 
         public async Task AddStudentsToLaboratory(Guid laboratoryId, List<Guid> studentsIds)
         {
-            await httpClient.PostAsJsonAsync($"{apiUrl}/{laboratoryId}/students", studentsIds);
+            await httpClient.PostAsJsonAsync($"{apiUrl}/{laboratoryId}/addStudents", studentsIds);
         }
 
         public async Task CreateLaboratory(LaboratoryInput laboratory)

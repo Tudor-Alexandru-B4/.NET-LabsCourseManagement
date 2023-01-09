@@ -1,4 +1,4 @@
-﻿@*@page "/laboratories-overview"
+﻿@page "/laboratories-overview"
 
 <h3>Laboratories Overview</h3>
 <h3 class="fw-bold">Laboratories</h3>
@@ -11,21 +11,21 @@ else
 
     <tabel class="table table-light">
         <thead class="table-primary">
-            <th>No.</th>
-            <th>Laboratory Id</th>
-            <th>Name</th>
-            <th>Active</th>
+        <th>No.</th>
+        <th>Laboratory Id</th>
+        <th>Name</th>
+        <th>Active</th>
         </thead>
 
         <tbody>
             @foreach (var laboratory in Laboratories)
             {
                 <tr>
-                    <td>@(@Laboratories.IndexOf(laboratory)+1)</td>
+                    <td>@(@Laboratories.IndexOf(laboratory) + 1)</td>
                     <td>@laboratory.Id</td>
                     <td>@laboratory.Name</td>
                     <td>@laboratory.IsActive</td>
-                    <td><button class="btn-outline-secondary" @onclick ="(() => ViewLaboratory(laboratory.Id))">View</button></td>
+                    <td><button class="btn-outline-secondary" @onclick="(() => ViewLaboratory(laboratory.Id))">View</button></td>
                     <td><button class="btn-outline-secondary" @onclick="(() => DeleteLaboratory(laboratory.Id))">Delete</button></td>
                 </tr>
             }
@@ -91,45 +91,28 @@ else
                     <br />
                 </label>
             </div>
-           
+
             <button type="submit">Add</button>
         </EditForm>
     }
 </section>
 
-@if(viewCourseSectionIsActive)
+@if(viewLaboratorySectionIsActive)
 {
-    <section id="update-course" class="mt-5">
-        <h3 class="fw-bold">View and edit the selected course</h3>
-        
+    <section id="update-laboratory" class="mt-5">
+        <h3 class="fw-bold">View and edit the selected laboratory</h3>
+
         <button type="submit" @onclick="CloseView">Close view</button>
 
         <div style="border:black 3px">
-            <h4>Name: @CourseToView.Name</h4>
-            <h4>Id: @CourseToView.Id</h4>
-            <h4>Active: @CourseToView.IsActive</h4>
+            <h4>Name: @LaboratoryToView.Name</h4>
+            <h4>Id: @LaboratoryToView.Id</h4>
+            <h4>Active: @LaboratoryToView.IsActive</h4>
 
             <br />
-            <h4>Professors</h4>
-            <tabel class="table table-light">
-                <thead class="table-primary">
-                <th>No.</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Id</th>
-                </thead>
-                <tbody>
-                    @foreach (var professor in CourseToView?.Professors)
-                    {
-                        <tr>
-                            <td>@(@CourseToView.Professors.IndexOf(professor)+1)</td>
-                            <td>@professor.Id</td>
-                            <td>@professor.Name</td>
-                            <td>@professor.Surname</td>
-                        </tr>
-                    }
-                </tbody>
-            </tabel>
+            <h4>Professor</h4>
+            <td>@LaboratoryToView.LaboratoryProfessor.Name</td>
+            <td>@LaboratoryToView.LaboratoryProfessor.Surname</td>
 
             <br />
             <h4>Students</h4>
@@ -145,10 +128,10 @@ else
                 <th>Registration number</th>
                 </thead>
                 <tbody>
-                    @foreach (var student in CourseToView?.Students)
+                    @foreach (var student in LaboratoryToView?.LaboratoryStudents)
                     {
                         <tr>
-                            <td>@(@CourseToView.Students.IndexOf(student) + 1)</td>
+                            <td>@(@LaboratoryToView.LaboratoryStudents.IndexOf(student) + 1)</td>
                             <td>@student.StudentId</td>
                             <td>@student.Name</td>
                             <td>@student.Surname</td>
@@ -169,34 +152,15 @@ else
                 <th>Header</th>
                 <th>Text</th>
                 <th>Date</th>
-                <th>Professor</th>
                 </thead>
                 <tbody>
-                    @foreach (var announcement in CourseToView?.CourseAnnouncements)
+                    @foreach (var announcement in LaboratoryToView?.LaboratoryAnnouncements)
                     {
                         <tr>
-                            <td>@(@CourseToView.CourseAnnouncements.IndexOf(announcement) + 1)</td>
+                            <td>@(@LaboratoryToView.LaboratoryAnnouncements.IndexOf(announcement) + 1)</td>
                             <td>@announcement.Header</td>
                             <td>@announcement.Text</td>
                             <td>@announcement.PostingDate</td>
-                        </tr>
-                    }
-                </tbody>
-            </tabel>
-
-            <br />
-            <h4>Helpful materials</h4>
-            <tabel class="table table-light">
-                <thead class="table-primary">
-                <th>No.</th>
-                <th>Material</th>
-                </thead>
-                <tbody>
-                    @foreach (var material in CourseToView?.HelpfulMaterials)
-                    {
-                        <tr>
-                            <td>@(@CourseToView.HelpfulMaterials.IndexOf(material) + 1)</td>
-                            <td>@material.String</td>
                         </tr>
                     }
                 </tbody>
@@ -214,35 +178,15 @@ else
                 <th>Description</th>
                 </thead>
                 <tbody>
-                    @foreach (var grading in CourseToView?.CourseGradingInfo)
+                    @foreach (var grading in LaboratoryToView?.LaboratoryGradingInfo)
                     {
                         <tr>
-                            <td>@(@CourseToView.CourseGradingInfo.IndexOf(grading) + 1)</td>
+                            <td>@(@LaboratoryToView.LaboratoryGradingInfo.IndexOf(grading) + 1)</td>
                             <td>@grading.ExaminationType</td>
                             <td>@grading.MinGrade</td>
                             <td>@grading.MaxGrade</td>
                             <td>@grading.IsMandatory</td>
                             <td>@grading.Description</td>
-                        </tr>
-                    }
-                </tbody>
-            </tabel>
-
-            <br />
-            <h4>Program</h4>
-            <tabel class="table table-light">
-                <thead class="table-primary">
-                <th>No.</th>
-                <th>Classroom</th>
-                <th>Date and time</th>
-                </thead>
-                <tbody>
-                    @foreach (var program in CourseToView?.CourseProgram)
-                    {
-                        <tr>
-                            <td>@(@CourseToView.CourseProgram.IndexOf(program) + 1)</td>
-                            <td>@program.Classroom</td>
-                            <td>@program.DateAndTime</td>
                         </tr>
                     }
                 </tbody>
@@ -257,12 +201,12 @@ else
                 <th>Final grade</th>
                 </thead>
                 <tbody>
-                    @if (CourseToView?.CourseCatalog?.StudentGrades != null)
+                    @if (LaboratoryToView?.LaboratoryCatalog?.StudentGrades != null)
                     {
-                        @foreach (var studentGrades in CourseToView?.CourseCatalog?.StudentGrades)
+                        @foreach (var studentGrades in LaboratoryToView?.LaboratoryCatalog?.StudentGrades)
                         {
                             <tr>
-                                <td>@(@CourseToView.CourseCatalog.StudentGrades.IndexOf(studentGrades) + 1)</td>
+                                <td>@(@LaboratoryToView.LaboratoryCatalog.StudentGrades.IndexOf(studentGrades) + 1)</td>
                                 <td>@studentGrades.Student</td>
 
                                 @foreach (var grade in studentGrades?.Grades)
@@ -276,29 +220,9 @@ else
                     }
                     else
                     {
-                        <p>There are no grades yet,</p>
+                        <p>There are no grades yet.</p>
                     }
 
-                </tbody>
-            </tabel>
-
-            <br />
-            <h4>Laboratory</h4>
-            <tabel class="table table-light">
-                <thead class="table-primary">
-                <th>No.</th>
-                <th>Name</th>
-                <th>Professor</th>
-                </thead>
-                <tbody>
-                    @foreach (var laboratory in CourseToView?.Laboratories)
-                    {
-                        <tr>
-                            <td>@(@CourseToView.Laboratories.IndexOf(laboratory) + 1)</td>
-                            <td>@laboratory.Name</td>
-                            <td>@laboratory.LaboratoryProfessor.Name @laboratory.LaboratoryProfessor.Surname</td>
-                        </tr>
-                    }
                 </tbody>
             </tabel>
         </div>
@@ -309,9 +233,9 @@ else
                 <br />
                 <br />
                 <p class="fw-bold">Update name</p>
-                Name 
+                Name
                 <br />
-                <InputText id="name" @bind-Value=UpdateCourseName DisplayName="Name" />
+                <InputText id="name" @bind-Value=UpdateLaboratoryName DisplayName="Name" />
                 <button type="submit" @onclick="UpdateName">Update</button>
             </div>
 
@@ -329,44 +253,10 @@ else
                 <br />
                 <br />
                 <br />
-                <p class="fw-bold">Add professors</p>
-                <p>Select professor</p>
-                <div id="select-professors">
-                    <InputSelect id="add-professor-to-course" @bind-Value="updateProfessorId" class="form-control">
-                        @foreach (var professor in Professors)
-                        {
-                            <option value="@professor.Id" class="text-black-50">@professor.Name @professor.Surname</option>
-                        }
-                    </InputSelect>
-                </div>
-                <button type="submit" @onclick="AddProfessorToCourse">Update</button>
-            </div>
-
-            <div>
-                <br />
-                <br />
-                <br />
-                <p class="fw-bold">Remove professors</p>
-                <p>Select professor</p>
-                <div id="select-professors-to-remove">
-                    <InputSelect id="remove-professor-from-course" @bind-Value="removeProfessorId" class="form-control">
-                        @foreach (var professor in Professors)
-                        {
-                            <option value="@professor.Id" class="text-black-50">@professor.Name @professor.Surname</option>
-                        }
-                    </InputSelect>
-                </div>
-                <button type="submit" @onclick="RemoveProfessorFromCourse">Update</button>
-            </div>
-
-            <div>
-                <br />
-                <br />
-                <br />
                 <p class="fw-bold">Add students</p>
                 <p>Select student</p>
                 <div id="select-students">
-                    <InputSelect id="add-stuents-to-course" @bind-Value="updateStudentId" class="form-control">
+                    <InputSelect id="add-students-to-laboratory" @bind-Value="updateStudentId" class="form-control">
                         @foreach (var student in Students)
                         {
                             <option value="@student.StudentId" class="text-black-50">@student.Name @student.Surname</option>
@@ -374,7 +264,7 @@ else
                     </InputSelect>
                 </div>
 
-                <button type="submit" @onclick="AddStudentsToCourse">Update</button>
+                <button type="submit" @onclick="AddStudentsToLaboratory">Update</button>
             </div>
 
             <div>
@@ -384,46 +274,14 @@ else
                 <p class="fw-bold">Remove students</p>
                 <p>Select student</p>
                 <div id="select-students-to-remove">
-                    <InputSelect id="remove-student-from-course" @bind-Value="removeStudentId" class="form-control">
+                    <InputSelect id="remove-student-from-laboratory" @bind-Value="removeStudentId" class="form-control">
                         @foreach (var student in Students)
                         {
                             <option value="@student.StudentId" class="text-black-50">@student.Name @student.Surname</option>
                         }
                     </InputSelect>
                 </div>
-                <button type="submit" @onclick="RemoveStudentsFromCourse">Update</button>
-            </div>
-
-            <div>
-                <br />
-                <br />
-                <br />
-                <p class="fw-bold">Add materials</p>
-                <label>
-                    Material link <br />
-                    <InputText id="material" @bind-Value=updateMaterialString DisplayName="Material" />
-                    <br />
-                </label>
-			
-                <button type="submit" @onclick="AddMaterialsToCourse">Update</button>
-
-            </div>
-
-            <div>
-                <br />
-                <br />
-                <br />
-                <p class="fw-bold">Remove materials</p>
-                <p>Select material</p>
-                <div id="select-materials-to-remove">
-                    <InputSelect id="remove-materials-from-course" @bind-Value="removeMaterialId" class="form-control">
-                        @foreach (var material in CourseToView.HelpfulMaterials)
-                        {
-                            <option value="@material.Id" class="text-black-50">@material.String</option>
-                        }
-                    </InputSelect>
-                </div>
-                <button type="submit" @onclick="RemoveMaterialFromCourse">Update</button>
+                <button type="submit" @onclick="RemoveStudentsFromLaboratory">Update</button>
             </div>
 
             <div>
@@ -458,7 +316,7 @@ else
                     </InputSelect>
                 </div>
 
-                <button type="submit" @onclick="AddAnnouncementToCourse">Update</button>
+                <button type="submit" @onclick="AddAnnouncementToLaboratory">Update</button>
             </div>
 
             <div>
@@ -468,51 +326,14 @@ else
                 <p class="fw-bold">Remove announcements</p>
                 <p>Select announcement</p>
                 <div id="select-announcement-to-remove">
-                    <InputSelect id="remove-announcement-from-course" @bind-Value="removeAnnouncementId" class="form-control">
-                        @foreach (var announcement in CourseToView.CourseAnnouncements)
+                    <InputSelect id="remove-announcement-from-laboratory" @bind-Value="removeAnnouncementId" class="form-control">
+                        @foreach (var announcement in LaboratoryToView.LaboratoryAnnouncements)
                         {
                             <option value="@announcement.Id" class="text-black-50">@announcement.Header</option>
                         }
                     </InputSelect>
                 </div>
-                <button type="submit" @onclick="RemoveAnnouncementFromCourse">Update</button>
-            </div>
-
-            <div>
-                <br />
-                <br />
-                <br />
-                <p class="fw-bold">Add programs</p>
-                <label>
-                    Classroom <br />
-                    <InputText id="program-classroom" @bind-Value=programClassroom DisplayName="Classroom" />
-                    <br />
-                </label>
-                <label>
-                    Date and time <br />
-                    <InputText id="program-date-time" @bind-Value=programDateTime DisplayName="DateTime" />
-                    <br />
-                </label>
-
-                <button type="submit" @onclick="AddProgramToCourse">Update</button>
-
-            </div>
-
-            <div>
-                <br />
-                <br />
-                <br />
-                <p class="fw-bold">Remove programs</p>
-                <p>Select program</p>
-                <div id="select-program-to-remove">
-                    <InputSelect id="remove-program-from-course" @bind-Value="removeProgramId" class="form-control">
-                        @foreach (var program in CourseToView.CourseProgram)
-                        {
-                            <option value="@program.Id" class="text-black-50">@program.Classroom @program.DateAndTime</option>
-                        }
-                    </InputSelect>
-                </div>
-                <button type="submit" @onclick="RemoveProgramFromCourse">Update</button>
+                <button type="submit" @onclick="RemoveAnnouncementFromLaboratory">Update</button>
             </div>
 
             <div>
@@ -556,7 +377,7 @@ else
                     <br />
                 </label>
 
-                <button type="submit" @onclick="AddGradingToCourse">Update</button>
+                <button type="submit" @onclick="AddGradingToLaboratory">Update</button>
 
             </div>
 
@@ -568,15 +389,15 @@ else
                 <p>Select grading information</p>
                 <div id="select-grading-to-remove">
                     <InputSelect id="remove-grading-from-course" @bind-Value="removeGradingId" class="form-control">
-                        @foreach (var grading in CourseToView.CourseGradingInfo)
+                        @foreach (var grading in LaboratoryToView.LaboratoryGradingInfo)
                         {
                             <option value="@grading.Id" class="text-black-50">@grading.ExaminationType</option>
                         }
                     </InputSelect>
                 </div>
-                <button type="submit" @onclick="RemoveGradingFromCourse">Update</button>
+                <button type="submit" @onclick="RemoveGradingFromLaboratory">Update</button>
             </div>
-            
+
             <br />
             <br />
             <br />
@@ -586,6 +407,3 @@ else
         </div>
     </section>
 }
-
-
-*@
