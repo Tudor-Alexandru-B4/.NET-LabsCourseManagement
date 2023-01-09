@@ -12,5 +12,6 @@ namespace LabsCourseManagement.UI.Pages.Services
         Task UpdateGroup(Guid studentId, string groupName);
         Task UpdateYear(Guid studentId, int year);
         Task UpdateRegistrationNumber(Guid studentId, string registrationNumber);
+        Task AddEmail(Guid studentId, string email);
     }
 }
