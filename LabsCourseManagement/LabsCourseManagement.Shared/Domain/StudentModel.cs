@@ -9,5 +9,6 @@
         public string? Group { get; set; }
         public bool IsActive { get; set; }
         public string? RegistrationNumber { get; set; }
+        public string? Email { get; set; }
     }
 }

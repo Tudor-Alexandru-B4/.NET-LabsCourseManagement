@@ -15,13 +15,13 @@ else
         <th>Year</th>
         <th>Group</th>
         <th>Registration Number</th>
+        <th>Email</th>
         <th></th>
 
         </thead>
         <tbody>
             @foreach (var student in Students)
             {
-                GuidForDelete = student.StudentId;
                 <tr>
                     <td>@student.StudentId</td>
                     <td>@student.Name</td>
@@ -29,6 +29,7 @@ else
                     <td>@student.Year</td>
                     <td>@student.Group</td>
                     <td>@student.RegistrationNumber</td>
+                    <td>@student.Email</td>
                     <td><button class="btn-outline-secondary" @onclick="(() => DeleteStudent(student.StudentId))">Delete</button></td>
                 </tr>
             }
@@ -78,6 +79,11 @@ else
                 <InputText id="registrationNumber" @bind-Value=NewStudent.RegistrationNumber DisplayName="RegistrationNumber" />
                 <br />
             </label>
+            <label>
+                Email <br />
+                <InputText id="email" @bind-Value=NewStudent.Email DisplayName="Email" />
+                <br />
+            </label>
 
             <button type="submit">Add</button>
         </EditForm>
@@ -125,6 +131,9 @@ else
             <InputText id="new-registration-number" @bind-Value=RegistrationNumber DisplayName="RegistrationNumber" />
             <button type="submit" onclick="@UpdateStudentRegistrationNumber">Update</button>
 
+            <p class="fw-bold">Add Email</p>
+            <InputText id="new-email" @bind-Value=Email DisplayName="Email" />
+            <button type="submit" onclick="@AddEmail">Add</button>
         }
 
     </div>
