@@ -72,7 +72,6 @@ namespace LabsCourseManagement.UI.Pages
     }
     public class ProfessorCreateModel
     {
-
         [Required(ErrorMessage = "Please insert a name")]
         public string? Name { get; set; }
         [Required(ErrorMessage = "Please insert a surname")]

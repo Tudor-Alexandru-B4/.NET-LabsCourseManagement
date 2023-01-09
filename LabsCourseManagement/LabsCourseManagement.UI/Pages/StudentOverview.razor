@@ -84,12 +84,6 @@ else
                 <ValidationMessage For="@(() => NewStudent.RegistrationNumber)"></ValidationMessage>
                 <br />
             </label>
-            <label>
-                Email <br />
-                <InputText id="email" @bind-Value=NewStudent.Email DisplayName="Email" />
-                <br />
-            </label>
-
             <button type="submit">Add</button>
         </EditForm>
     }
@@ -144,7 +138,3 @@ else
     </div>
 </section>
 
-
-@code {
-
-}
