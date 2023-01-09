@@ -85,6 +85,7 @@ else
             <p class="fw-bold">Update Professor Phone Number</p>
             <p>Select Contact Id</p>
             <InputSelect id="update-professor-contact" @bind-Value="GuidConatctForUpdate" class="form-control">
+                <option value="">Select...</option>
                 @foreach (var contact in Contacts)
                 {
                     <option value="@contact.Id" class="text-black-50">@contact.Id</option>
@@ -113,6 +114,7 @@ else
             <p class="fw-bold">Add Courses</p>
             <p>Select Courses</p>
             <InputSelect @bind-Value="CourseGuid">
+                <option value="">Select...</option>
                 @foreach (var course in Courses)
                 {
                     <option value="@course.Id" class="text-black-50">@course.Name</option>

@@ -99,7 +99,7 @@ namespace LabsCourseManagement.UI.Pages
         [Required(ErrorMessage = "Please insert a surname")]
         public string? Surname { get; set; }
         [Required(ErrorMessage = "Please insert a phone number")]
-        [RegularExpression(@"^(\+\d{1,3}( )?)?((\(\d{3}\))|\d{3})[- .]?\d{3}[- .]?\d{4}$", ErrorMessage = "Incorect format.")]
+        [RegularExpression(@"^(\+\d{1,3}( )?)?((\(\d{3}\))|\d{3})[- .]?\d{3}[- .]?\d{4}$", ErrorMessage = "Incorrect format.")]
         public string? PhoneNumber { get; set; }
         [Required(ErrorMessage = "Please insert a year that is greater than 0")]
         [Range(1, 10, ErrorMessage = "Number out of range: 1-10")]

@@ -43,11 +43,11 @@ else
     {
         <EditForm Model="@NewLaboratory" OnValidSubmit="@CreateLaboratory">
             <DataAnnotationsValidator />
-            <ValidationSummary />
             <div>
                 <label>
                     Name <br />
                     <InputText id="name" @bind-Value=NewLaboratory.Name DisplayName="Name" />
+                    <ValidationMessage For="@(() => NewLaboratory.Name)"></ValidationMessage>
                     <br />
                 </label>
             </div>
@@ -56,6 +56,7 @@ else
                 <p>Select a course</p>
                 <label>
                     <InputSelect id="select-course" @bind-Value="NewLaboratory.CourseId" class="form-control">
+                        <option value="">Select...</option>
                         @foreach (var course in Courses)
                         {
                             <option value="@course.Id" class="text-black">@course.Name</option>
@@ -68,6 +69,7 @@ else
                 <p>Select a professor</p>
                 <label>
                     <InputSelect id="select-professor" @bind-Value="NewLaboratory.ProfessorId" class="form-control">
+                        <option value="">Select...</option>
                         @foreach (var professor in Professors)
                         {
                             <option value="@professor.Id" class="text-black">@professor.Name @professor.Surname</option>
@@ -80,6 +82,7 @@ else
                 <label>
                     Date and time <br />
                     <InputText id="laboratory-date-time" @bind-Value=NewLaboratory.DateTime DisplayName="Date and time" />
+                    <ValidationMessage For="@(() => NewLaboratory.DateTime)"></ValidationMessage>
                     <br />
                 </label>
             </div>
@@ -88,6 +91,7 @@ else
                 <label>
                     Place <br />
                     <InputText id="laboratory-place" @bind-Value=NewLaboratory.Place DisplayName="Place" />
+                    <ValidationMessage For="@(() => NewLaboratory.Place)"></ValidationMessage>
                     <br />
                 </label>
             </div>
