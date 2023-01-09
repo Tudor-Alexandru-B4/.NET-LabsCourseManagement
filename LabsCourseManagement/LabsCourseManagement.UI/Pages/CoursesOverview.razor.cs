@@ -20,7 +20,6 @@ namespace LabsCourseManagement.UI.Pages
         public List<StudentModel> Students { get; set; } = new List<StudentModel>();
         public CourseModel? CourseToView { get; set; }
 
-        public string MaterialLink { get; set; } = default!;
         public string UpdateCourseName { get; set; } = default!;
 
         public Guid updateCourseId { get; set; }
