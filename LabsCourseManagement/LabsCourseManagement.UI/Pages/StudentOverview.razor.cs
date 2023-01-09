@@ -2,7 +2,6 @@
 using LabsCourseManagement.UI.Pages.Services;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNetCore.Components;
-using System.ComponentModel.DataAnnotations;
 
 namespace LabsCourseManagement.UI.Pages
 {
@@ -94,21 +93,13 @@ namespace LabsCourseManagement.UI.Pages
 
     public class StudentCreateModel
     {
-        [Required(ErrorMessage = "Please insert a name")]
         public string? Name { get; set; }
-        [Required(ErrorMessage = "Please insert a surname")]
         public string? Surname { get; set; }
-        [Required(ErrorMessage = "Please insert a phone number")]
-        [RegularExpression(@"^(\+\d{1,3}( )?)?((\(\d{3}\))|\d{3})[- .]?\d{3}[- .]?\d{4}$", ErrorMessage = "Incorect format.")]
         public string? PhoneNumber { get; set; }
-        [Required(ErrorMessage = "Please insert a year that is greater than 0")]
-        [Range(1, 10, ErrorMessage = "Number out of range: 1-10")]
         public int Year { get; set; }
-        [Required(ErrorMessage = "Please insert a group")]
         public string? Group { get; set; }
         public bool IsActive { get; set; }
-        [Required(ErrorMessage = "Please insert your registration number")]
         public string? RegistrationNumber { get; set; }
-
+        public string? Email { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using LabsCourseManagement.Shared.Domain;
 using Microsoft.AspNetCore.Components;
 using LabsCourseManagement.UI.Pages.Services;
-using System.ComponentModel.DataAnnotations;
 
 namespace LabsCourseManagement.UI.Pages
 {
@@ -72,13 +71,8 @@ namespace LabsCourseManagement.UI.Pages
     }
     public class ProfessorCreateModel
     {
-
-        [Required(ErrorMessage = "Please insert a name")]
         public string? Name { get; set; }
-        [Required(ErrorMessage = "Please insert a surname")]
         public string? Surname { get; set; }
-        [Required(ErrorMessage = "Please insert a phone number")]
-        [RegularExpression(@"^(\+\d{1,3}( )?)?((\(\d{3}\))|\d{3})[- .]?\d{3}[- .]?\d{4}$", ErrorMessage = "Incorect format.")]
         public string? PhoneNumber { get; set; }
     }
 }
