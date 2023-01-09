@@ -38,6 +38,10 @@ namespace LabsCourseManagement.WebUI.Controllers
         public async Task<IActionResult> Get(Guid studentId)
         {
             var students = await mediator.Send(new GetStudentQuery { Id = studentId });
+            if (students == null)
+            {
+                return NotFound();
+            }
             return Ok(students);
         }
 
@@ -59,7 +63,7 @@ namespace LabsCourseManagement.WebUI.Controllers
         public async Task<ActionResult<StudentResponse>> Create([FromBody] CreateStudentRequest request)
         {
             var result = await mediator.Send(request);
-            return Ok(result);
+            return Created(nameof(Get), result);
         }
 
         [MapToApiVersion("1.0")]
