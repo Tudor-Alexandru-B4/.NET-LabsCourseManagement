@@ -37,7 +37,7 @@ else
 }
 
 
-<section id="create-student" class="mt-5">
+<section id="create-student" class="mt-5" >
     <h3 class="fw-bold">Add new Student</h3>
     @if (NewStudent == null)
     {
@@ -45,37 +45,42 @@ else
     }
     else
     {
-        <EditForm Model="@NewStudent" OnValidSubmit="@CreateStudent">
+        <EditForm Model="@NewStudent" OnValidSubmit="@CreateStudent" class="col-2">
             <DataAnnotationsValidator />
-            <ValidationSummary />
             <label>
                 Name <br />
                 <InputText id="name" @bind-Value=NewStudent.Name DisplayName="Name" />
+                <ValidationMessage For="@(() => NewStudent.Name)"></ValidationMessage>
                 <br />
             </label>
             <label>
                 Surname <br />
                 <InputText id="surname" @bind-Value=NewStudent.Surname DisplayName="Surname" />
+                <ValidationMessage For="@(() => NewStudent.Surname)"></ValidationMessage>
                 <br />
             </label>
             <label>
                 Phone Number <br />
                 <InputText id="phoneNumber" @bind-Value=NewStudent.PhoneNumber DisplayName="PhoneNumber" />
+                <ValidationMessage For="@(() => NewStudent.PhoneNumber)"></ValidationMessage>
                 <br />
             </label>
             <label>
                 Year <br />
                 <InputNumber id="year" @bind-Value=NewStudent.Year DisplayName="Year" />
+                <ValidationMessage For="@(() => NewStudent.Year)"></ValidationMessage>
                 <br />
             </label>
             <label>
                 Group <br />
                 <InputText id="group" @bind-Value=NewStudent.Group DisplayName="Group" />
+                <ValidationMessage For="@(() => NewStudent.Group)"></ValidationMessage>
                 <br />
             </label>
             <label>
                 Registration Number <br />
                 <InputText id="registrationNumber" @bind-Value=NewStudent.RegistrationNumber DisplayName="RegistrationNumber" />
+                <ValidationMessage For="@(() => NewStudent.RegistrationNumber)"></ValidationMessage>
                 <br />
             </label>
 
@@ -130,3 +135,7 @@ else
     </div>
 </section>
 
+
+@code {
+
+}

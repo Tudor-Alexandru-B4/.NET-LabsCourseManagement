@@ -38,22 +38,24 @@ else
         }
         else
         {
-            <EditForm Model="@NewProfessor" OnValidSubmit="@CreateProfessor">
+            <EditForm Model="@NewProfessor" OnValidSubmit="@CreateProfessor" class="col-2">
                 <DataAnnotationsValidator />
-                <ValidationSummary />
                 <label>
                     Name <br />
                     <InputText id="name" @bind-Value=NewProfessor.Name DisplayName="Name" />
+                    <ValidationMessage For="@(() => NewProfessor.Name)"></ValidationMessage>
                     <br />
                 </label>
                 <label>
                     Surname <br />
                     <InputText id="surname" @bind-Value=NewProfessor.Surname DisplayName="Surname" />
+                    <ValidationMessage For="@(() => NewProfessor.Surname)"></ValidationMessage>
                     <br />
                 </label>
                 <label>
                     Phone Number <br />
                     <InputText id="phoneNumber" @bind-Value=NewProfessor.PhoneNumber DisplayName="PhoneNumber" />
+                    <ValidationMessage For="@(() => NewProfessor.PhoneNumber)"></ValidationMessage>
                     <br />
                 </label>
                 <button type="submit" id="createProfBtn">Add</button>

@@ -41,13 +41,13 @@ else
     }
     else
     {
-        <EditForm Model="@NewCourse" OnValidSubmit="@CreateCourse">
+        <EditForm Model="@NewCourse" OnValidSubmit="@CreateCourse" class="col-2">
             <DataAnnotationsValidator />
-            <ValidationSummary />
             <div>
                 <label>
                     Name <br />
                     <InputText id="name" @bind-Value=NewCourse.Name DisplayName="Name" />
+                    <ValidationMessage For="@(() => NewCourse.Name)"></ValidationMessage>
                     <br />
                 </label>
             </div>
