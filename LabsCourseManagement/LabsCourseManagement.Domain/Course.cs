@@ -1,4 +1,5 @@
 ﻿using LabsCourseManagement.Domain.Helpers;
+using System.Xml.Linq;
 
 namespace LabsCourseManagement.Domain
 {
@@ -55,6 +56,11 @@ namespace LabsCourseManagement.Domain
 
         public Result UpdateActiveStatus(bool isActive)
         {
+            if (isActive == null)
+            {
+                return Result.Failure("ActiveStatus cannot be null");
+            }
+
             IsActive = isActive;
             return Result.Success();
         }
