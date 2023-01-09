@@ -1,6 +1,4 @@
-﻿using LabsCourseManagement.Domain;
-
-namespace LabsCourseManagement.WebUI.Dtos
+﻿namespace LabsCourseManagement.WebUI.Dtos
 {
     public class ProfessorDto
     {

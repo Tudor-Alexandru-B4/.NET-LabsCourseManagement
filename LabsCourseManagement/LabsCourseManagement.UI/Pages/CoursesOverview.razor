@@ -25,7 +25,7 @@ else
                     <td>@course.Id</td>
                     <td>@course.Name</td>
                     <td>@course.IsActive</td>
-                    <td><button class="btn-outline-secondary" @onclick ="(() => ViewCourse(course.Id))">View</button></td>
+                    <td><button class="btn-outline-secondary" @onclick="(() => ViewCourse(course.Id))">View</button></td>
                     <td><button class="btn-outline-secondary" @onclick="(() => DeleteCourse(course.Id))">Delete</button></td>
                 </tr>
             }
@@ -141,7 +141,6 @@ else
                 <th>Header</th>
                 <th>Text</th>
                 <th>Date</th>
-                <th>Professor</th>
                 </thead>
                 <tbody>
                     @foreach (var announcement in CourseToView?.CourseAnnouncements)
