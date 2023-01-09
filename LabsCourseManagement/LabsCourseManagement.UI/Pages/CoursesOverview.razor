@@ -41,13 +41,13 @@ else
     }
     else
     {
-        <EditForm Model="@NewCourse" OnValidSubmit="@CreateCourse">
+        <EditForm Model="@NewCourse" OnValidSubmit="@CreateCourse" class="col-2">
             <DataAnnotationsValidator />
-            <ValidationSummary />
             <div>
                 <label>
                     Name <br />
                     <InputText id="name" @bind-Value=NewCourse.Name DisplayName="Name" />
+                    <ValidationMessage For="@(() => NewCourse.Name)"></ValidationMessage>
                     <br />
                 </label>
             </div>
@@ -55,6 +55,7 @@ else
                 <p>Select a professor</p>
                 <label>
                     <InputSelect id="select-professor" @bind-Value="NewCourse.ProfessorId" class="form-control">
+                        <option value="">Select...</option>
                         @foreach (var professor in Professors)
                         {
                             <option value="@professor.Id" class="text-black">@professor.Name @professor.Surname</option>
