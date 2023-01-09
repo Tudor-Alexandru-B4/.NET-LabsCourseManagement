@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using LabsCourseManagement.Domain;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace LabsCourseManagement.IntegrationTests
 {
