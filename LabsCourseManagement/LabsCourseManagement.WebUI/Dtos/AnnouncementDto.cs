@@ -8,6 +8,6 @@ namespace LabsCourseManagement.WebUI.Dtos
         public string? Header { get; set; }
         public string? Text { get; set; }
         public DateTime PostingDate { get; set; }
-        public Professor? Writer { get; set; }
+        public ProfessorDto? Writer { get; set; }
     }
 }
