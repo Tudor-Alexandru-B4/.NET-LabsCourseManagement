@@ -15,7 +15,6 @@ else
         <th>Year</th>
         <th>Group</th>
         <th>Registration Number</th>
-        <th>Email</th>
         <th></th>
 
         </thead>
@@ -29,7 +28,6 @@ else
                     <td>@student.Year</td>
                     <td>@student.Group</td>
                     <td>@student.RegistrationNumber</td>
-                    <td>@student.Email</td>
                     <td><button class="btn-outline-secondary" @onclick="(() => DeleteStudent(student.StudentId))">Delete</button></td>
                 </tr>
             }
